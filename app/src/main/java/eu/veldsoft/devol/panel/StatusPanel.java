@@ -1,20 +1,17 @@
 package eu.veldsoft.devol.panel;
 
-// Import all classes from the java.awt package
-
 import java.awt.Font;
 import java.awt.Label;
 
 import eu.veldsoft.devol.screen.DEScreen;
 
-// Import screens
-
-public class StatusPanel extends Label
-/***********************************************************
- ** ** The little status panel at the bottom of the ** application. ** **
- ** Authors: Mikal Keenan ** Rainer Storn ** **
- ***********************************************************/
-{
+/**
+ * The little status panel at the bottom of the application.
+ *
+ * @author Mikal Keenan
+ * @author Rainer Storn
+ */
+public class StatusPanel extends Label {
     public final static String runningString = "Running...";
     public final static String pausedString = "Paused...";
     public final static String completedString = "Completed...";
@@ -24,60 +21,53 @@ public class StatusPanel extends Label
 
     public DEScreen deScreen;
 
-    public StatusPanel(DEScreen app)
-    /***************************************
-     ** Constructor. **
-     ***************************************/
-    {
+    /**
+     * Constructor.
+     */
+    public StatusPanel(DEScreen app) {
         deScreen = app;
         setFont(labelFont);
     }
 
-    public void idle()
-    /***************************************
-     ** Show nothing **
-     ***************************************/
-    {
+    /**
+     * Show nothing.
+     */
+    public void idle() {
         setText(nullString);
     }
 
-    public void running()
-    /***************************************
-     ** Show "Running" **
-     ***************************************/
-    {
+    /**
+     * Show "Running".
+     */
+    public void running() {
         setText(runningString);
     }
 
-    public void pause()
-    /***************************************
-     ** Show "Paused" **
-     ***************************************/
-    {
+    /**
+     * Show "Paused".
+     */
+    public void pause() {
         setText(pausedString);
     }
 
-    public void resume()
-    /***************************************
-     ** Show "Running" **
-     ***************************************/
-    {
+    /**
+     * Show "Running".
+     */
+    public void resume() {
         setText(runningString);
     }
 
-    public void stop()
-    /***************************************
-     ** Show nothing **
-     ***************************************/
-    {
+    /**
+     * Show nothing.
+     */
+    public void stop() {
         setText(nullString);
     }
 
-    public void done()
-    /***************************************
-     ** Show "Completed" **
-     ***************************************/
-    {
+    /**
+     * Show "Completed".
+     */
+    public void done() {
         setText(completedString);
     }
-}// StatusPanel
+}

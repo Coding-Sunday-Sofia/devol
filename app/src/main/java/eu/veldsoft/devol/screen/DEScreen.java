@@ -26,6 +26,7 @@ public class DEScreen extends Screen
  ***********************************************************/
 {
     public static final java.awt.Color BACKGROUNDCOLOR = Color.lightGray;
+
     /*-----Define identifiers which are used to select classes-------*/
     public String[] problem_identifier = {"T4", "T8", "Lowpass1"}; // chooses
     public String[] strategy_identifier = {"Best2Bin", "Rand1Bin",
