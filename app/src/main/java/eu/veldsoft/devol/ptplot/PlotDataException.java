@@ -25,7 +25,7 @@ ENHANCEMENTS, OR MODIFICATIONS.
                                                 PT_COPYRIGHT_VERSION_2
                                                 COPYRIGHTENDKEY
 */
-package ptplot;
+package eu.veldsoft.devol.ptplot;
 
 /**
  * Exception thrown by plot classes if there are format problems with the data
@@ -35,11 +35,12 @@ package ptplot;
  * @version @(#)PlotDataException.java 1.8 01/02/98
  */
 class PlotDataException extends Throwable {
-	public PlotDataException() {
-		super();
-	}
-	public PlotDataException(String s) {
-		super(s);
-	}
+    public PlotDataException() {
+        super();
+    }
+
+    public PlotDataException(String s) {
+        super(s);
+    }
 
 }

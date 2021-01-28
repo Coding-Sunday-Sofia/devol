@@ -1,4 +1,4 @@
-package de;
+package eu.veldsoft.devol.de;
 
 public class DERand2Exp extends DEStrategy
 /***********************************************************
@@ -6,12 +6,12 @@ public class DERand2Exp extends DEStrategy
  ** Authors: Mikal Keenan ** Rainer Storn ** **
  ***********************************************************/
 {
-	public void apply(double F, double Cr, int dim, double[] x,
-			double[] gen_best, double[][] g0) {
-		prepare(dim);
-		do {
-			x[i] = g0[0][i] + F * (g0[1][i] + g0[2][i] - g0[3][i] - g0[4][i]);
-			i = ++i % dim;
-		} while ((deRandom.nextDouble() < Cr) && (++counter < dim));
-	}
+    public void apply(double F, double Cr, int dim, double[] x,
+                      double[] gen_best, double[][] g0) {
+        prepare(dim);
+        do {
+            x[i] = g0[0][i] + F * (g0[1][i] + g0[2][i] - g0[3][i] - g0[4][i]);
+            i = ++i % dim;
+        } while ((deRandom.nextDouble() < Cr) && (++counter < dim));
+    }
 }

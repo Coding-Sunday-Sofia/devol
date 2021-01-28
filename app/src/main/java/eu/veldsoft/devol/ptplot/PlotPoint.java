@@ -28,32 +28,41 @@ ENHANCEMENTS, OR MODIFICATIONS.
                                                 PT_COPYRIGHT_VERSION_2
                                                 COPYRIGHTENDKEY
 */
-package ptplot;
+package eu.veldsoft.devol.ptplot;
 
 //////////////////////////////////////////////////////////////////////////
 //// PlotPoint
+
 /**
  * A simple structure for storing a plot point.
- * 
+ *
  * @author Edward A. Lee
  * @version @(#)PlotPoint.java 1.10 02/08/98
  */
 public class PlotPoint {
 
-	/////////////////////////////////////////////////////////////////////////
-	//// public variables ////
+    /////////////////////////////////////////////////////////////////////////
+    //// public variables ////
 
-	public double x, y;
+    public double x, y;
 
-	/** Error bar Y low value. */
-	public double yLowEB;
+    /**
+     * Error bar Y low value.
+     */
+    public double yLowEB;
 
-	/** Error bar Y low value. */
-	public double yHighEB;
+    /**
+     * Error bar Y low value.
+     */
+    public double yHighEB;
 
-	/** True if this point is connected to the previous point by a line. */
-	public boolean connected = false;
+    /**
+     * True if this point is connected to the previous point by a line.
+     */
+    public boolean connected = false;
 
-	/** True if the yLowEB and yHighEB fields are valid. */
-	public boolean errorBar = false;
+    /**
+     * True if the yLowEB and yHighEB fields are valid.
+     */
+    public boolean errorBar = false;
 }

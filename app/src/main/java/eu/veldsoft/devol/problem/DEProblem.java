@@ -1,41 +1,43 @@
-package problem;
+package eu.veldsoft.devol.problem;
 
-import de.T_DEOptimizer;
+import eu.veldsoft.devol.de.T_DEOptimizer;
 
-public abstract class DEProblem
-/***********************************************************
- ** ** Describes the problem to solve. ** The abstract class declares the methods
- * that all ** subtypes must have. Not all of them, however, are ** implemented
- * in the abstract class. ** ** Authors: Mikal Keenan ** Rainer Storn ** **
- ***********************************************************/
-{
-	/*----Public variables---------------------*/
-	public static final int NAPTIME = 10;
-	public double mincost;
+/**
+ * Describes the problem to solve. The abstract class declares the methods that all subtypes must
+ * have. Not all of them, however, are implemented in the abstract class.
+ *
+ * @author Mikal Keenan
+ * @author Rainer Storn
+ */
+public abstract class DEProblem {
+    int dim;
+    double[] best;
 
-	/*----Protected variables------------------*/
-	double best[];
-	int dim;
+    public static final int NAPTIME = 10;
+    public double mincost;
 
-	/*----Function stubs-----------------------*/
-	public abstract boolean completed(); // TRUE if evaluation is completed
+    /**
+     * @return True if evaluation is completed.
+     */
+    public abstract boolean completed();
 
-	public abstract double evaluate(T_DEOptimizer t_DEOptimizer, double[] X,
-			int dim); // the actal cost function
+    /**
+     * The actal cost function.
+     */
+    public abstract double evaluate(T_DEOptimizer t_DEOptimizer, double[] X,
+                                    int dim);
 
-	public final double[] getBest()
-	/**********************************
-	 ** Best vector. **
-	 **********************************/
-	{
-		return best;
-	}
+    /**
+     * Best vector.
+     */
+    public final double[] getBest() {
+        return best;
+    }
 
-	public final int getLength()
-	/***********************************
-	 ** Dimensionality of the problem. **
-	 ***********************************/
-	{
-		return dim;
-	}
+    /**
+     * Dimensionality of the problem.
+     */
+    public final int getLength() {
+        return dim;
+    }
 }

@@ -1,4 +1,4 @@
-package de;
+package eu.veldsoft.devol.de;
 
 public abstract class DEStrategy
 /***********************************************************
@@ -6,30 +6,31 @@ public abstract class DEStrategy
  ** Authors: Mikal Keenan ** Rainer Storn ** **
  ***********************************************************/
 {
-	protected DERandom deRandom;
+    protected DERandom deRandom;
 
-	protected int i, counter;
+    protected int i, counter;
 
-	abstract public void apply(double F, double Cr, int dim, double[] x,
-			double[] gen_best, double[][] g0);
-	/***********************************************************
-	 ** Contains the actual strategy which alters your vectors.**
-	 ***********************************************************/
+    abstract public void apply(double F, double Cr, int dim, double[] x,
+                               double[] gen_best, double[][] g0);
 
-	public void init(DERandom deRnd)
-	/***********************************************************
-	 ** Link to the random number generator. **
-	 ***********************************************************/
-	{
-		deRandom = deRnd;
-	}
+    /***********************************************************
+     ** Contains the actual strategy which alters your vectors.**
+     ***********************************************************/
 
-	protected final void prepare(int dim)
-	/***********************************************************
-	 ** Fetch a random number ex [0,dim]. **
-	 ***********************************************************/
-	{
-		i = deRandom.nextValue(dim);
-		counter = 0;
-	}
+    public void init(DERandom deRnd)
+    /***********************************************************
+     ** Link to the random number generator. **
+     ***********************************************************/
+    {
+        deRandom = deRnd;
+    }
+
+    protected final void prepare(int dim)
+    /***********************************************************
+     ** Fetch a random number ex [0,dim]. **
+     ***********************************************************/
+    {
+        i = deRandom.nextValue(dim);
+        counter = 0;
+    }
 }

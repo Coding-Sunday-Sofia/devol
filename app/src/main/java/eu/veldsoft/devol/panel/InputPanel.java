@@ -1,6 +1,7 @@
-package panel;
+package eu.veldsoft.devol.panel;
 
 // Import all classes from the java.awt package
+
 import java.awt.Event;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -8,9 +9,10 @@ import java.awt.GridBagLayout;
 import java.awt.Label;
 import java.awt.TextField;
 
-import de.T_DEOptimizer;
+import eu.veldsoft.devol.de.T_DEOptimizer;
+import eu.veldsoft.devol.screen.DEScreen;
+
 // Import screens
-import screen.DEScreen;
 
 public class InputPanel extends MyPanel
 /***********************************************************
@@ -18,282 +20,276 @@ public class InputPanel extends MyPanel
  * ** ** Authors: Mikal Keenan ** Rainer Storn ** **
  ***********************************************************/
 {
-	public final static Font ScrollFont = new Font("Dialog", Font.PLAIN, 12);
+    public final static Font ScrollFont = new Font("Dialog", Font.PLAIN, 12);
+    // maximum values for the control variables
+    final static int NPMAX = 500;
+    final static double FMAX = 1.0;
+    final static double CRMAX = 1.0;
+    final static double RMAX = 500.0;
+    final static int RFMAX = 200;
+    public DEScreen deScreen;
+    // Text values for the scrollbars
+    TextField NPText;
+    TextField FText;
+    TextField CrText;
+    TextField RangeText;
+    TextField RefreshText;
+    // Labels to the text fields
+    Label NPLab;
+    Label FLab;
+    Label CrLab;
+    Label RangeLab;
+    Label RefreshLab;
+    // The actual control variables
+    int NP;
+    double F;
+    double Cr;
+    double Range;
+    int Refresh;
+    // data type wrappers for the control variables
+    Integer NPObj;
+    Double FObj;
+    Double CrObj;
+    Double RangeObj;
+    Integer RefreshObj;
 
-	public DEScreen deScreen;
+    public InputPanel(DEScreen app)
+    /***********************************************************
+     ** ** Defines the input panel where DE's control variables ** can be set.
+     * This can be done either by using a scroll- ** bar or by entering the data
+     * into the text fields. ** ** Authors: Mikal Keenan ** Rainer Storn ** **
+     ** Date: 3/16/98 ** **
+     ***********************************************************/
+    {
+        deScreen = app; // know your container class
 
-	// Text values for the scrollbars
-	TextField NPText;
-	TextField FText;
-	TextField CrText;
-	TextField RangeText;
-	TextField RefreshText;
+        /*----Initialization values for the DE control variables.-----*/
+        NP = 30;
+        F = 0.5;
+        Cr = 1.0;
+        Range = 100.0;
+        Refresh = 1;
+        // ToDo: Change this to GetParameters(deScreen.);
+        this.setLayout(new GridBagLayout()); // Slider below the text
 
-	// Labels to the text fields
-	Label NPLab;
-	Label FLab;
-	Label CrLab;
-	Label RangeLab;
-	Label RefreshLab;
+        // ------Parameter NP-----------------------------------
+        NPText = new TextField(10); // Create the NP text field
+        NPText.setEditable(true);
+        NPLab = new Label("NP:");
 
-	// The actual control variables
-	int NP;
-	double F;
-	double Cr;
-	double Range;
-	int Refresh;
+        NPText.setText(String.valueOf(NP)); // Show initial value
+        this.setLayout(new GridBagLayout()); // Slider below the text
+        constrain(this, NPLab, 0, 0, 1, 1, GridBagConstraints.BOTH,
+                GridBagConstraints.CENTER, 1.0, 1.0, 5, 5, 0, 0);
+        constrain(this, NPText, 1, 0, 2, 1, GridBagConstraints.BOTH,
+                GridBagConstraints.CENTER, 1.0, 1.0, 5, 5, 0, 0);
 
-	// data type wrappers for the control variables
-	Integer NPObj;
-	Double FObj;
-	Double CrObj;
-	Double RangeObj;
-	Integer RefreshObj;
+        // ------Parameter F-----------------------------------
+        FText = new TextField(10);
+        FText.setEditable(true);
+        FLab = new Label("F:");
 
-	// maximum values for the control variables
-	final static int NPMAX = 500;
-	final static double FMAX = 1.0;
-	final static double CRMAX = 1.0;
-	final static double RMAX = 500.0;
-	final static int RFMAX = 200;
+        FText.setText(Double.toString(F));
+        constrain(this, FLab, 0, 2, 1, 1, GridBagConstraints.BOTH,
+                GridBagConstraints.CENTER, 1.0, 1.0, 5, 5, 0, 0);
+        constrain(this, FText, 1, 2, 2, 1, GridBagConstraints.BOTH,
+                GridBagConstraints.CENTER, 1.0, 1.0, 5, 5, 0, 0);
 
-	public InputPanel(DEScreen app)
-	/***********************************************************
-	 ** ** Defines the input panel where DE's control variables ** can be set.
-	 * This can be done either by using a scroll- ** bar or by entering the data
-	 * into the text fields. ** ** Authors: Mikal Keenan ** Rainer Storn ** **
-	 ** Date: 3/16/98 ** **
-	 ***********************************************************/
-	{
-		deScreen = app; // know your container class
+        // ----Parameter CR---------------------------------------
+        CrText = new TextField(10);
+        CrText.setEditable(true);
+        CrLab = new Label("CR:");
 
-		/*----Initialization values for the DE control variables.-----*/
-		NP = 30;
-		F = 0.5;
-		Cr = 1.0;
-		Range = 100.0;
-		Refresh = 1;
-		// ToDo: Change this to GetParameters(deScreen.);
-		this.setLayout(new GridBagLayout()); // Slider below the text
+        CrText.setText(Double.toString(Cr));
+        constrain(this, CrLab, 0, 4, 1, 1, GridBagConstraints.BOTH,
+                GridBagConstraints.CENTER, 1.0, 1.0, 5, 5, 0, 0);
+        constrain(this, CrText, 1, 4, 2, 1, GridBagConstraints.BOTH,
+                GridBagConstraints.CENTER, 1.0, 1.0, 5, 5, 0, 0);
 
-		// ------Parameter NP-----------------------------------
-		NPText = new TextField(10); // Create the NP text field
-		NPText.setEditable(true);
-		NPLab = new Label("NP:");
+        // ---Init section-----------------------------------------
+        RangeText = new TextField(10);
+        RangeText.setEditable(true);
+        RangeLab = new Label("Range:  ");
 
-		NPText.setText(String.valueOf(NP)); // Show initial value
-		this.setLayout(new GridBagLayout()); // Slider below the text
-		constrain(this, NPLab, 0, 0, 1, 1, GridBagConstraints.BOTH,
-				GridBagConstraints.CENTER, 1.0, 1.0, 5, 5, 0, 0);
-		constrain(this, NPText, 1, 0, 2, 1, GridBagConstraints.BOTH,
-				GridBagConstraints.CENTER, 1.0, 1.0, 5, 5, 0, 0);
+        RangeText.setText(Double.toString(Range));
+        constrain(this, RangeLab, 0, 6, 1, 1, GridBagConstraints.BOTH,
+                GridBagConstraints.CENTER, 1.0, 1.0, 5, 5, 0, 0);
+        constrain(this, RangeText, 1, 6, 2, 1, GridBagConstraints.BOTH,
+                GridBagConstraints.CENTER, 1.0, 1.0, 5, 5, 0, 0);
 
-		// ------Parameter F-----------------------------------
-		FText = new TextField(10);
-		FText.setEditable(true);
-		FLab = new Label("F:");
+        // ------Range-----------------------------------
+        RefreshText = new TextField(10); // Create the Refresh text field
+        RefreshText.setEditable(true);
+        RefreshLab = new Label("Refresh:");
 
-		FText.setText(FObj.toString(F));
-		constrain(this, FLab, 0, 2, 1, 1, GridBagConstraints.BOTH,
-				GridBagConstraints.CENTER, 1.0, 1.0, 5, 5, 0, 0);
-		constrain(this, FText, 1, 2, 2, 1, GridBagConstraints.BOTH,
-				GridBagConstraints.CENTER, 1.0, 1.0, 5, 5, 0, 0);
+        RefreshText.setText(String.valueOf(Refresh)); // Show initial value
+        constrain(this, RefreshLab, 0, 8, 1, 1, GridBagConstraints.BOTH,
+                GridBagConstraints.CENTER, 1.0, 1.0, 5, 5, 0, 0);
+        constrain(this, RefreshText, 1, 8, 2, 1, GridBagConstraints.BOTH,
+                GridBagConstraints.CENTER, 1.0, 1.0, 5, 5, 0, 0);
 
-		// ----Parameter CR---------------------------------------
-		CrText = new TextField(10);
-		CrText.setEditable(true);
-		CrLab = new Label("CR:");
+    }
 
-		CrText.setText(CrObj.toString(Cr));
-		constrain(this, CrLab, 0, 4, 1, 1, GridBagConstraints.BOTH,
-				GridBagConstraints.CENTER, 1.0, 1.0, 5, 5, 0, 0);
-		constrain(this, CrText, 1, 4, 2, 1, GridBagConstraints.BOTH,
-				GridBagConstraints.CENTER, 1.0, 1.0, 5, 5, 0, 0);
+    public boolean handleEvent(Event E)
+    // Handles the scrollbar actions. Note: overriding the Scrollbar
+    // class's own event handler.
+    {
 
-		// ---Init section-----------------------------------------
-		RangeText = new TextField(10);
-		RangeText.setEditable(true);
-		RangeLab = new Label("Range:  ");
+        repaint(); // Redraw everything
 
-		RangeText.setText(RangeObj.toString(Range));
-		constrain(this, RangeLab, 0, 6, 1, 1, GridBagConstraints.BOTH,
-				GridBagConstraints.CENTER, 1.0, 1.0, 5, 5, 0, 0);
-		constrain(this, RangeText, 1, 6, 2, 1, GridBagConstraints.BOTH,
-				GridBagConstraints.CENTER, 1.0, 1.0, 5, 5, 0, 0);
+        return super.handleEvent(E); // Propagate message to the superclass
+    }
 
-		// ------Range-----------------------------------
-		RefreshText = new TextField(10); // Create the Refresh text field
-		RefreshText.setEditable(true);
-		RefreshLab = new Label("Refresh:");
+    public void enable()
+    /***************************************
+     ** Enable the input. **
+     ***************************************/
+    {
+        /*
+         * If you enable the sliders, put them into the position which
+         * corresponds to the text field
+         */
+        NPText.enable();
+        NPText.setText(String.valueOf(NP)); // set the text according to the
+        // actual value
 
-		RefreshText.setText(String.valueOf(Refresh)); // Show initial value
-		constrain(this, RefreshLab, 0, 8, 1, 1, GridBagConstraints.BOTH,
-				GridBagConstraints.CENTER, 1.0, 1.0, 5, 5, 0, 0);
-		constrain(this, RefreshText, 1, 8, 2, 1, GridBagConstraints.BOTH,
-				GridBagConstraints.CENTER, 1.0, 1.0, 5, 5, 0, 0);
+        FText.enable();
+        FText.setText(Double.toString(F));
 
-	}
+        CrText.enable();
+        CrText.setText(Double.toString(Cr));
 
-	public boolean handleEvent(Event E)
-	// Handles the scrollbar actions. Note: overriding the Scrollbar
-	// class's own event handler.
-	{
+        RangeText.enable();
+        RangeText.setText(Double.toString(Range));
 
-		repaint(); // Redraw everything
+        RefreshText.enable();
+        RefreshText.setText(String.valueOf(Refresh)); // set the text according
+        // to the actual value
 
-		return super.handleEvent(E); // Propagate message to the superclass
-	}
+    }
 
-	public void enable()
-	/***************************************
-	 ** Enable the input. **
-	 ***************************************/
-	{
-		/*
-		 * If you enable the sliders, put them into the position which
-		 * corresponds to the text field
-		 */
-		NPText.enable();
-		NPText.setText(String.valueOf(NP)); // set the text according to the
-											// actual value
+    public void disable()
+    /********************************************
+     ** Deactivate text fields and load the ** control variables with their new
+     * values.**
+     ********************************************/
+    {
+        // Convert from text representation to numbers
+        NP = (NPObj.valueOf(NPText.getText())).intValue();
+        F = (FObj.valueOf(FText.getText())).doubleValue();
+        Cr = (CrObj.valueOf(CrText.getText())).doubleValue();
+        Range = (RangeObj.valueOf(RangeText.getText())).doubleValue();
+        Refresh = (RefreshObj.valueOf(RefreshText.getText())).intValue();
 
-		FText.enable();
-		FText.setText(FObj.toString(F));
+        // check for violation of ranges and then set the variables
+        if ((NP > NPMAX) || (NP < 0))
+            NP = NPMAX;
+        NPText.setText(String.valueOf(NP)); // reflect a change of variable in
+        // the text
 
-		CrText.enable();
-		CrText.setText(CrObj.toString(Cr));
+        if ((F > FMAX) || (F < 0))
+            F = FMAX;
+        FText.setText(Double.toString(F));
 
-		RangeText.enable();
-		RangeText.setText(CrObj.toString(Range));
+        if ((Cr > CRMAX) || (Cr < 0))
+            Cr = CRMAX;
+        CrText.setText(Double.toString(Cr));
 
-		RefreshText.enable();
-		RefreshText.setText(String.valueOf(Refresh)); // set the text according
-														// to the actual value
+        if ((Range > RMAX) || (Range < 0))
+            Range = RMAX;
+        RangeText.setText(Double.toString(Range));
 
-	}
+        if ((Refresh > RFMAX) || (Refresh < 0))
+            Refresh = RFMAX;
+        RefreshText.setText(String.valueOf(Refresh)); // reflect a change of
+        // variable in the text
 
-	public void disable()
-	/********************************************
-	 ** Deactivate text fields and load the ** control variables with their new
-	 * values.**
-	 ********************************************/
-	{
-		// Convert from text representation to numbers
-		NP = (NPObj.valueOf(NPText.getText())).intValue();
-		F = (FObj.valueOf(FText.getText())).doubleValue();
-		Cr = (CrObj.valueOf(CrText.getText())).doubleValue();
-		Range = (RangeObj.valueOf(RangeText.getText())).doubleValue();
-		Refresh = (RefreshObj.valueOf(RefreshText.getText())).intValue();
+        // disable the textfields, so that
+        // nobody can tamper with them during optimization
+        NPText.disable();
 
-		// check for violation of ranges and then set the variables
-		if ((NP > NPMAX) || (NP < 0))
-			NP = NPMAX;
-		NPText.setText(String.valueOf(NP)); // reflect a change of variable in
-											// the text
+        CrText.disable();
 
-		if ((F > FMAX) || (F < 0))
-			F = FMAX;
-		FText.setText(FObj.toString(F));
+        FText.disable();
 
-		if ((Cr > CRMAX) || (Cr < 0))
-			Cr = CRMAX;
-		CrText.setText(CrObj.toString(Cr));
+        RangeText.disable();
 
-		if ((Range > RMAX) || (Range < 0))
-			Range = RMAX;
-		RangeText.setText(CrObj.toString(Range));
+        RefreshText.disable();
+    }
 
-		if ((Refresh > RFMAX) || (Refresh < 0))
-			Refresh = RFMAX;
-		RefreshText.setText(String.valueOf(Refresh)); // reflect a change of
-														// variable in the text
+    public void pause()
+    /********************************************
+     ** Activate Cr, F, and refresh rate ** manipulation during pause. **
+     ********************************************/
+    {
+        FText.enable();
+        FText.setText(Double.toString(F));
 
-		// disable the textfields, so that
-		// nobody can tamper with them during optimization
-		NPText.disable();
+        CrText.enable();
+        CrText.setText(Double.toString(Cr));
 
-		CrText.disable();
+        RefreshText.enable();
+        RefreshText.setText(Integer.toString(Refresh));
 
-		FText.disable();
+    }
 
-		RangeText.disable();
+    public void resume()
+    /********************************************
+     ** Deactivate Cr and F manipulation on ** resume. **
+     ********************************************/
+    {
 
-		RefreshText.disable();
-	}
+        // Convert from text representation to numbers
+        F = (FObj.valueOf(FText.getText())).doubleValue();
+        Cr = (CrObj.valueOf(CrText.getText())).doubleValue();
+        Refresh = (RefreshObj.valueOf(RefreshText.getText())).intValue();
+        // System.out.println(Refresh);
 
-	public void pause()
-	/********************************************
-	 ** Activate Cr, F, and refresh rate ** manipulation during pause. **
-	 ********************************************/
-	{
-		FText.enable();
-		FText.setText(FObj.toString(F));
+        // check for violation of ranges and then set the variables
+        if ((F > FMAX) || (F < 0))
+            F = FMAX;
+        FText.setText(Double.toString(F));// reflect a change of variable in the
+        // text
 
-		CrText.enable();
-		CrText.setText(CrObj.toString(Cr));
+        if ((Cr > CRMAX) || (Cr < 0))
+            Cr = CRMAX;
+        CrText.setText(Double.toString(Cr));
 
-		RefreshText.enable();
-		RefreshText.setText(RefreshObj.toString(Refresh));
+        if ((Refresh > RFMAX) || (Refresh < 0))
+            Refresh = RFMAX;
+        RefreshText.setText(String.valueOf(Refresh)); // reflect a change of
+        // variable in the text
 
-	}
+        // disable the textfields, so that
+        // nobody can tamper with them during optimization
+        CrText.disable();
 
-	public void resume()
-	/********************************************
-	 ** Deactivate Cr and F manipulation on ** resume. **
-	 ********************************************/
-	{
+        FText.disable();
 
-		// Convert from text representation to numbers
-		F = (FObj.valueOf(FText.getText())).doubleValue();
-		Cr = (CrObj.valueOf(CrText.getText())).doubleValue();
-		Refresh = (RefreshObj.valueOf(RefreshText.getText())).intValue();
-		// System.out.println(Refresh);
+        RefreshText.disable();
 
-		// check for violation of ranges and then set the variables
-		if ((F > FMAX) || (F < 0))
-			F = FMAX;
-		FText.setText(FObj.toString(F));// reflect a change of variable in the
-										// text
+    }
 
-		if ((Cr > CRMAX) || (Cr < 0))
-			Cr = CRMAX;
-		CrText.setText(CrObj.toString(Cr));
+    public void done()
+    /********************************************
+     ** Optimization finished. **
+     ********************************************/
+    {
+        enable();
+    }
 
-		if ((Refresh > RFMAX) || (Refresh < 0))
-			Refresh = RFMAX;
-		RefreshText.setText(String.valueOf(Refresh)); // reflect a change of
-														// variable in the text
+    public void getParameters(T_DEOptimizer opt)
+    /********************************************
+     ** DE's control variables. **
+     ********************************************/
+    {
+        opt.NP = NP;
+        opt.F = F;
+        opt.Cr = Cr;
+        opt.Range = Range;
+        opt.Refresh = Refresh; // How many generations until next plot
+        // System.out.println(Refresh);
 
-		// disable the textfields, so that
-		// nobody can tamper with them during optimization
-		CrText.disable();
-
-		FText.disable();
-
-		RefreshText.disable();
-
-	}
-
-	public void done()
-	/********************************************
-	 ** Optimization finished. **
-	 ********************************************/
-	{
-		enable();
-	}
-
-	public void getParameters(T_DEOptimizer opt)
-	/********************************************
-	 ** DE's control variables. **
-	 ********************************************/
-	{
-		opt.NP = NP;
-		opt.F = F;
-		opt.Cr = Cr;
-		opt.Range = Range;
-		opt.Refresh = Refresh; // How many generations until next plot
-		// System.out.println(Refresh);
-
-	}
+    }
 
 }// End class InputPanel

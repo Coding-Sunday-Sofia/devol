@@ -1,4 +1,4 @@
-package de;
+package eu.veldsoft.devol.de;
 
 public class DECurrent2Rand extends DEStrategy
 /***********************************************************
@@ -6,10 +6,10 @@ public class DECurrent2Rand extends DEStrategy
  * Storn ** **
  ***********************************************************/
 {
-	public void apply(double F, double Cr, int dim, double[] x,
-			double[] gen_best, double[][] g0) {
-		for (i = 0; i < dim; i++) {
-			x[i] = x[i] + Cr * (g0[0][i] - x[i]) + F * (g0[1][i] - g0[2][i]);
-		}
-	}
+    public void apply(double F, double Cr, int dim, double[] x,
+                      double[] gen_best, double[][] g0) {
+        for (i = 0; i < dim; i++) {
+            x[i] = x[i] + Cr * (g0[0][i] - x[i]) + F * (g0[1][i] - g0[2][i]);
+        }
+    }
 }

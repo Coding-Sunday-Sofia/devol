@@ -1,4 +1,4 @@
-package de;
+package eu.veldsoft.devol.de;
 
 public class DERand1Bin extends DEStrategy
 /***********************************************************
@@ -6,13 +6,13 @@ public class DERand1Bin extends DEStrategy
  * fastest one. ** ** Authors: Mikal Keenan ** Rainer Storn ** **
  ***********************************************************/
 {
-	public void apply(double F, double Cr, int dim, double[] x,
-			double[] gen_best, double[][] g0) {
-		prepare(dim);
-		while (counter++ < dim) {
-			if ((deRandom.nextDouble() < Cr) || (counter == dim))
-				x[i] = g0[0][i] + F * (g0[1][i] - g0[2][i]);
-			i = ++i % dim;
-		}
-	}
+    public void apply(double F, double Cr, int dim, double[] x,
+                      double[] gen_best, double[][] g0) {
+        prepare(dim);
+        while (counter++ < dim) {
+            if ((deRandom.nextDouble() < Cr) || (counter == dim))
+                x[i] = g0[0][i] + F * (g0[1][i] - g0[2][i]);
+            i = ++i % dim;
+        }
+    }
 }

@@ -25,7 +25,7 @@ ENHANCEMENTS, OR MODIFICATIONS.
                                                 PT_COPYRIGHT_VERSION_2
                                                 COPYRIGHTENDKEY
 */
-package ptplot;
+package eu.veldsoft.devol.ptplot;
 
 /**
  * Exception thrown by plot classes if there are format problems with the data
@@ -35,10 +35,11 @@ package ptplot;
  * @version @(#)CmdLineArgException.java 1.7 01/02/98
  */
 class CmdLineArgException extends Throwable {
-	public CmdLineArgException() {
-		super();
-	}
-	public CmdLineArgException(String s) {
-		super(s);
-	}
+    public CmdLineArgException() {
+        super();
+    }
+
+    public CmdLineArgException(String s) {
+        super(s);
+    }
 }

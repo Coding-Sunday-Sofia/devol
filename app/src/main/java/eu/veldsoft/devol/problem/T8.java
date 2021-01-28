@@ -1,5 +1,6 @@
-package problem;
-import de.T_DEOptimizer;
+package eu.veldsoft.devol.problem;
+
+import eu.veldsoft.devol.de.T_DEOptimizer;
 
 public class T8 extends DEProblem
 /***********************************************************
@@ -7,71 +8,74 @@ public class T8 extends DEProblem
  * Chebychev polynomial T8. ** ** Authors: Mikal Keenan ** Rainer Storn ** **
  ***********************************************************/
 {
-	int evaluation_samples;
-	double lower_limit;
+    int evaluation_samples;
+    double lower_limit;
 
-	public T8()
-	/***********************************************************
-	 ** Constructor initializes some parameters. **
-	 ***********************************************************/
-	{
-		best = new double[dim = 9];
-		lower_limit = 72.661;
-		evaluation_samples = 60;
-	}
+    public T8()
+    /***********************************************************
+     ** Constructor initializes some parameters. **
+     ***********************************************************/
+    {
+        best = new double[dim = 9];
+        lower_limit = 72.661;
+        evaluation_samples = 60;
+    }
 
-	public boolean completed()
-	/***********************************************************
-	 ** Is TRUE if the value-to-reach (VTR) has been reached ** or passed. **
-	 ***********************************************************/
-	{
-		return mincost <= 1.0e-6; // TRUE if mincost is <= 1.e-6
-	}
+    public boolean completed()
+    /***********************************************************
+     ** Is TRUE if the value-to-reach (VTR) has been reached ** or passed. **
+     ***********************************************************/
+    {
+        return mincost <= 1.0e-6; // TRUE if mincost is <= 1.e-6
+    }
 
-	public double evaluate(T_DEOptimizer t_DEOptimizer, double temp[], int dim)
-	/*****************************************************************
-	 ** The actual objective function consists of the sum of squared ** errors,
-	 * where an error is the magnitude of deviation of the ** polynomial at a
-	 * specific argument value. **
-	 *****************************************************************/
-	{
-		double y = 0.0;
-		double x = -1.0;
-		double z = 0.0, aux;
+    public double evaluate(T_DEOptimizer t_DEOptimizer, double[] temp, int dim)
+    /*****************************************************************
+     ** The actual objective function consists of the sum of squared ** errors,
+     * where an error is the magnitude of deviation of the ** polynomial at a
+     * specific argument value. **
+     *****************************************************************/
+    {
+        double y = 0.0;
+        double x = -1.0;
+        double z = 0.0, aux;
 
-		double dx = 2 / ((double) evaluation_samples);
-		for (int i = 0; i <= evaluation_samples; i++, x += dx) {
-			if ((z = polynomial(temp, x, dim)) > 1.0) {
-				aux = 1.0 - z;
-				y += aux * aux;
-			} else if (z < -1.0) {
-				aux = z - 1.0;
-				y += aux * aux;
-			}
-		}
+        double dx = 2 / ((double) evaluation_samples);
+        for (int i = 0; i <= evaluation_samples; i++, x += dx) {
+            if ((z = polynomial(temp, x, dim)) > 1.0) {
+                aux = 1.0 - z;
+                y += aux * aux;
+            } else if (z < -1.0) {
+                aux = z - 1.0;
+                y += aux * aux;
+            }
+        }
 
-		aux = lower_limit - z;
-		aux *= aux;
+        aux = lower_limit - z;
+        aux *= aux;
 
-		if (polynomial(temp, -1.2, dim) < lower_limit)
-			y += aux;
+        if (polynomial(temp, -1.2, dim) < lower_limit) {
+            y += aux;
+        }
 
-		if (polynomial(temp, +1.2, dim) < lower_limit)
-			y += aux;
+        if (polynomial(temp, +1.2, dim) < lower_limit) {
+            y += aux;
+        }
 
-		return y;
-	}
+        return y;
+    }
 
-	public double polynomial(double temp[], double x, int dim)
-	/***********************************************************
-	 ** Evaluate the current polynomial. **
-	 ***********************************************************/
-	{
-		double y = temp[0];
-		for (int j = 1; j < dim; j++)
-			y = x * y + temp[j];
+    public double polynomial(double[] temp, double x, int dim)
+    /***********************************************************
+     ** Evaluate the current polynomial. **
+     ***********************************************************/
+    {
+        double y = temp[0];
+        for (int j = 1; j < dim; j++) {
+            y = x * y + temp[j];
+        }
 
-		return y;
-	}
+        return y;
+    }
 
 }
