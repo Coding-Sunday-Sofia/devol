@@ -3,8 +3,8 @@ package eu.veldsoft.devol.panel;
 // Import all classes from the java.awt package
 
 import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Dimension;
+import android.graphics.Color;
+import android.util.Size;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -31,7 +31,7 @@ public class MonitorPanel extends Canvas
     private final int y2 = y1 + new_line;
     private final int y3 = y2 + new_line;
     public DEScreen deScreen;
-    Dimension minSize; // set the minimum size of the canvas
+    Size minSize; // set the minimum size of the canvas
     Image offscreenImage; // This is where the image is stored
     Graphics offscreenGraphics;
     boolean initialized = false;
@@ -42,10 +42,10 @@ public class MonitorPanel extends Canvas
      ***************************************/
     {
         deScreen = app;
-        minSize = new Dimension(100, 60); // set minimum size
+        minSize = new Size(100, 60); // set minimum size
     }
 
-    public Dimension preferredSize()
+    public Size preferredSize()
     /******************************************
      ** The layout managers need this. **
      ******************************************/
@@ -53,7 +53,7 @@ public class MonitorPanel extends Canvas
         return minimumSize();
     }
 
-    public synchronized Dimension minimumSize()
+    public synchronized Size minimumSize()
     /******************************************
      ** The layout managers need this. **
      ******************************************/
@@ -66,7 +66,7 @@ public class MonitorPanel extends Canvas
      ** Paints the current optimization data. **
      ******************************************/
     { // Get the values to display
-        Dimension Area = size();
+        Size Area = size();
 
         int width = Area.width;
         int height = Area.height;
@@ -79,7 +79,7 @@ public class MonitorPanel extends Canvas
 
         offscreenGraphics.setColor(DEScreen.BACKGROUNDCOLOR); // Like applet
         offscreenGraphics.fill3DRect(0, 0, width - 1, height - 1, true); // ?
-        offscreenGraphics.setColor(Color.blue); // Text color
+        offscreenGraphics.setColor(Color.BLUE); // Text color
         offscreenGraphics.setFont(new Font("Helvetica", Font.PLAIN, 12)); // font
         // //
         // Text

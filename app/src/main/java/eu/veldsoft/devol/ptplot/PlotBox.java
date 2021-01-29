@@ -33,9 +33,13 @@ ENHANCEMENTS, OR MODIFICATIONS.
 */
 package eu.veldsoft.devol.ptplot;
 
+import android.graphics.Color;
+import android.os.Build;
+import android.util.Size;
+
+import androidx.annotation.RequiresApi;
+
 import java.awt.Button;
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Event;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -161,6 +165,7 @@ import java.util.Vector;
  * @author Edward A. Lee, Christopher Hylands
  * @version @(#)PlotBox.java 1.86 05/13/98
  */
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class PlotBox extends Panel {
 
     //////////////////////////////////////////////////////////////////////////
@@ -174,18 +179,19 @@ public class PlotBox extends Panel {
     // There are 11 colors so that combined with the
     // 10 marks of the Plot class, we can distinguish 110
     // distinct data sets.
-    static protected Color[] _colors = {new Color(0xffffff), // white
-            new Color(0xff0000), // red
-            new Color(0x0000ff), // blue
-            new Color(0x14ff14), // green-ish
-            new Color(0x000000), // black
-            new Color(0xffa500), // orange
-            new Color(0x53868b), // cadetblue4
-            new Color(0xff7f50), // coral
-            new Color(0x55bb2f), // dark green-ish
-            new Color(0x90422d), // sienna-ish
-            new Color(0xa0a0a0), // grey-ish
-            new Color(0x00aaaa), // cyan-ish
+    static protected Color[] _colors = {
+            Color.valueOf(0xffffff), // white
+            Color.valueOf(0xff0000), // red
+            Color.valueOf(0x0000ff), // blue
+            Color.valueOf(0x14ff14), // green-ish
+            Color.valueOf(0x000000), // black
+            Color.valueOf(0xffa500), // orange
+            Color.valueOf(0x53868b), // cadetblue4
+            Color.valueOf(0xff7f50), // coral
+            Color.valueOf(0x55bb2f), // dark green-ish
+            Color.valueOf(0x90422d), // sienna-ish
+            Color.valueOf(0xa0a0a0), // grey-ish
+            Color.valueOf(0x00aaaa), // cyan-ish
     };
     // Legend information.
     private final Vector _legendStrings = new Vector();
@@ -285,7 +291,7 @@ public class PlotBox extends Panel {
             // Check to see if it is a hexadecimal
             // Can't use Color decode here, it is not in 1.0.2
             // Color col = Color.decode(name);
-            Color col = new Color(Integer.parseInt(name, 16));
+            Color col = Color.valueOf(Integer.parseInt(name, 16));
             return col;
         } catch (NumberFormatException e) {
         }
@@ -297,7 +303,7 @@ public class PlotBox extends Panel {
         for (int i = 0; i < names.length; i++) {
             if (name.equals(names[i][0])) {
                 try {
-                    Color col = new Color(Integer.parseInt(names[i][1], 16));
+                    Color col = Color.valueOf(Integer.parseInt(names[i][1], 16));
                     return col;
                 } catch (NumberFormatException e) {
                 }
@@ -655,7 +661,7 @@ public class PlotBox extends Panel {
                 graphics.drawLine(_ulx, yCoord1, xCoord1, yCoord1);
                 graphics.drawLine(_lrx, yCoord1, xCoord2, yCoord1);
                 if (_grid && yCoord1 != _uly && yCoord1 != _lry) {
-                    graphics.setColor(Color.lightGray);
+                    graphics.setColor(Color.LTGRAY);
                     graphics.drawLine(xCoord1, yCoord1, xCoord2, yCoord1);
                     graphics.setColor(_foreground);
                 }
@@ -688,7 +694,7 @@ public class PlotBox extends Panel {
                         int yCoord1 = _lry
                                 - (int) ((ypos - _ytickMin) * _ytickscale);
                         if (_grid && yCoord1 != _uly && yCoord1 != _lry) {
-                            graphics.setColor(Color.lightGray);
+                            graphics.setColor(Color.LTGRAY);
                             graphics.drawLine(_ulx + 1, yCoord1, _lrx - 1,
                                     yCoord1);
                             graphics.setColor(_foreground);
@@ -729,7 +735,7 @@ public class PlotBox extends Panel {
                 graphics.drawLine(_ulx, yCoord1, xCoord1, yCoord1);
                 graphics.drawLine(_lrx, yCoord1, xCoord2, yCoord1);
                 if (_grid && yCoord1 != _uly && yCoord1 != _lry) {
-                    graphics.setColor(Color.lightGray);
+                    graphics.setColor(Color.LTGRAY);
                     graphics.drawLine(xCoord1, yCoord1, xCoord2, yCoord1);
                     graphics.setColor(_foreground);
                 }
@@ -822,7 +828,7 @@ public class PlotBox extends Panel {
                 graphics.drawLine(xCoord1, _uly, xCoord1, yCoord1);
                 graphics.drawLine(xCoord1, _lry, xCoord1, yCoord2);
                 if (_grid && xCoord1 != _ulx && xCoord1 != _lrx) {
-                    graphics.setColor(Color.lightGray);
+                    graphics.setColor(Color.LTGRAY);
                     graphics.drawLine(xCoord1, yCoord1, xCoord1, yCoord2);
                     graphics.setColor(_foreground);
                 }
@@ -861,7 +867,7 @@ public class PlotBox extends Panel {
                         xCoord1 = _ulx
                                 + (int) ((xpos - _xtickMin) * _xtickscale);
                         if (_grid && xCoord1 != _ulx && xCoord1 != _lrx) {
-                            graphics.setColor(Color.lightGray);
+                            graphics.setColor(Color.LTGRAY);
                             graphics.drawLine(xCoord1, _uly + 1, xCoord1,
                                     _lry - 1);
                             graphics.setColor(_foreground);
@@ -895,7 +901,7 @@ public class PlotBox extends Panel {
                 graphics.drawLine(xCoord1, _uly, xCoord1, yCoord1);
                 graphics.drawLine(xCoord1, _lry, xCoord1, yCoord2);
                 if (_grid && xCoord1 != _ulx && xCoord1 != _lrx) {
-                    graphics.setColor(Color.lightGray);
+                    graphics.setColor(Color.LTGRAY);
                     graphics.drawLine(xCoord1, yCoord1, xCoord1, yCoord2);
                     graphics.setColor(_foreground);
                 }
@@ -1032,19 +1038,19 @@ public class PlotBox extends Panel {
     /**
      * Get the minimum size of this component.
      */
-    public Dimension getMinimumSize() {
+    public Size getMinimumSize() {
         if (_debug > 8)
             System.out.println("PlotBox: getMinimumSize");
-        return new Dimension(_width, _height);
+        return new Size(_width, _height);
     }
 
     /**
      * Get the preferred size of this component.
      */
-    public Dimension getPreferredSize() {
+    public Size getPreferredSize() {
         if (_debug > 8)
             System.out.println("PlotBox: getPreferredSize");
-        return new Dimension(_width, _height);
+        return new Size(_width, _height);
     }
 
     /**
@@ -1073,13 +1079,13 @@ public class PlotBox extends Panel {
         if (_foreground != null) {
             setForeground(_foreground);
         } else {
-            _foreground = Color.black;
+            _foreground = Color.BLACK;
         }
 
         if (_background != null) {
             setBackground(_background);
         } else {
-            _background = Color.white;
+            _background = Color.WHITE;
         }
         if (_debug > 6)
             System.out.println(
@@ -1107,7 +1113,7 @@ public class PlotBox extends Panel {
      * @deprecated As of JDK1.1 in java.awt.component, but we need to compile
      * under 1.0.2 for netscape3.x compatibility.
      */
-    public Dimension minimumSize() {
+    public Size minimumSize() {
         if (_debug > 9)
             System.out
                     .println("PlotBox: minimumSize " + _width + " " + _height);
@@ -1454,7 +1460,7 @@ public class PlotBox extends Panel {
      * @deprecated As of JDK1.1 in java.awt.component, but we need to compile
      * under 1.0.2 for netscape3.x compatibility.
      */
-    public Dimension preferredSize() {
+    public Size preferredSize() {
         if (_debug > 9)
             System.out.println(
                     "PlotBox: preferredSize " + _width + " " + _height);

@@ -3,8 +3,8 @@ package eu.veldsoft.devol.plot;
 // Import all classes from the java.awt package
 
 import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Dimension;
+import android.graphics.Color;
+import android.util.Size;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -30,7 +30,7 @@ public class PlotGraph2 extends Canvas
 
     protected boolean ready = false;
     protected DEScreen deScreen;
-    protected Dimension Area;
+    protected Size Area;
     protected int x;
     protected int y;
     protected int w;
@@ -60,7 +60,7 @@ public class PlotGraph2 extends Canvas
      * (abs_max_y-abs_min_y)/2) | | is center of drawing area | | abs_max_y | |
      * | h
      */
-    Dimension minSize;
+    Size minSize;
     int margin = 40;
 
     public PlotGraph2(DEScreen father, int width, int height)
@@ -69,11 +69,11 @@ public class PlotGraph2 extends Canvas
      ***********************************************************/
     {
         deScreen = father;
-        minSize = new Dimension(width - margin, height - margin); // set minimum
+        minSize = new Size(width - margin, height - margin); // set minimum
         // size
     }
 
-    public Dimension preferredSize()
+    public Size preferredSize()
     /***********************************************************
      ** The layout manager needs this to determine the right ** size. **
      ***********************************************************/
@@ -81,7 +81,7 @@ public class PlotGraph2 extends Canvas
         return minimumSize();
     }
 
-    public synchronized Dimension minimumSize()
+    public synchronized Size minimumSize()
     /***********************************************************
      ** The layout manager needs this to determine the right ** size. **
      ***********************************************************/
@@ -149,7 +149,7 @@ public class PlotGraph2 extends Canvas
         staticImage = createImage(w, h); // create a static image
         staticGraphics = staticImage.getGraphics(); // graphics context for the
         // static image.
-        staticGraphics.setColor(Color.white); // white background
+        staticGraphics.setColor(Color.WHITE); // white background
         staticGraphics.fillRect(x, y, w, h); // in rectangle area.
         preparePlot(staticGraphics); // plot axes and tolerance scheme
 
@@ -192,7 +192,7 @@ public class PlotGraph2 extends Canvas
         int i; // counter variable
         // System.out.println("Plot Axes");
 
-        g.setColor(Color.black);
+        g.setColor(Color.BLACK);
 
         /*---Draw x-axis----------------------------*/
         int static0 = absY(0.0);
@@ -287,7 +287,7 @@ public class PlotGraph2 extends Canvas
      ** Plot the tolerance scheme. **
      *******************************************************/
     {
-        g.setColor(Color.red); // Plot upper part of tolerance scheme
+        g.setColor(Color.RED); // Plot upper part of tolerance scheme
         int i;
         double coefficient = (max_x - min_x) / ((double) tolerance_samples);
         double d1, d2;
@@ -382,7 +382,7 @@ public class PlotGraph2 extends Canvas
      ** Plots the current polynomial. **
      *******************************************************/
     {
-        g.setColor(Color.blue);
+        g.setColor(Color.BLUE);
         best = deScreen.getBest();
         dim = deScreen.getDimension();
         double coefficient = (max_x - min_x) / ((double) plotting_samples);

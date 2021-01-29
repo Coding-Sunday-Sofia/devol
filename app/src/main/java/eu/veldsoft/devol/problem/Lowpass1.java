@@ -2,23 +2,24 @@ package eu.veldsoft.devol.problem;
 
 import eu.veldsoft.devol.de.T_DEOptimizer;
 
-public class Lowpass1 extends DEProblem
-/***********************************************************
- ** Objective function which uses a tolerance scheme that ** can be fitted by a
- * Chebychev polynomial T4. ** ** Authors: Mikal Keenan ** Rainer Storn ** **
- ***********************************************************/
-{
+/**
+ * Objective function which uses a tolerance scheme that can be fitted by a
+ * Chebychev polynomial T4.
+ *
+ * @author Mikal Keenan
+ * @author Rainer Storn
+ */
+public class Lowpass1 extends DEProblem {
     double MINI; // just a constant
     double pi, pi2; // mathematical constants
     double c0, c1, c2, c3; // Constants for filter
     double o0, o1, o2, o3; // normalized frequencies
     int cpole, czero, D; // number of poles and zeroes
 
-    public Lowpass1()
-    /***********************************************************
-     ** Constructor initializes some parameters. **
-     ***********************************************************/
-    {
+    /**
+     * Constructor initializes some parameters.
+     */
+    public Lowpass1() {
         cpole = 0;
         czero = 8;
         D = 2 * (czero + cpole) + 1; // number of parameters = dim
@@ -39,25 +40,20 @@ public class Lowpass1 extends DEProblem
         pi2 = 6.28318530717958647692;
     }
 
-    public boolean completed()
-    /***********************************************************
-     ** Is TRUE if the value-to-reach (VTR) has been reached ** or passed. **
-     ***********************************************************/
-    {
+    /**
+     * Is TRUE if the value-to-reach (VTR) has been reached or passed.
+     */
+    public boolean completed() {
         return mincost <= 1.0e-6; // TRUE if mincost is <= 1.e-6
     }
 
+    /**
+     * The actual objective function consists of the sum of squared errors,
+     * where an error is the magnitude of deviation of the polynomial at a
+     * specific argument value.
+     */
     public double evaluate(T_DEOptimizer t_DEOptimizer, double[] trialVector,
-                           int dim)
-    // public double evaluate(T_DEOptimizer t_DEOptimizer, double temp[], int
-    // dim)
-
-    /*****************************************************************
-     ** The actual objective function consists of the sum of squared ** errors,
-     * where an error is the magnitude of deviation of the ** polynomial at a
-     * specific argument value. **
-     *****************************************************************/
-    {
+                           int dim) {
         int i;
         int M5 = 5;
         int M10 = 10;
@@ -99,6 +95,7 @@ public class Lowpass1 extends DEProblem
                 // temp[i]=t_DEOptimizer.deRandom.nextValue(1);
             }
         }
+
         for (i = cz1; i < cz2; i++)// phase angle of zeroes < 0.5
         {
             if (temp[i] > 0.5) {
@@ -185,16 +182,15 @@ public class Lowpass1 extends DEProblem
         return (double) err;
     }
 
-    public double amag(double[] p, double x, int czero, int cpole, double a0)
-    /*****************************************************************
-     ** ** Computes magnitude over normalized frequency x. ** ** czero: denotes
-     * the number of conjugate complex poles, ** i.e. p[1] ... p[czero] contains
-     * the radii ** p[czero+1] ... p[2*czero] the angles. ** ** cpole: denotes
-     * the number of conjugate complex poles, ** i.e. p[2*czero+1] ...
-     * p[2*czero+cpole] -> radii ** p[2*czero+cpole+1] ... p[2*(czero+cpole)] **
-     ** -> angles. ** a0: amplification factor. If <= 0 a0 = p[0]. ** **
-     *****************************************************************/
-    {
+    /**
+     * Computes magnitude over normalized frequency x. czero: denotes
+     * the number of conjugate complex poles, i.e. p[1] ... p[czero] contains
+     * the radii p[czero+1] ... p[2*czero] the angles. cpole: denotes
+     * the number of conjugate complex poles, i.e. p[2*czero+1] ...
+     * p[2*czero+cpole] -> radii p[2*czero+cpole+1] ... p[2*(czero+cpole)]
+     * -> angles. a0: amplification factor. If <= 0 a0 = p[0].
+     */
+    public double amag(double[] p, double x, int czero, int cpole, double a0) {
         double sum, prod, r2;
         int k, k1, k2, k3, k4, cz1, cz2, czp;
 
@@ -250,5 +246,4 @@ public class Lowpass1 extends DEProblem
         sum = Math.sqrt(sum / prod);
         return (sum);
     }
-
-} // end of class
+}

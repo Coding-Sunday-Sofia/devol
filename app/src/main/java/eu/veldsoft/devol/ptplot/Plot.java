@@ -297,8 +297,10 @@ public class Plot extends PlotBox {
      */
     public synchronized void addPointWithErrorBars(int dataset, double x,
                                                    double y, double yLowEB, double yHighEB, boolean connected) {
-        if (dataset >= _numsets || dataset < 0 || _datasetoverflow)
+        if (dataset >= _numsets || dataset < 0 || _datasetoverflow) {
             return;
+        }
+
         if (_xlog) {
             if (x <= 0.0) {
                 System.err.println("Can't plot non-positive X values "
@@ -306,8 +308,10 @@ public class Plot extends PlotBox {
                         + x);
                 return;
             }
+
             x = Math.log(x) * _LOG10SCALE;
         }
+
         if (_ylog) {
             if (y <= 0.0 || yLowEB <= 0.0 || yHighEB <= 0.0) {
                 System.err.println("Can't plot non-positive Y values "
@@ -315,10 +319,12 @@ public class Plot extends PlotBox {
                         + y);
                 return;
             }
+
             y = Math.log(y) * _LOG10SCALE;
             yLowEB = Math.log(yLowEB) * _LOG10SCALE;
             yHighEB = Math.log(yHighEB) * _LOG10SCALE;
         }
+
         _addPoint(_graphics, dataset, x, y, yLowEB, yHighEB, connected, true);
     }
 
@@ -330,12 +336,16 @@ public class Plot extends PlotBox {
      * been first drawn. If the argument is true, clear the display first.
      */
     public synchronized void drawPlot(Graphics graphics, boolean clearfirst) {
-        if (_debug > 7)
+        if (_debug > 7) {
             System.out.println("Plot: drawPlot");
+        }
+
         _calledDrawPlot = true;
+
         // We must call PlotBox::drawPlot() before calling _drawPlotPoint
         // so that _xscale and _yscale are set.
         super.drawPlot(graphics, clearfirst);
+
         // Plot the points
         for (int dataset = 0; dataset < _numsets; dataset++) {
             // FIXME: Make the following iteration more efficient.
@@ -344,6 +354,7 @@ public class Plot extends PlotBox {
                 _drawPlotPoint(graphics, dataset, pointnum);
             }
         }
+
         notify();
     }
 
@@ -371,17 +382,19 @@ public class Plot extends PlotBox {
      * Initialize the plotter, parse any data files.
      */
     public synchronized void init() {
-
-        if (_debug > 8)
+        if (_debug > 8) {
             System.out.println("Plot: init");
+        }
 
         setNumSets(_MAX_DATASETS);
 
         super.init();
+
         if (_dataurls != null) {
             // If the pxgraphargs parameter was set, then we might have more
             // than one file to plot.
             Enumeration urls = _dataurls.elements();
+
             while (urls.hasMoreElements()) {
                 String url = (String) urls.nextElement();
                 if (_debug > 3)
@@ -395,8 +408,10 @@ public class Plot extends PlotBox {
      * Draw the axes and the accumulated points.
      */
     public void paint(Graphics graphics) {
-        if (_debug > 7)
+        if (_debug > 7) {
             System.out.println("Plot: paint");
+        }
+
         drawPlot(graphics, true);
     }
 
@@ -431,8 +446,10 @@ public class Plot extends PlotBox {
         while (i < args.length
                 && (args[i].startsWith("-") || args[i].startsWith("="))) {
             arg = args[i++];
-            if (_debug > 2)
+
+            if (_debug > 2) {
                 System.out.print("Plot: arg = " + arg + "\n");
+            }
 
             if (arg.startsWith("-")) {
                 // Search for unsupported options that take arguments
@@ -445,8 +462,11 @@ public class Plot extends PlotBox {
                         badarg = true;
                     }
                 }
-                if (badarg)
+
+                if (badarg) {
                     continue;
+                }
+
                 // Search for unsupported boolean flags
                 for (j = 0; j < unsupportedFlags.length; j++) {
                     if (arg.equals(unsupportedFlags[j])) {
@@ -454,10 +474,12 @@ public class Plot extends PlotBox {
                                 "pxgraph: " + arg + " is not yet supported");
                         badarg = true;
                     }
-
                 }
-                if (badarg)
+
+                if (badarg) {
                     continue;
+                }
+
                 if (arg.equals("-bg")) {
                     setBackground(getColorByName(args[i++]));
                     continue;

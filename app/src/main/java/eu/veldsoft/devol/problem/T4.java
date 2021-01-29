@@ -2,40 +2,39 @@ package eu.veldsoft.devol.problem;
 
 import eu.veldsoft.devol.de.T_DEOptimizer;
 
-public class T4 extends DEProblem
-/***********************************************************
- ** Objective function which uses a tolerance scheme that ** can be fitted by a
- * Chebychev polynomial T4. ** ** Authors: Mikal Keenan ** Rainer Storn ** **
- ***********************************************************/
-{
+/**
+ * Objective function which uses a tolerance scheme that can be fitted by a
+ * Chebychev polynomial T4.
+ *
+ * @author Mikal Keenan
+ * @author Rainer Storn
+ */
+public class T4 extends DEProblem {
     int evaluation_samples;
     double lower_limit;
 
-    public T4()
-    /***********************************************************
-     ** Constructor initializes some parameters. **
-     ***********************************************************/
-    {
+    /**
+     * Constructor initializes some parameters.
+     */
+    public T4() {
         best = new double[dim = 5];
         lower_limit = 5.9;
         evaluation_samples = 60;
     }
 
-    public boolean completed()
-    /***********************************************************
-     ** Is TRUE if the value-to-reach (VTR) has been reached ** or passed. **
-     ***********************************************************/
-    {
+    /**
+     * Is TRUE if the value-to-reach (VTR) has been reached or passed.
+     */
+    public boolean completed() {
         return mincost <= 1.0e-6; // TRUE if mincost is <= 1.e-6
     }
 
-    public double evaluate(T_DEOptimizer t_DEOptimizer, double[] temp, int dim)
-    /*****************************************************************
-     ** The actual objective function consists of the sum of squared ** errors,
+    /**
+     * The actual objective function consists of the sum of squared errors,
      * where an error is the magnitude of deviation of the ** polynomial at a
-     * specific argument value. **
-     *****************************************************************/
-    {
+     * specific argument value.
+     */
+    public double evaluate(T_DEOptimizer t_DEOptimizer, double[] temp, int dim) {
         double y = 0.0;
         double x = -1.0;
         double z = 0.0, aux;
@@ -65,11 +64,10 @@ public class T4 extends DEProblem
         return y;
     }
 
-    public double polynomial(double[] temp, double x, int dim)
-    /***********************************************************
-     ** Evaluate the current polynomial. **
-     ***********************************************************/
-    {
+    /**
+     * Evaluate the current polynomial.
+     */
+    public double polynomial(double[] temp, double x, int dim) {
         double y = temp[0];
         for (int j = 1; j < dim; j++) {
             y = x * y + temp[j];
@@ -77,5 +75,4 @@ public class T4 extends DEProblem
 
         return y;
     }
-
 }

@@ -2,8 +2,12 @@ package eu.veldsoft.devol.screen;
 
 // Import all classes from the java.awt package
 
-import java.awt.Color;
-import java.awt.Dimension;
+import android.graphics.Color;
+import android.os.Build;
+import android.util.Size;
+
+import androidx.annotation.RequiresApi;
+
 import java.awt.Event;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -16,6 +20,7 @@ import eu.veldsoft.devol.panel.MonitorPanel;
 import eu.veldsoft.devol.panel.PlotChoicePanel;
 import eu.veldsoft.devol.panel.StatusPanel;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class DEScreen extends Screen
 /***********************************************************
  ** This is the mediator class for the entire application. ** All major classes
@@ -25,7 +30,7 @@ public class DEScreen extends Screen
  * Storn ** **
  ***********************************************************/
 {
-    public static final java.awt.Color BACKGROUNDCOLOR = Color.lightGray;
+    public static final Color BACKGROUNDCOLOR = Color.valueOf(Color.LTGRAY);
 
     /*-----Define identifiers which are used to select classes-------*/
     public String[] problem_identifier = {"T4", "T8", "Lowpass1"}; // chooses
@@ -61,7 +66,7 @@ public class DEScreen extends Screen
     public boolean plot_screen2_exists = false; // flag for existence of plot
     // screen
     public boolean plot_screen3_exists = false; // flag for existence of plot
-    Dimension minSize; // set the minimum size of the screen
+    Size minSize; // set the minimum size of the screen
     GridBagLayout gridbag = new GridBagLayout(); // define the layout
     // screen
 
@@ -73,11 +78,11 @@ public class DEScreen extends Screen
      *************************************/
     {
         super("DeApp 1.0.3"); // print Title
-        setBackground(Color.lightGray);
+        setBackground(Color.LTGRAY);
 
         // this really sets the initial size if you provide the
         // methods preferredSize() and minimumSize()
-        minSize = new Dimension(205, 450); // set minimum size
+        minSize = new Size(205, 450); // set minimum size
 
         Panel mainPanel = new Panel(); // For controlPanel, monitorPanel,
         // inputPanel
@@ -139,7 +144,7 @@ public class DEScreen extends Screen
         } // we need this in order to keep writing access to the DEScreen
     } // especially in the input panel
 
-    public Dimension preferredSize()
+    public Size preferredSize()
     /***********************************************************
      ** The layout manager needs this to determine the right ** size. **
      ***********************************************************/
@@ -147,7 +152,7 @@ public class DEScreen extends Screen
         return minimumSize();
     }
 
-    public synchronized Dimension minimumSize()
+    public synchronized Size minimumSize()
     /***********************************************************
      ** The layout manager needs this to determine the right ** size. **
      ***********************************************************/
