@@ -1374,6 +1374,7 @@ public class Plot extends PlotBox {
      * @throws PlotDataException   if there is a serious data format problem.
      * @throws java.io.IOException if an I/O error occurs.
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     protected void _parseBinaryStream(DataInputStream in)
             throws PlotDataException, IOException {
         // This method is similar to _parseLine() below, except it parses
@@ -1527,6 +1528,7 @@ public class Plot extends PlotBox {
      * Parse a line that gives plotting information. Return true if the line is
      * recognized. Lines with syntax errors are ignored.
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     protected boolean _parseLine(String line) {
         boolean connected = false;
         if (_debug > 8)

@@ -56,15 +56,15 @@ public class ControlPanel extends MyPanel
 
         startButton = new Button(); // Create the start button
         startButton.setFont(buttonFont); // Define its font
-        startButton.setLabel(startString); // and its text
+        startButton.setText(startString); // and its text
 
         pauseButton = new Button(); // Create the pause button
         pauseButton.setFont(buttonFont); // Define its font
-        pauseButton.setLabel(pauseString); // and its text
+        pauseButton.setText(pauseString); // and its text
 
         exitButton = new Button(); // Create the exit button
         exitButton.setFont(buttonFont); // Define its font
-        exitButton.setLabel("Exit"); // and its text
+        exitButton.setText("Exit"); // and its text
 
         problemList = new Spinner();
         problemList.setFont(choiceFont);
@@ -123,17 +123,17 @@ public class ControlPanel extends MyPanel
             }
         } else if (E.target instanceof Button) {
             if (startString.equals((String) O)) {
-                startButton.setLabel(stopString); // Now animation can only stop
+                startButton.setText(stopString); // Now animation can only stop
                 pauseButton.setEnabled(true); // or pause
-                problemList.disable(); // No choices during animation
-                strategyList.disable(); // No choices during animation
+                problemList.setEnabled(false); // No choices during animation
+                strategyList.setEnabled(false); // No choices during animation
                 deScreen.start();
             } else if (pauseString.equals((String) O)) {
-                pauseButton.setLabel(resumeString); // Show: animation can
+                pauseButton.setText(resumeString); // Show: animation can
                 // resume
                 deScreen.pause();
             } else if (resumeString.equals((String) O)) {
-                pauseButton.setLabel(pauseString); // Show: animation can pause
+                pauseButton.setText(pauseString); // Show: animation can pause
                 deScreen.resume();
             } else if (stopString.equals((String) O)) {
                 reset();
@@ -153,8 +153,8 @@ public class ControlPanel extends MyPanel
      ** A special kind of reset. **
      ********************************************/
     {
-        startButton.setLabel(startString); // Start button shows "start"
-        pauseButton.setLabel(pauseString); // Pause button shows "pause"
+        startButton.setText(startString); // Start button shows "start"
+        pauseButton.setText(pauseString); // Pause button shows "pause"
         startButton.setEnabled(true);
         pauseButton.setEnabled(false);
     }
@@ -182,8 +182,8 @@ public class ControlPanel extends MyPanel
      ********************************************/
     {
         userReset();
-        problemList.enable(); // Enable problem selection
-        strategyList.enable(); // Enable strategy selection
+        problemList.setEnabled(true); // Enable problem selection
+        strategyList.setEnabled(true); // Enable strategy selection
         repaint(); // Redraw everything
     }
 }

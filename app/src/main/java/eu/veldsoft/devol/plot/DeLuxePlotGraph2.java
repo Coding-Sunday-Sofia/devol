@@ -1,5 +1,9 @@
 package eu.veldsoft.devol.plot;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import java.awt.Graphics;
 
 import eu.veldsoft.devol.ptplot.Plot;
@@ -161,6 +165,7 @@ public class DeLuxePlotGraph2 extends Plot
         return (sum);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void refreshImage()
     /***********************************************************
      ** Update function which recomputes the variable screen ** image. **
@@ -215,6 +220,7 @@ public class DeLuxePlotGraph2 extends Plot
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void paint(Graphics g)
     /*******************************************************
      ** Whenever the component is exposed anew, this method * is called. **

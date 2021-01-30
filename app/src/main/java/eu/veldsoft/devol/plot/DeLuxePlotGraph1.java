@@ -1,5 +1,9 @@
 package eu.veldsoft.devol.plot;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import java.awt.Graphics;
 
 import eu.veldsoft.devol.ptplot.Plot;
@@ -59,6 +63,7 @@ public class DeLuxePlotGraph1 extends Plot
         this.show();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void refreshImage()
     /***********************************************************
      ** Update function which recomputes the variable screen ** image. **

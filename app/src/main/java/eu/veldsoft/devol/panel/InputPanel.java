@@ -135,7 +135,6 @@ public class InputPanel extends MyPanel
     // Handles the scrollbar actions. Note: overriding the Scrollbar
     // class's own event handler.
     {
-
         repaint(); // Redraw everything
 
         return super.handleEvent(E); // Propagate message to the superclass
@@ -226,7 +225,6 @@ public class InputPanel extends MyPanel
 
         RefreshText.setEnabled(true);
         RefreshText.setText(Integer.toString(Refresh));
-
     }
 
     public void resume()
@@ -282,7 +280,6 @@ public class InputPanel extends MyPanel
         opt.Range = Range;
         opt.Refresh = Refresh; // How many generations until next plot
         // System.out.println(Refresh);
-
     }
 
 }// End class InputPanel

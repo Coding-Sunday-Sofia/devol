@@ -56,4 +56,5 @@ public class MyPanel extends Panel
         ((GridBagLayout) container.getLayout()).setConstraints(component, c);
         container.add(component);
     }
-}// End class ControlPanel
+}
+
