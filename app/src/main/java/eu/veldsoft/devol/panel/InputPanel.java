@@ -2,12 +2,13 @@ package eu.veldsoft.devol.panel;
 
 // Import all classes from the java.awt package
 
+import android.graphics.fonts.Font;
+import android.widget.EditText;
+import android.widget.TextView;
+
 import java.awt.Event;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Label;
-import java.awt.TextField;
 
 import eu.veldsoft.devol.de.T_DEOptimizer;
 import eu.veldsoft.devol.screen.DEScreen;
@@ -29,17 +30,17 @@ public class InputPanel extends MyPanel
     final static int RFMAX = 200;
     public DEScreen deScreen;
     // Text values for the scrollbars
-    TextField NPText;
-    TextField FText;
-    TextField CrText;
-    TextField RangeText;
-    TextField RefreshText;
+    EditText NPText;
+    EditText FText;
+    EditText CrText;
+    EditText RangeText;
+    EditText RefreshText;
     // Labels to the text fields
-    Label NPLab;
-    Label FLab;
-    Label CrLab;
-    Label RangeLab;
-    Label RefreshLab;
+    TextView NPLab;
+    TextView FLab;
+    TextView CrLab;
+    TextView RangeLab;
+    TextView RefreshLab;
     // The actual control variables
     int NP;
     double F;
@@ -73,9 +74,9 @@ public class InputPanel extends MyPanel
         this.setLayout(new GridBagLayout()); // Slider below the text
 
         // ------Parameter NP-----------------------------------
-        NPText = new TextField(10); // Create the NP text field
-        NPText.setEditable(true);
-        NPLab = new Label("NP:");
+        NPText = new EditText(10); // Create the NP text field
+        NPText.setEnabled(true);
+        NPLab = new TextView("NP:");
 
         NPText.setText(String.valueOf(NP)); // Show initial value
         this.setLayout(new GridBagLayout()); // Slider below the text
@@ -85,9 +86,9 @@ public class InputPanel extends MyPanel
                 GridBagConstraints.CENTER, 1.0, 1.0, 5, 5, 0, 0);
 
         // ------Parameter F-----------------------------------
-        FText = new TextField(10);
-        FText.setEditable(true);
-        FLab = new Label("F:");
+        FText = new EditText(10);
+        FText.setEnabled(true);
+        FLab = new TextView("F:");
 
         FText.setText(Double.toString(F));
         constrain(this, FLab, 0, 2, 1, 1, GridBagConstraints.BOTH,
@@ -96,9 +97,9 @@ public class InputPanel extends MyPanel
                 GridBagConstraints.CENTER, 1.0, 1.0, 5, 5, 0, 0);
 
         // ----Parameter CR---------------------------------------
-        CrText = new TextField(10);
-        CrText.setEditable(true);
-        CrLab = new Label("CR:");
+        CrText = new EditText(10);
+        CrText.setEnabled(true);
+        CrLab = new TextView("CR:");
 
         CrText.setText(Double.toString(Cr));
         constrain(this, CrLab, 0, 4, 1, 1, GridBagConstraints.BOTH,
@@ -107,9 +108,9 @@ public class InputPanel extends MyPanel
                 GridBagConstraints.CENTER, 1.0, 1.0, 5, 5, 0, 0);
 
         // ---Init section-----------------------------------------
-        RangeText = new TextField(10);
-        RangeText.setEditable(true);
-        RangeLab = new Label("Range:  ");
+        RangeText = new EditText(10);
+        RangeText.setEnabled(true);
+        RangeLab = new TextView("Range:  ");
 
         RangeText.setText(Double.toString(Range));
         constrain(this, RangeLab, 0, 6, 1, 1, GridBagConstraints.BOTH,
@@ -118,9 +119,9 @@ public class InputPanel extends MyPanel
                 GridBagConstraints.CENTER, 1.0, 1.0, 5, 5, 0, 0);
 
         // ------Range-----------------------------------
-        RefreshText = new TextField(10); // Create the Refresh text field
-        RefreshText.setEditable(true);
-        RefreshLab = new Label("Refresh:");
+        RefreshText = new EditText(10); // Create the Refresh text field
+        RefreshText.setEnabled(true);
+        RefreshLab = new TextView("Refresh:");
 
         RefreshText.setText(String.valueOf(Refresh)); // Show initial value
         constrain(this, RefreshLab, 0, 8, 1, 1, GridBagConstraints.BOTH,
@@ -149,23 +150,22 @@ public class InputPanel extends MyPanel
          * If you enable the sliders, put them into the position which
          * corresponds to the text field
          */
-        NPText.enable();
+        NPText.setEnabled(true);
         NPText.setText(String.valueOf(NP)); // set the text according to the
         // actual value
 
-        FText.enable();
+        FText.setEnabled(true);
         FText.setText(Double.toString(F));
 
-        CrText.enable();
+        CrText.setEnabled(true);
         CrText.setText(Double.toString(Cr));
 
-        RangeText.enable();
+        RangeText.setEnabled(true);
         RangeText.setText(Double.toString(Range));
 
-        RefreshText.enable();
+        RefreshText.setEnabled(true);
         RefreshText.setText(String.valueOf(Refresh)); // set the text according
         // to the actual value
-
     }
 
     public void disable()
@@ -175,11 +175,11 @@ public class InputPanel extends MyPanel
      ********************************************/
     {
         // Convert from text representation to numbers
-        NP = (NPObj.valueOf(NPText.getText())).intValue();
-        F = (FObj.valueOf(FText.getText())).doubleValue();
-        Cr = (CrObj.valueOf(CrText.getText())).doubleValue();
-        Range = (RangeObj.valueOf(RangeText.getText())).doubleValue();
-        Refresh = (RefreshObj.valueOf(RefreshText.getText())).intValue();
+        NP = (NPObj.valueOf(NPText.getText().toString())).intValue();
+        F = (FObj.valueOf(FText.getText().toString())).doubleValue();
+        Cr = (CrObj.valueOf(CrText.getText().toString())).doubleValue();
+        Range = (RangeObj.valueOf(RangeText.getText().toString())).doubleValue();
+        Refresh = (RefreshObj.valueOf(RefreshText.getText().toString())).intValue();
 
         // check for violation of ranges and then set the variables
         if ((NP > NPMAX) || (NP < 0))
@@ -206,15 +206,11 @@ public class InputPanel extends MyPanel
 
         // disable the textfields, so that
         // nobody can tamper with them during optimization
-        NPText.disable();
-
-        CrText.disable();
-
-        FText.disable();
-
-        RangeText.disable();
-
-        RefreshText.disable();
+        NPText.setEnabled(false);
+        CrText.setEnabled(false);
+        FText.setEnabled(false);
+        RangeText.setEnabled(false);
+        RefreshText.setEnabled(false);
     }
 
     public void pause()
@@ -222,13 +218,13 @@ public class InputPanel extends MyPanel
      ** Activate Cr, F, and refresh rate ** manipulation during pause. **
      ********************************************/
     {
-        FText.enable();
+        FText.setEnabled(true);
         FText.setText(Double.toString(F));
 
-        CrText.enable();
+        CrText.setEnabled(true);
         CrText.setText(Double.toString(Cr));
 
-        RefreshText.enable();
+        RefreshText.setEnabled(true);
         RefreshText.setText(Integer.toString(Refresh));
 
     }
@@ -240,9 +236,9 @@ public class InputPanel extends MyPanel
     {
 
         // Convert from text representation to numbers
-        F = (FObj.valueOf(FText.getText())).doubleValue();
-        Cr = (CrObj.valueOf(CrText.getText())).doubleValue();
-        Refresh = (RefreshObj.valueOf(RefreshText.getText())).intValue();
+        F = (FObj.valueOf(FText.getText().toString())).doubleValue();
+        Cr = (CrObj.valueOf(CrText.getText().toString())).doubleValue();
+        Refresh = (RefreshObj.valueOf(RefreshText.getText().toString())).intValue();
         // System.out.println(Refresh);
 
         // check for violation of ranges and then set the variables
@@ -262,12 +258,9 @@ public class InputPanel extends MyPanel
 
         // disable the textfields, so that
         // nobody can tamper with them during optimization
-        CrText.disable();
-
-        FText.disable();
-
-        RefreshText.disable();
-
+        CrText.setEnabled(false);
+        FText.setEnabled(false);
+        RefreshText.setEnabled(false);
     }
 
     public void done()

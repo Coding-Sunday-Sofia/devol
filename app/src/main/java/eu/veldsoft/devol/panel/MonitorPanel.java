@@ -1,24 +1,22 @@
 package eu.veldsoft.devol.panel;
 
-// Import all classes from the java.awt package
-
-import java.awt.Canvas;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.fonts.Font;
+import android.media.Image;
 import android.util.Size;
-import java.awt.Font;
+
 import java.awt.Graphics;
-import java.awt.Image;
 
 import eu.veldsoft.devol.screen.DEScreen;
 
-// Import screens
-
-public class MonitorPanel extends Canvas
-/***********************************************************
- ** ** Defines the output panel which shows the current data. ** ** Authors:
- * Mikal Keenan ** Rainer Storn ** **
- ***********************************************************/
-{
+/**
+ * Defines the output panel which shows the current data.
+ *
+ * @author Rainer Storn
+ * @autor Mikal Keenan
+ */
+public class MonitorPanel extends Canvas {
     public final static String genString = "Generation :  ";
     public final static String evalString = "Evaluations:  ";
     public final static String valueString = "Minimum    :  ";
@@ -36,40 +34,34 @@ public class MonitorPanel extends Canvas
     Graphics offscreenGraphics;
     boolean initialized = false;
 
-    public MonitorPanel(DEScreen app)
-    /***************************************
-     ** Constructor. **
-     ***************************************/
-    {
+    /**
+     * Constructor.
+     */
+    public MonitorPanel(DEScreen app) {
         deScreen = app;
         minSize = new Size(100, 60); // set minimum size
     }
 
-    public Size preferredSize()
-    /******************************************
-     ** The layout managers need this. **
-     ******************************************/
-    {
+    /**
+     * The layout managers need this.
+     */
+    public Size preferredSize() {
         return minimumSize();
     }
 
-    public synchronized Size minimumSize()
-    /******************************************
-     ** The layout managers need this. **
-     ******************************************/
-    {
+    /**
+     * The layout managers need this.
+     */
+    public synchronized Size minimumSize() {
         return minSize;
     }
 
-    public void paint(Graphics G)
-    /******************************************
-     ** Paints the current optimization data. **
-     ******************************************/
-    { // Get the values to display
-        Size Area = size();
-
-        int width = Area.width;
-        int height = Area.height;
+    /**
+     * Paints the current optimization data.
+     */
+    public void paint(Graphics G) { // Get the values to display
+        int width = getWidth();
+        int height = getHeight();
 
         if (!initialized) {
             offscreenImage = createImage(width, height);
@@ -94,4 +86,4 @@ public class MonitorPanel extends Canvas
         // reduce length of string to (float)
         G.drawImage(offscreenImage, 0, 0, this); // Display the data panel
     }
-}// End class MonitorPanel
+}

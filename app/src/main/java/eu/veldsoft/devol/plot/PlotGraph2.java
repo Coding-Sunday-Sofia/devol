@@ -1,17 +1,14 @@
 package eu.veldsoft.devol.plot;
 
-// Import all classes from the java.awt package
-
-import java.awt.Canvas;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.fonts.Font;
+import android.media.Image;
 import android.util.Size;
-import java.awt.Font;
+
 import java.awt.Graphics;
-import java.awt.Image;
 
 import eu.veldsoft.devol.screen.DEScreen;
-
-// Import screens
 
 public class PlotGraph2 extends Canvas
 /***********************************************************
@@ -114,8 +111,8 @@ public class PlotGraph2 extends Canvas
     {
         x = 0;
         y = 0;
-        w = size().width;
-        h = size().height;
+        w = getWidth();
+        h = getHeight();
 
         abs_min_x = w / 8; // Compute some variables
         abs_max_x = w * 7 / 8;
@@ -258,11 +255,13 @@ public class PlotGraph2 extends Canvas
      ** Computes the upper part of the tolerance scheme. **
      *******************************************************/
     {
-        if ((x >= o0) && (x < o2))
+        if ((x >= o0) && (x < o2)) {
             return c0;
+        }
 
-        if ((x >= o2) && (x <= o3))
+        if ((x >= o2) && (x <= o3)) {
             return ((c2 - c3) * (x - o3) / (o2 - o3) + c3);
+        }
 
         return 0; // default
     }
@@ -273,11 +272,13 @@ public class PlotGraph2 extends Canvas
      * only holds for the T4 ** problem. **
      *******************************************************/
     {
-        if ((x >= o0) && (x < o1))
+        if ((x >= o0) && (x < o1)) {
             return c1;
+        }
 
-        if (x >= o1)
+        if (x >= o1) {
             return 0;
+        }
 
         return 0; // default
     }
@@ -434,5 +435,4 @@ public class PlotGraph2 extends Canvas
     {
         g.drawImage(offscreenImage, 0, 0, null);
     }
-
 }

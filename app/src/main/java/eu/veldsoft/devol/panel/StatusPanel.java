@@ -1,7 +1,7 @@
 package eu.veldsoft.devol.panel;
 
-import java.awt.Font;
-import java.awt.Label;
+import android.graphics.fonts.Font;
+import android.widget.TextView;
 
 import eu.veldsoft.devol.screen.DEScreen;
 
@@ -11,7 +11,7 @@ import eu.veldsoft.devol.screen.DEScreen;
  * @author Mikal Keenan
  * @author Rainer Storn
  */
-public class StatusPanel extends Label {
+public class StatusPanel extends TextView {
     public final static String runningString = "Running...";
     public final static String pausedString = "Paused...";
     public final static String completedString = "Completed...";

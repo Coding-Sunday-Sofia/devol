@@ -1,17 +1,14 @@
 package eu.veldsoft.devol.plot;
 
-// Import all classes from the java.awt package
-
-import java.awt.Canvas;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.fonts.Font;
+import android.media.Image;
 import android.util.Size;
-import java.awt.Font;
+
 import java.awt.Graphics;
-import java.awt.Image;
 
 import eu.veldsoft.devol.screen.DEScreen;
-
-// Import screens
 
 public class PlotGraph1 extends Canvas
 /***********************************************************
@@ -112,8 +109,8 @@ public class PlotGraph1 extends Canvas
     {
         x = 0;
         y = 0;
-        w = size().width;
-        h = size().height;
+        w = getWidth();
+        h = getHeight();
 
         abs_min_x = w / 8; // Compute some variables
         abs_max_x = w * 7 / 8;
@@ -292,5 +289,4 @@ public class PlotGraph1 extends Canvas
     {
         g.drawImage(offscreenImage, 0, 0, null);
     }
-
 }

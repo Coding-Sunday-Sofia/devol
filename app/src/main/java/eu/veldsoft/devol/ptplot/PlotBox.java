@@ -31,18 +31,21 @@ ENHANCEMENTS, OR MODIFICATIONS.
                                                 PT_COPYRIGHT_VERSION_2
                                                 COPYRIGHTENDKEY
 */
+
+
 package eu.veldsoft.devol.ptplot;
 
 import android.graphics.Color;
+import android.graphics.fonts.Font;
 import android.os.Build;
 import android.util.Size;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.annotation.RequiresApi;
 
-import java.awt.Button;
 import java.awt.Event;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Panel;
@@ -56,11 +59,6 @@ import java.net.URL;
 import java.util.Enumeration;
 import java.util.StringTokenizer;
 import java.util.Vector;
-
-//import java.lang.*; //already imported by ptplot
-
-//////////////////////////////////////////////////////////////////////////
-//// PlotBox
 
 /**
  * Construct a labeled box within which to place a data plot. A title, X and Y
@@ -1097,11 +1095,6 @@ public class PlotBox extends Panel {
         // for them, like below the legend, stacked vertically.
         setLayout(new FlowLayout(FlowLayout.RIGHT));
 
-        // ---Fill Button not needed---------------------
-        // _fillButton = new Button("fill");
-        // add(_fillButton);
-        // validate();
-
         if (_dataurl != null) {
             parseFile(_dataurl, _documentBase);
         }
@@ -1451,7 +1444,6 @@ public class PlotBox extends Panel {
             } catch (IOException me) {
             }
         }
-
     }
 
     /**
@@ -1461,9 +1453,11 @@ public class PlotBox extends Panel {
      * under 1.0.2 for netscape3.x compatibility.
      */
     public Size preferredSize() {
-        if (_debug > 9)
+        if (_debug > 9) {
             System.out.println(
                     "PlotBox: preferredSize " + _width + " " + _height);
+        }
+
         return getPreferredSize();
     }
 
@@ -1472,11 +1466,15 @@ public class PlotBox extends Panel {
      */
     public void reshape(int x, int y, int width, int height) {
         _reshapeFlag = 1; // Rainer's Flag
-        if (_debug > 9)
+
+        if (_debug > 9) {
             System.out.println("PlotBox: reshape: " + x + " " + y + " " + width
                     + " " + height);
+        }
+
         _width = width;
         _height = height;
+
         super.reshape(x, y, _width, _height);
     }
 
@@ -1487,10 +1485,13 @@ public class PlotBox extends Panel {
      * under 1.0.2 for netscape3.x compatibility.
      */
     public void resize(int width, int height) {
-        if (_debug > 8)
+        if (_debug > 8) {
             System.out.println("PlotBox: resize" + width + " " + height);
+        }
+
         _width = width;
         _height = height;
+
         super.resize(width, height); // FIXME: resize() is deprecated.
     }
 
@@ -1591,8 +1592,10 @@ public class PlotBox extends Panel {
      * max are identical, then the range is arbitrarily spread by 1.
      */
     public void setXRange(double min, double max) {
-        if (_debug > 7)
+        if (_debug > 7) {
             System.out.println("PlotBox: setXRange");
+        }
+
         _xRangeGiven = true;
         _setXRange(min, max);
     }
@@ -1636,9 +1639,11 @@ public class PlotBox extends Panel {
                               long ypos, boolean clip) {
         boolean pointinside = ypos <= _lry && ypos >= _uly && xpos <= _lrx
                 && xpos >= _ulx;
+
         if (!pointinside && clip) {
             return;
         }
+
         graphics.fillRect((int) xpos - 6, (int) ypos - 6, 6, 6);
     }
 
@@ -1752,11 +1757,11 @@ public class PlotBox extends Panel {
     protected void _setButtonsVisibility(boolean vis) {
         // _fillButton.setVisible(vis);
         if (vis) {
-            _fillButton.show(); // FIXME: show() is
+            _fillButton.setVisibility(View.VISIBLE); // FIXME: show() is
             // deprecated in JDK1.1, but we need to compile under
             // 1.0.2 for netscape3.x compatibility.
         } else {
-            _fillButton.hide(); // FIXME: hide() is
+            _fillButton.setVisibility(View.GONE); // FIXME: hide() is
             // deprecated in JDK1.1, but we need to compile under
             // 1.0.2 for netscape3.x compatibility.
         }
@@ -1845,10 +1850,13 @@ public class PlotBox extends Panel {
                         numfracdigits);
             }
         }
-        if (_debug == 5)
+
+        if (_debug == 5) {
             System.out.println(
                     "PlotBox: _formatLogNum: " + num + " " + Math.pow(10.0, num)
                             + " " + results + " " + (num - (int) num));
+        }
+
         return results;
     }
 
@@ -2119,10 +2127,12 @@ public class PlotBox extends Panel {
      */
     private int _numIntDigits(double num) {
         int numdigits = 0;
+
         while (numdigits <= 15 && (int) num != 0.0) {
             num /= 10.0;
             numdigits += 1;
         }
+
         return numdigits;
     }
 

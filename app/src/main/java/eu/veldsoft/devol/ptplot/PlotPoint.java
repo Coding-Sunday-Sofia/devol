@@ -28,10 +28,8 @@ ENHANCEMENTS, OR MODIFICATIONS.
                                                 PT_COPYRIGHT_VERSION_2
                                                 COPYRIGHTENDKEY
 */
-package eu.veldsoft.devol.ptplot;
 
-//////////////////////////////////////////////////////////////////////////
-//// PlotPoint
+package eu.veldsoft.devol.ptplot;
 
 /**
  * A simple structure for storing a plot point.
@@ -41,10 +39,9 @@ package eu.veldsoft.devol.ptplot;
  */
 public class PlotPoint {
 
-    /////////////////////////////////////////////////////////////////////////
-    //// public variables ////
+    public double x;
 
-    public double x, y;
+    public double y;
 
     /**
      * Error bar Y low value.

@@ -1,7 +1,5 @@
 package eu.veldsoft.devol.panel;
 
-// Import all classes from the java.awt package
-
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.GridBagConstraints;

@@ -1,14 +1,9 @@
 package eu.veldsoft.devol.plot;
 
-// Import all classes from the java.awt package
-
 import java.awt.Graphics;
 
 import eu.veldsoft.devol.ptplot.Plot;
 import eu.veldsoft.devol.screen.DEScreen;
-
-// import plotting routines from PtPlot1.3
-// Import screens
 
 public class DeLuxePlotGraph1 extends Plot
 /***********************************************************
@@ -53,14 +48,14 @@ public class DeLuxePlotGraph1 extends Plot
 
         this.setXRange(min_x, max_x); // x-range
         this.setYRange(min_y, max_y); // y-range
-        // this.setXLabel("x-axis");
-        // this.setYLabel("y-axis");
+
         this.setGrid(true); // plot grid
         this.setBars(0.5, 0.0); // use bars with width=0.5, offset=0.0
-        // this.setBars(1.0,0.0); // use bars with width=1.0, offset=0.0
+
         this.setNumSets(15); // fifteen graphs my be written into one picture
         this.setPointsPersistence(no_of_persistent_points); // lifetime of
         // points
+
         this.show();
     }
 
@@ -103,10 +98,6 @@ public class DeLuxePlotGraph1 extends Plot
 
         // -----now plot new graph-----------------------------
         for (i = 0; i < dim; i++) {
-            // addPoint(1,(double)i,0,!true);
-            // addPoint(1,(double)i,best[i],!false);
-            // addPoint(1,(double)(i+1),best[i],!false);
-            // addPoint(1,(double)(i+1),0,!false);
             addPoint(1, (double) i, best[i], !true);
         }
         paint(_graphics);

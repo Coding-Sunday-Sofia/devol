@@ -45,6 +45,10 @@ package eu.veldsoft.devol.ptplot;
 // given, unfortunately, in pixels.  This means that as resolutions
 // get better, this program may need to be adjusted.
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import java.awt.Graphics;
 import java.io.DataInputStream;
 import java.io.EOFException;
@@ -53,9 +57,6 @@ import java.io.StreamTokenizer;
 import java.io.StringBufferInputStream;
 import java.util.Enumeration;
 import java.util.Vector;
-
-//////////////////////////////////////////////////////////////////////////
-//// Plot
 
 /**
  * A flexible signal plotter. The plot can be configured and data can be
@@ -261,6 +262,7 @@ public class Plot extends PlotBox {
      * fourth argument indicates whether the point should be connected by a line
      * to the previous point.
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public synchronized void addPoint(int dataset, double x, double y,
                                       boolean connected) {
         if (_xlog) {
@@ -272,6 +274,7 @@ public class Plot extends PlotBox {
             }
             x = Math.log(x) * _LOG10SCALE;
         }
+
         if (_ylog) {
             if (y <= 0.0) {
                 System.err.println("Can't plot non-positive Y values "
@@ -281,6 +284,7 @@ public class Plot extends PlotBox {
             }
             y = Math.log(y) * _LOG10SCALE;
         }
+
         // This point is not an error bar so we set yLowEB
         // and yHighEB to 0
         _addPoint(_graphics, dataset, x, y, 0, 0, connected, false);
@@ -295,6 +299,7 @@ public class Plot extends PlotBox {
      * line to the previous point. This method is based on a suggestion by
      * Michael Altmann <michael@email.labmed.umn.edu>.
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public synchronized void addPointWithErrorBars(int dataset, double x,
                                                    double y, double yLowEB, double yHighEB, boolean connected) {
         if (dataset >= _numsets || dataset < 0 || _datasetoverflow) {
@@ -335,6 +340,7 @@ public class Plot extends PlotBox {
      * <code>wait()</code> to prevent it plotting points before the axes have
      * been first drawn. If the argument is true, clear the display first.
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public synchronized void drawPlot(Graphics graphics, boolean clearfirst) {
         if (_debug > 7) {
             System.out.println("Plot: drawPlot");
@@ -367,6 +373,7 @@ public class Plot extends PlotBox {
      * previous point). The point is not checked to see whether it is in range,
      * so care must be taken by the caller to ensure that it is.
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public synchronized void erasePoint(int dataset, int index) {
         _erasePoint(_graphics, dataset, index);
     }
@@ -381,6 +388,7 @@ public class Plot extends PlotBox {
     /**
      * Initialize the plotter, parse any data files.
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public synchronized void init() {
         if (_debug > 8) {
             System.out.println("Plot: init");
@@ -407,6 +415,7 @@ public class Plot extends PlotBox {
     /**
      * Draw the axes and the accumulated points.
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void paint(Graphics graphics) {
         if (_debug > 7) {
             System.out.println("Plot: paint");
@@ -426,6 +435,7 @@ public class Plot extends PlotBox {
      * @throws ptplot.CmdLineArgException if there is a problem parsing the command line arguments
      *                                    passed in.
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public int parseArgs(String[] args) throws CmdLineArgException {
         int i = 0, j, argsread = 0;
 
@@ -745,6 +755,7 @@ public class Plot extends PlotBox {
      * @exception ptplot.CmdLineArgException if there is a problem parsing the
      * command line arguments passed in.
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public int parsePxgraphargs(String pxgraphargs) throws CmdLineArgException {
         // We convert the String to a Stream and then use a StreamTokenizer
         // to parse the arguments into a Vector and then copy
@@ -848,6 +859,7 @@ public class Plot extends PlotBox {
      * @deprecated As of JDK1.1 in java.awt.component, but we need to compile
      * under 1.0.2 for netscape3.x compatibility.
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void resize(int width, int height) {
         if (_debug > 8)
             System.out.println("Plot: resize" + width + " " + height);
@@ -994,6 +1006,7 @@ public class Plot extends PlotBox {
      * that PlotBox::drawPlot() should be called before calling this method so
      * that _xscale and _yscale are properly set.
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     protected void _drawBar(Graphics graphics, int dataset, long xpos,
                             long ypos, boolean clip) {
         if (_debug > 21) {
@@ -1052,6 +1065,7 @@ public class Plot extends PlotBox {
      * specified point is below the y axis or outside the x range, do nothing.
      * If the <i>clip</i> argument is true, then do not draw above the y range.
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     protected void _drawErrorBar(Graphics graphics, int dataset, long xpos,
                                  long yLowEBPos, long yHighEBPos, boolean clip) {
         if (_debug > 20) {
@@ -1070,6 +1084,7 @@ public class Plot extends PlotBox {
      * point is below the y axis or outside the x range, do nothing. If the
      * <i>clip</i> argument is true, then do not draw above the y range.
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     protected void _drawImpulse(Graphics graphics, long xpos, long ypos,
                                 boolean clip) {
         if (_debug > 20) {
@@ -1103,6 +1118,7 @@ public class Plot extends PlotBox {
      * then draw only that portion of the line that lies within the plotting
      * rectangle.
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     protected void _drawLine(Graphics graphics, int dataset, long startx,
                              long starty, long endx, long endy, boolean clip) {
 
@@ -1206,6 +1222,7 @@ public class Plot extends PlotBox {
      * fourth argument is true, then check the range and plot only points that
      * are in range.
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     protected void _drawPoint(Graphics graphics, int dataset, long xpos,
                               long ypos, boolean clip) {
         if (_debug > 20) {
@@ -1367,8 +1384,9 @@ public class Plot extends PlotBox {
         boolean connected = false;
         byte[] input = new byte[4];
 
-        if (_connected)
+        if (_connected) {
             connected = true;
+        }
 
         switch (_endian) {
             case NATIVE_ENDIAN:
@@ -1724,6 +1742,7 @@ public class Plot extends PlotBox {
     /*
      * Add a legend if necessary, return the value of the connected flag.
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private boolean _addLegendIfNecessary(boolean connected) {
         if (_datasetoverflow)
             return false;
@@ -1759,6 +1778,7 @@ public class Plot extends PlotBox {
      * fourth argument indicates whether the point should be connected by a line
      * to the previous point.
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private synchronized void _addPoint(Graphics graphics, int dataset,
                                         double x, double y, double yLowEB, double yHighEB,
                                         boolean connected, boolean errorBar) {
@@ -1818,6 +1838,7 @@ public class Plot extends PlotBox {
      * PlotBox::drawPlot() should be called before calling this method so that
      * _xscale and _yscale are properly set.
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private synchronized void _drawPlotPoint(Graphics graphics, int dataset,
                                              int index) {
         if (_debug > 20)
@@ -1884,6 +1905,7 @@ public class Plot extends PlotBox {
      * previous point). Note that PlotBox::drawPlot() should be called before
      * calling this method so that _xscale and _yscale are properly set.
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private synchronized void _erasePoint(Graphics graphics, int dataset,
                                           int index) {
         // Set the color

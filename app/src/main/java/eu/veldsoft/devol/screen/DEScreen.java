@@ -1,7 +1,5 @@
 package eu.veldsoft.devol.screen;
 
-// Import all classes from the java.awt package
-
 import android.graphics.Color;
 import android.os.Build;
 import android.util.Size;
@@ -20,63 +18,75 @@ import eu.veldsoft.devol.panel.MonitorPanel;
 import eu.veldsoft.devol.panel.PlotChoicePanel;
 import eu.veldsoft.devol.panel.StatusPanel;
 
+/**
+ * This is the mediator class for the entire application. All major classes
+ * are known to DEScreen. DEScreen also provides for the main graphical user
+ * interface (GUI). Note that we have almost always employed the gridbag
+ * layout to allow resizing of the GUI.
+ *
+ * @author Mikal Keenan
+ * @author Rainer Storn
+ */
 @RequiresApi(api = Build.VERSION_CODES.O)
-public class DEScreen extends Screen
-/***********************************************************
- ** This is the mediator class for the entire application. ** All major classes
- * are known to DEScreen. ** DEScreen also provides for the main graphical user
- * ** interface (GUI). Note that we have almost always ** employed the gridbag
- * layout to allow resizing of the ** GUI. ** ** Authors: Mikal Keenan ** Rainer
- * Storn ** **
- ***********************************************************/
-{
+public class DEScreen extends Screen {
     public static final Color BACKGROUNDCOLOR = Color.valueOf(Color.LTGRAY);
 
     /*-----Define identifiers which are used to select classes-------*/
     public String[] problem_identifier = {"T4", "T8", "Lowpass1"}; // chooses
+
     public String[] strategy_identifier = {"Best2Bin", "Rand1Bin",
             "RandToBest1Bin", // only show the most promising
             "Best3Bin", "Best1Bin"}; // strategies
+
     public T_DEOptimizer t_DEOptimizer; // Optimization thread
     // the cost
     // function
 
-    /*
-     * public String strategy_identifier[] = { "Best1Exp", "Rand1Exp",
-     * "RandToBest1Exp", "Best2Exp", "Rand2Exp", "Best1Bin", "Rand1Bin",
-     * "RandToBest1Bin", "Best2Bin", "Rand2Bin", };
-     */
     public ControlPanel controlPanel; // Push controlPanel for start, pause etc.
+
     public MonitorPanel monitorPanel; // monitorPanel generations, evaluations,
+
     // minimum
     public InputPanel inputPanel; // inputPanel for NP, F and CR
+
     public StatusPanel statusPanel; // Shows the applet's current status
+
     public PlotChoicePanel plotChoicePanel;// Chooses various plots for
+
     // monitoring
     public PrintOut printOut;
+
     /* =====plotting stuff============================ */
     public PlotScreen plotScreen0; // a separate screen for plots
+
     public PlotScreen plotScreen1; // a separate screen for plots
+
     public PlotScreen plotScreen2; // a separate screen for plots
+
     public PlotScreen plotScreen3; // a separate screen for plots
+
     public boolean plot_screen0_exists = false; // flag for existence of plot
+
     // screen
     public boolean plot_screen1_exists = false; // flag for existence of plot
+
     // screen
     public boolean plot_screen2_exists = false; // flag for existence of plot
+
     // screen
     public boolean plot_screen3_exists = false; // flag for existence of plot
+
     Size minSize; // set the minimum size of the screen
+
     GridBagLayout gridbag = new GridBagLayout(); // define the layout
     // screen
 
     /* ===== end plotting stuff======================= */
 
-    public DEScreen()
-    /*************************************
-     ** Constructor of the class. **
-     *************************************/
-    {
+    /**
+     * Constructor of the class.
+     */
+    public DEScreen() {
         super("DeApp 1.0.3"); // print Title
         setBackground(Color.LTGRAY);
 
@@ -129,12 +139,11 @@ public class DEScreen extends Screen
         t_DEOptimizer.start(); // start the optimization thread
     }
 
-    public boolean handleEvent(Event e)
-    /***********************************************************
-     ** Handles events occuring from manipulating the screen ** (not the panels
-     * inside). **
-     ***********************************************************/
-    { // The "x" field closes the application
+    /**
+     * Handles events occuring from manipulating the screen (not the panels
+     * inside).
+     */
+    public boolean handleEvent(Event e) { // The "x" field closes the application
         if (e.id == Event.WINDOW_DESTROY) {
             System.exit(0);
             return true;
@@ -144,284 +153,259 @@ public class DEScreen extends Screen
         } // we need this in order to keep writing access to the DEScreen
     } // especially in the input panel
 
-    public Size preferredSize()
-    /***********************************************************
-     ** The layout manager needs this to determine the right ** size. **
-     ***********************************************************/
-    {
+    /**
+     * The layout manager needs this to determine the right size.
+     */
+    public Size preferredSize() {
         return minimumSize();
     }
 
-    public synchronized Size minimumSize()
-    /***********************************************************
-     ** The layout manager needs this to determine the right ** size. **
-     ***********************************************************/
-    {
+    /**
+     * The layout manager needs this to determine the right size.
+     */
+    public synchronized Size minimumSize() {
         return minSize;
     }
 
-    public void idle()
-    /*****************************************
-     ** Optimization is sleeping. **
-     *****************************************/
-    {
+    /**
+     * Optimization is sleeping.
+     */
+    public void idle() {
         t_DEOptimizer.optIdle();
         monitorPanel.repaint();
         inputPanel.enable(); // allow for a change of control variables
         statusPanel.idle(); // show "Idle"
     }
 
-    public void start()
-    /*****************************************
-     ** Start the optimization. **
-     *****************************************/
-    {
+    /**
+     * Start the optimization.
+     */
+    public void start() {
         t_DEOptimizer.optStart();
         inputPanel.disable(); // freeze control variables
         statusPanel.running(); // show "Running"
         t_DEOptimizer.optStart();
     }
 
-    public void pause()
-    /*****************************************
-     ** Pause the optimization. **
-     *****************************************/
-    {
+    /**
+     * Pause the optimization.
+     */
+    public void pause() {
         t_DEOptimizer.makeNotReady();
         inputPanel.pause(); // allow to change some (not all) variables
         statusPanel.pause(); // show "Paused"
     }
 
-    public void resume()
-    /*****************************************
-     ** Resume the optimization activity. **
-     *****************************************/
-    {
+    /**
+     * Resume the optimization activity.
+     */
+    public void resume() {
         inputPanel.resume(); // freeze variables
         statusPanel.resume(); // show "Running"
         t_DEOptimizer.optResume();
     }
 
-    public void stop()
-    /*****************************************
-     ** Stop the optimization. **
-     *****************************************/
-    {
+    /**
+     * Stop the optimization.
+     */
+    public void stop() {
         t_DEOptimizer.makeNotReady();
         inputPanel.enable();
         statusPanel.stop(); // show nothing
         printOut.printResult(); // as the name says
     }
 
-    public void done()
-    /*****************************************
-     ** Is called when the optimization has ** come to an end. **
-     *****************************************/
-    {
+    /**
+     * Is called when the optimization has ** come to an end.
+     */
+    public void done() {
         controlPanel.done();// reset control panel
         inputPanel.done(); // Enable input panel
         statusPanel.done(); // show "Completed"
         printOut.printResult(); // as the name says
     }
 
-    public String[] getProblemIdentifiers()
-    /*****************************************
-     ** Access the problem identifiers. **
-     *****************************************/
-    {
+    /**
+     * Access the problem identifiers.
+     */
+    public String[] getProblemIdentifiers() {
         return problem_identifier;
     }
 
-    public String[] getStrategyIdentifiers()
-    /*****************************************
-     ** Access the strategy identifiers. **
-     *****************************************/
-    {
+    /**
+     * Access the strategy identifiers.
+     */
+    public String[] getStrategyIdentifiers() {
         return strategy_identifier;
     }
 
-    public void getParameters()
-    /*****************************************
-     ** Fetch DE's control variables from ** the various panels. **
-     *****************************************/
-    {
+    /**
+     * Fetch DE's control variables from the various panels.
+     */
+    public void getParameters() {
         inputPanel.getParameters(t_DEOptimizer);
         controlPanel.getParameters(t_DEOptimizer);
     }
 
-    public void setProblem(int Index)
-    /*****************************************
-     ** Define the cost function for DE. **
-     *****************************************/
-    {
+    /**
+     * Define the cost function for DE.
+     */
+    public void setProblem(int Index) {
         t_DEOptimizer.setProblem(Index);
         idle();
     }
 
-    public void setStatus(String Text)
-    /*****************************************
-     ** Update the status panel. **
-     *****************************************/
-    {
+    /**
+     * Update the status panel.
+     */
+    public void setStatus(String Text) {
         if (statusPanel != null) {
             statusPanel.setText(Text);
         }
     }
 
-    public void repaint()
-    /*****************************************
-     ** Update the monitor panel and the ** plot screens (if existing). **
-     *****************************************/
-    {
+    /**
+     * Update the monitor panel and the plot screens (if existing).
+     */
+    public void repaint() {
         monitorPanel.repaint();
 
         if (plot_screen0_exists) {
             plotScreen0.refreshImage();
         }
+
         if (plot_screen1_exists) {
             plotScreen1.refreshImage();
         }
+
         if (plot_screen2_exists) {
             plotScreen2.refreshImage();
         }
+
         if (plot_screen3_exists) {
             plotScreen3.refreshImage();
         }
-
     }
 
-    public int getGeneration()
-    /*****************************************
-     ** Get generation counter. **
-     *****************************************/
-    {
+    /**
+     * Get generation counter.
+     */
+    public int getGeneration() {
         return t_DEOptimizer.getGeneration();
     }
 
-    public int getEvaluation()
-    /*****************************************
-     ** Get evaluation counter. **
-     *****************************************/
-    {
+    /**
+     * Get evaluation counter.
+     */
+    public int getEvaluation() {
         return t_DEOptimizer.getEvaluation();
     }
 
-    public double[] getBest()
-    /**********************************
-     ** Best vector. **
-     **********************************/
-    {
+    /**
+     * Best vector.
+     */
+    public double[] getBest() {
         return t_DEOptimizer.best;
     }
 
     public int getDimension()
-    /*****************************************
-     ** Get number of parameters. **
-     *****************************************/
+    /**
+     * Get number of parameters.
+     */
     {
         return t_DEOptimizer.dim;
     }
 
-    public double getMinimum()
-    /*****************************************
-     ** Get best so far cost. **
-     *****************************************/
-    {
+    /**
+     * Get best so far cost.
+     */
+    public double getMinimum() {
         return t_DEOptimizer.getMinimum();
     }
 
-    public void consoleEnable()
-    /*****************************************
-     ** Enable console output trace of ** results. **
-     *****************************************/
-    {
+    /**
+     * Enable console output trace of results.
+     */
+    public void consoleEnable() {
         t_DEOptimizer.consoleEnable();
     }
 
-    public void consoleDisable()
-    /*****************************************
-     ** Enable console output trace of ** results. **
-     *****************************************/
-    {
+    /**
+     * Enable console output trace of results.
+     */
+    public void consoleDisable() {
         t_DEOptimizer.consoleDisable();
     }
 
-    public void newPlotScreen0()
-    /*****************************************
-     ** Instantiate plot screen. **
-     *****************************************/
-    {
+    /**
+     * Instantiate plot screen.
+     */
+    public void newPlotScreen0() {
         plotScreen0 = new PlotScreen(this, 0);
         plotScreen0.pack(); // arrange components
         plotScreen0.show(); // and show them
     }
 
-    public void destroyPlotScreen0()
-    /*****************************************
-     ** Destroy plot screen. **
-     *****************************************/
-    {
-        if (plotScreen0 != null)
+    /**
+     * Destroy plot screen.
+     */
+    public void destroyPlotScreen0() {
+        if (plotScreen0 != null) {
             plotScreen0.dispose(); // BUG:: No Null Pointer check
+        }
     }
 
-    public void newPlotScreen1()
-    /*****************************************
-     ** Instantiate plot screen. **
-     *****************************************/
-    {
+    /**
+     * Instantiate plot screen.
+     */
+    public void newPlotScreen1() {
         plotScreen1 = new PlotScreen(this, 1);
         plotScreen1.pack(); // arrange components
         plotScreen1.show(); // and show them
     }
 
-    public void destroyPlotScreen1()
-    /*****************************************
-     ** Destroy plot screen. **
-     *****************************************/
-    {
-        if (plotScreen1 != null)
+    /**
+     * Destroy plot screen.
+     */
+    public void destroyPlotScreen1() {
+        if (plotScreen1 != null) {
             plotScreen1.dispose(); // BUG:: No Null Pointer check
+        }
     }
 
-    public void newPlotScreen2()
-    /*****************************************
-     ** Instantiate plot screen. **
-     *****************************************/
-    {
+    /**
+     * Instantiate plot screen.
+     */
+    public void newPlotScreen2() {
         plotScreen2 = new PlotScreen(this, 2);
         plotScreen2.pack(); // arrange components
         plotScreen2.show(); // and show them
     }
 
-    public void destroyPlotScreen2()
-    /*****************************************
-     ** Destroy plot screen. **
-     *****************************************/
-    {
-        if (plotScreen2 != null)
+    /**
+     * Destroy plot screen.
+     */
+    public void destroyPlotScreen2() {
+        if (plotScreen2 != null) {
             plotScreen2.dispose(); // BUG:: No Null Pointer check
+        }
     }
 
-    public void newPlotScreen3()
-    /*****************************************
-     ** Instantiate plot screen. **
-     *****************************************/
-    {
+    /**
+     * Instantiate plot screen.
+     */
+    public void newPlotScreen3() {
         plotScreen3 = new PlotScreen(this, 3);
         plotScreen3.pack(); // arrange components
         plotScreen3.show(); // and show them
     }
 
-    public void destroyPlotScreen3()
-    /*****************************************
-     ** Destroy plot screen. **
-     *****************************************/
-    {
-        if (plotScreen3 != null)
+    /**
+     * Destroy plot screen.
+     */
+    public void destroyPlotScreen3() {
+        if (plotScreen3 != null) {
             plotScreen3.dispose(); // BUG:: No Null Pointer check
+        }
     }
-
 }
-
-// Class DEScreen

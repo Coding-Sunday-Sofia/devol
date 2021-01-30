@@ -1,16 +1,13 @@
 package eu.veldsoft.devol.panel;
 
-// Import all classes from the java.awt package
+import android.widget.CheckBox;
 
-import java.awt.Checkbox;
 import java.awt.Event;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
 import eu.veldsoft.devol.de.T_DEOptimizer;
 import eu.veldsoft.devol.screen.DEScreen;
-
-// Import screens
 
 public class PlotChoicePanel extends MyPanel
 /***********************************************************
@@ -21,7 +18,7 @@ public class PlotChoicePanel extends MyPanel
     public DEScreen deScreen; // caller class
     public T_DEOptimizer t_DEOptimizer;
     GridBagLayout gridbag = new GridBagLayout();
-    Checkbox[] plotCheckBox; // array of check boxes
+    CheckBox[] plotCheckBox; // array of check boxes
 
     public PlotChoicePanel(DEScreen app, T_DEOptimizer opt)
     /***************************************
@@ -32,15 +29,15 @@ public class PlotChoicePanel extends MyPanel
         t_DEOptimizer = opt;
         this.setLayout(gridbag); // P layout manager, 3 rows
 
-        plotCheckBox = new Checkbox[3]; // three check boxes
-        plotCheckBox[0] = new Checkbox("Tolerance Scheme Plot");
-        plotCheckBox[0].setState(false); // check box not checked
+        plotCheckBox = new CheckBox[3]; // three check boxes
+        plotCheckBox[0] = new CheckBox("Tolerance Scheme Plot");
+        plotCheckBox[0].setChecked(false); // check box not checked
 
-        plotCheckBox[1] = new Checkbox("Coefficient Plot");
-        plotCheckBox[1].setState(false); // check box not checked
+        plotCheckBox[1] = new CheckBox("Coefficient Plot");
+        plotCheckBox[1].setChecked(false); // check box not checked
 
-        plotCheckBox[2] = new Checkbox("Console Output");
-        plotCheckBox[2].setState(false); // check box not checked
+        plotCheckBox[2] = new CheckBox("Console Output");
+        plotCheckBox[2].setChecked(false); // check box not checked
         deScreen.consoleDisable(); // and hence suppress console trace
 
         constrain(this, plotCheckBox[0], 0, 0, 1, 1, GridBagConstraints.BOTH,
@@ -61,7 +58,7 @@ public class PlotChoicePanel extends MyPanel
         // plot
         { // BUG:: No check for event type
             if (t_DEOptimizer.current_problem != 2) {
-                if (plotCheckBox[1].getState() == true
+                if (plotCheckBox[1].isChecked() == true
                         && !deScreen.plot_screen1_exists) // new plot screen
                 { // BUG:: No check if the plot screen screen already exists
                     deScreen.newPlotScreen1();
@@ -72,7 +69,7 @@ public class PlotChoicePanel extends MyPanel
                     deScreen.plot_screen1_exists = false;
                 }
             } else {
-                if (plotCheckBox[1].getState() == true
+                if (plotCheckBox[1].isChecked() == true
                         && !deScreen.plot_screen3_exists) // new plot screen
                 { // BUG:: No check if the plot screen screen already exists
                     deScreen.newPlotScreen3();
@@ -89,7 +86,7 @@ public class PlotChoicePanel extends MyPanel
         // plot
         { // BUG:: No check for event type
             if (t_DEOptimizer.current_problem != 2) {
-                if (plotCheckBox[0].getState() == true
+                if (plotCheckBox[0].isChecked() == true
                         && !deScreen.plot_screen0_exists) // new plot screen
                 { // BUG:: No check if the plot screen screen already exists
                     deScreen.newPlotScreen0();
@@ -100,7 +97,7 @@ public class PlotChoicePanel extends MyPanel
                     deScreen.plot_screen0_exists = false;
                 }
             } else {
-                if (plotCheckBox[0].getState() == true
+                if (plotCheckBox[0].isChecked() == true
                         && !deScreen.plot_screen2_exists) // new plot screen
                 { // BUG:: No check if the plot screen screen already exists
                     deScreen.newPlotScreen2();
@@ -117,7 +114,7 @@ public class PlotChoicePanel extends MyPanel
             // for
             // event
             // type
-            if (plotCheckBox[2].getState() == true) // enable console output
+            if (plotCheckBox[2].isChecked() == true) // enable console output
             {
                 deScreen.consoleEnable();
             } else // disable console output
@@ -128,5 +125,4 @@ public class PlotChoicePanel extends MyPanel
 
         return true;
     }
-
-}// End class ControlPanel
+}

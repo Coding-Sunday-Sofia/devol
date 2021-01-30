@@ -1,14 +1,9 @@
 package eu.veldsoft.devol.plot;
 
-// Import all classes from the java.awt package
-
 import java.awt.Graphics;
 
 import eu.veldsoft.devol.ptplot.Plot;
 import eu.veldsoft.devol.screen.DEScreen;
-
-// import plotting routines from PtPlot1.3
-// Import screens
 
 public class DeLuxePlotGraph2 extends Plot
 /***********************************************************
@@ -59,8 +54,7 @@ public class DeLuxePlotGraph2 extends Plot
 
         this.setXRange(min_x, max_x); // x-range
         this.setYRange(min_y, max_y); // y-range
-        // this.setXLabel("x-axis");
-        // this.setYLabel("y-axis");
+
         this.setGrid(true); // plot grid
         this.setNumSets(15); // fifteen graphs my be written into one picture
         this.setPointsPersistence(no_of_persistent_points); // lifetime of
@@ -69,6 +63,7 @@ public class DeLuxePlotGraph2 extends Plot
         // graph number. When the number of plotting samples
         // is less than those in the argument none of them
         // will disappear (we uses that for the tolerance scheme).
+
         this.show();
     }
 
@@ -160,7 +155,9 @@ public class DeLuxePlotGraph2 extends Plot
             if (prod < MINI)
                 prod = MINI;
         }
+
         sum = Math.sqrt(sum / prod);
+
         return (sum);
     }
 
@@ -237,5 +234,4 @@ public class DeLuxePlotGraph2 extends Plot
             _reshapeFlag = 0;
         }
     }
-
 }

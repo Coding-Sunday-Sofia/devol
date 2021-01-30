@@ -2,13 +2,14 @@ package eu.veldsoft.devol.panel;
 
 // Import all classes from the java.awt package
 
-import java.awt.Button;
-import java.awt.Choice;
+import android.graphics.fonts.Font;
+import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.TextView;
+
 import java.awt.Event;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Label;
 
 import eu.veldsoft.devol.de.T_DEOptimizer;
 import eu.veldsoft.devol.screen.DEScreen;
@@ -35,11 +36,11 @@ public class ControlPanel extends MyPanel
     Button startButton; // The start button
     Button pauseButton; // The pause button
     Button exitButton; // The exit button
-    Choice problemList; // Problem control
-    Choice strategyList; // Strategy control
+    Spinner problemList; // Problem control
+    Spinner strategyList; // Strategy control
     // Labels to the choices
-    Label problemLab;
-    Label strategyLab;
+    TextView problemLab;
+    TextView strategyLab;
     int i, n; // some general variables
 
     public ControlPanel(DEScreen app)
@@ -56,35 +57,32 @@ public class ControlPanel extends MyPanel
         startButton = new Button(); // Create the start button
         startButton.setFont(buttonFont); // Define its font
         startButton.setLabel(startString); // and its text
-        // add (startButton); // and make it visible
 
         pauseButton = new Button(); // Create the pause button
         pauseButton.setFont(buttonFont); // Define its font
         pauseButton.setLabel(pauseString); // and its text
-        // add (pauseButton); // and make it visible
 
         exitButton = new Button(); // Create the exit button
         exitButton.setFont(buttonFont); // Define its font
         exitButton.setLabel("Exit"); // and its text
-        // add (exitButton); // and make it visible
 
-        problemList = new Choice();
+        problemList = new Spinner();
         problemList.setFont(choiceFont);
         String[] identifier = deScreen.getProblemIdentifiers();
         n = identifier.length; // how many different cost functions ?
         for (i = 0; i < n; i++)
             problemList.addItem(identifier[i]); // Put problems into list
         // add (problemList); // Make the list visible
-        problemLab = new Label("Problem:");
+        problemLab = new TextView("Problem:");
 
-        strategyList = new Choice();
+        strategyList = new Spinner();
         strategyList.setFont(choiceFont);
         identifier = deScreen.getStrategyIdentifiers();
         n = identifier.length; // how many different strategies ?
         for (i = 0; i < n; i++)
             strategyList.addItem(identifier[i]); // Put strategies into list
         // add (strategyList); // Make the list visible
-        strategyLab = new Label("Strategy:");
+        strategyLab = new TextView("Strategy:");
 
         constrain(this, startButton, 0, 0, 1, 1, GridBagConstraints.BOTH,
                 GridBagConstraints.CENTER, 1.0, 1.0, 5, 5, 0, 0);
@@ -112,21 +110,21 @@ public class ControlPanel extends MyPanel
      ** Handles mouse events for the panel. **
      ********************************************/
     {
-        if (E.target instanceof Choice) {
+        if (E.target instanceof Spinner) {
             if (E.target.equals(problemList)) // Selected a problem
             {
-                current_problem = ((Choice) (E.target)).getSelectedIndex();
+                current_problem = ((Spinner) (E.target)).getSelectedIndex();
                 deScreen.setProblem(current_problem);
             } else if (E.target.equals(strategyList)) // Selected a strategy
             {
-                current_strategy = ((Choice) (E.target)).getSelectedIndex();
+                current_strategy = ((Spinner) (E.target)).getSelectedIndex();
                 userReset();
                 deScreen.idle();
             }
         } else if (E.target instanceof Button) {
             if (startString.equals((String) O)) {
                 startButton.setLabel(stopString); // Now animation can only stop
-                pauseButton.enable(); // or pause
+                pauseButton.setEnabled(true); // or pause
                 problemList.disable(); // No choices during animation
                 strategyList.disable(); // No choices during animation
                 deScreen.start();
@@ -157,8 +155,8 @@ public class ControlPanel extends MyPanel
     {
         startButton.setLabel(startString); // Start button shows "start"
         pauseButton.setLabel(pauseString); // Pause button shows "pause"
-        startButton.enable();
-        pauseButton.disable();
+        startButton.setEnabled(true);
+        pauseButton.setEnabled(false);
     }
 
     public void getParameters(T_DEOptimizer opt)
@@ -188,5 +186,4 @@ public class ControlPanel extends MyPanel
         strategyList.enable(); // Enable strategy selection
         repaint(); // Redraw everything
     }
-
-}// End class ControlPanel
+}
