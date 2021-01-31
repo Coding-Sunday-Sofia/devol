@@ -3,9 +3,12 @@ package eu.veldsoft.devol.panel;
 // Import all classes from the java.awt package
 
 import android.graphics.fonts.Font;
+import android.os.Build;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import androidx.annotation.RequiresApi;
 
 import java.awt.Event;
 import java.awt.GridBagConstraints;
@@ -105,6 +108,7 @@ public class ControlPanel extends MyPanel
         // problem
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public boolean action(Event E, Object O)
     /********************************************
      ** Handles mouse events for the panel. **

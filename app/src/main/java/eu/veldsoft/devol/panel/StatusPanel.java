@@ -3,7 +3,6 @@ package eu.veldsoft.devol.panel;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Typeface;
-import android.graphics.fonts.Font;
 import android.widget.TextView;
 
 import eu.veldsoft.devol.screen.DEScreen;

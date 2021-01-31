@@ -1,7 +1,5 @@
 package eu.veldsoft.devol.screen;
 
-// Import all classes from the java.awt package
-
 import android.graphics.Color;
 import android.os.Build;
 import android.util.Size;
@@ -16,13 +14,13 @@ import eu.veldsoft.devol.plot.DeLuxePlotGraph1;
 import eu.veldsoft.devol.plot.DeLuxePlotGraph2;
 import eu.veldsoft.devol.plot.PlotGraph3;
 
-public class PlotScreen extends Screen
-/***********************************************************
- ** ** A new screen where the optional plotting takes place. ** ** Authors:
- * Rainer Storn ** ** Date: 3/16/98 ** **
- ***********************************************************/
-
-{
+/**
+ * A new screen where the optional plotting takes place.
+ *
+ * @uthors Rainer Storn
+ * @date: 3/16/98
+ */
+public class PlotScreen extends Screen {
     public static final int BACKGROUNDCOLOR = Color.LTGRAY;
     // public PlotGraph0 plotGraph0; // First graphics panel
     public DeLuxePlotGraph0 plotGraph0; // First graphics panel
@@ -34,7 +32,6 @@ public class PlotScreen extends Screen
     public DEScreen app;
     Size minSize; // set the minimum size of the screen
     GridBagLayout gridbag = new GridBagLayout();
-    int w, h; // width and height
     int graph_type; // selects what to plot
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -67,8 +64,8 @@ public class PlotScreen extends Screen
 
         this.resize(400, 400);
 
-        w = size().width;
-        h = size().height;
+        int w = size().width;
+        int h = size().height;
 
         // ----Place the graph on the plot screen-----
         this.setLayout(gridbag); // apply gridbag layout to the
@@ -85,18 +82,15 @@ public class PlotScreen extends Screen
             plotGraph1 = new DeLuxePlotGraph1(app, w, h);
             constrain(this, plotGraph1, 0, 0, 1, 1, GridBagConstraints.BOTH,
                     GridBagConstraints.CENTER, 1.0, 1.0, 10, 10, 10, 10);
-
         } else if (graph_type == 2) {
             // plotGraph2 = new PlotGraph2(app,w,h);
             plotGraph2 = new DeLuxePlotGraph2(app, w, h);
             constrain(this, plotGraph2, 0, 0, 1, 1, GridBagConstraints.BOTH,
                     GridBagConstraints.CENTER, 1.0, 1.0, 10, 10, 10, 10);
-
         } else {
             plotGraph3 = new PlotGraph3(app, w, h);
             constrain(this, plotGraph3, 0, 0, 1, 1, GridBagConstraints.BOTH,
                     GridBagConstraints.CENTER, 1.0, 1.0, 10, 10, 10, 10);
-
         }
 
     }
@@ -117,6 +111,7 @@ public class PlotScreen extends Screen
         return minSize;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void refreshImage()
     /***********************************************************
      ** Updates the actual graph that is plotted. **
@@ -131,23 +126,5 @@ public class PlotScreen extends Screen
         } else {
             plotGraph3.refreshImage();
         }
-    }
-
-    /**
-     * It is a dummy method. It was created only to bypass compilation error.
-     */
-    public void pack() {
-    }
-
-    /**
-     * It is a dummy method. It was created only to bypass compilation error.
-     */
-    public void show() {
-    }
-
-    /**
-     * It is a dummy method. It was created only to bypass compilation error.
-     */
-    public void dispose() {
     }
 }

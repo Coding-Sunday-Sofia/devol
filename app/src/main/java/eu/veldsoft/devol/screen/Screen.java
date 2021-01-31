@@ -1,12 +1,13 @@
 package eu.veldsoft.devol.screen;
 
+import android.graphics.Bitmap;
+
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Event;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Image;
 import java.awt.Insets;
 
 /*********************************************************************************
@@ -76,7 +77,7 @@ import java.awt.Insets;
  ************************************************************************************/
 
 public class Screen extends Frame {
-    Image image;
+    Bitmap image = null;
 
     protected Screen(String title) {
         super(title);
@@ -87,21 +88,23 @@ public class Screen extends Frame {
      * problem, Screen takes now care itself of this event
      */
     public boolean handleEvent(Event event) {
-        if (event.id == Event.WINDOW_DESTROY)
+        if (event.id == Event.WINDOW_DESTROY) {
             this.dispose();
-        else
+        } else {
             return super.handleEvent(event);
+        }
+
         return true;
     }
 
     /**
-     * This Methode place the component in the container grid_x, gird_y : the
+     * This method place the component in the container grid_x, gird_y : the
      * absolute place of the cells in the gridlayout grid_width,grid_height: the
      * number of cells which use this component fill : the direction, where the
      * component become bigger when it is possible. anchor : the position in its
      * cells (NORTH SOUTH EAST...) weight_x,weight_y : when the window becomes
-     * larger, this direction top,left,bottom,right : the marge arround the
-     * component
+     * larger, this direction top,left,bottom,right : the marge around the
+     * component.
      */
     protected void constrain(Container container, Component component,
                              int grid_x, int grid_y, int grid_with, int grid_height, int fill,
@@ -141,5 +144,41 @@ public class Screen extends Frame {
         constrain(container, component, grid_x, grid_y, grid_with, grid_height,
                 GridBagConstraints.NONE, GridBagConstraints.NORTHWEST, 0.0, 0.0,
                 0, 0, 0, 0);
+    }
+
+    /**
+     * It is a dummy method. It was created only to bypass compilation error.
+     */
+    protected void setBackground(int color) {
+    }
+
+    /**
+     * It is a dummy method. It was created only to bypass compilation error.
+     */
+    protected void setTitle(String title) {
+    }
+
+    /**
+     * It is a dummy method. It was created only to bypass compilation error.
+     */
+    protected void resize(int width, int height) {
+    }
+
+    /**
+     * It is a dummy method. It was created only to bypass compilation error.
+     */
+    protected void dispose() {
+    }
+
+    /**
+     * It is a dummy method. It was created only to bypass compilation error.
+     */
+    protected void show() {
+    }
+
+    /**
+     * It is a dummy method. It was created only to bypass compilation error.
+     */
+    protected void pack() {
     }
 }

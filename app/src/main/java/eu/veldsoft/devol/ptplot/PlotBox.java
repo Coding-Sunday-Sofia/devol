@@ -37,6 +37,7 @@ package eu.veldsoft.devol.ptplot;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint.FontMetrics;
 import android.graphics.fonts.Font;
 import android.os.Build;
 import android.util.Size;
@@ -47,7 +48,6 @@ import androidx.annotation.RequiresApi;
 
 import java.awt.Event;
 import java.awt.FlowLayout;
-import android.graphics.Paint.FontMetrics;
 import java.awt.Panel;
 import java.awt.Rectangle;
 import java.io.DataInputStream;
@@ -220,7 +220,7 @@ public class PlotBox extends Panel {
     // Whether to draw a background grid.
     protected boolean _grid = true;
     // Color of the background, settable from HTML.
-    protected Color _background = null;
+    protected int _background = 0;
     // Color of the foreground, settable from HTML.
     protected int _foreground = 0;
     // Derived classes can increment these to make space around the plot.
@@ -284,15 +284,15 @@ public class PlotBox extends Panel {
     /**
      * Convert a color name into a Color.
      */
-    public static Color getColorByName(String name) {
+    public static int getColorByName(String name) {
         try {
             // Check to see if it is a hexadecimal
             // Can't use Color decode here, it is not in 1.0.2
             // Color col = Color.decode(name);
-            Color col = Color.valueOf(Integer.parseInt(name, 16));
-            return col;
+            return Integer.parseInt(name, 16);
         } catch (NumberFormatException e) {
         }
+
         // FIXME: This is a poor excuse for a list of colors and values.
         // We should use a hash table here.
         // Note that Color decode() wants the values to start with 0x.
@@ -301,13 +301,13 @@ public class PlotBox extends Panel {
         for (int i = 0; i < names.length; i++) {
             if (name.equals(names[i][0])) {
                 try {
-                    Color col = Color.valueOf(Integer.parseInt(names[i][1], 16));
-                    return col;
+                    return Integer.parseInt(names[i][1], 16);
                 } catch (NumberFormatException e) {
                 }
             }
         }
-        return null;
+
+        return 0;
     }
 
     /**
@@ -611,7 +611,7 @@ public class PlotBox extends Panel {
                     + " " + _lrx + " " + _lry + " " + width + " " + height);
         }
 
-        if (_background == null) {
+        if (_background == 0) {
             throw new Error("PlotBox.drawPlot(): _background == null\n"
                     + "Be sure to call init() before calling paint().");
         }
@@ -1080,7 +1080,7 @@ public class PlotBox extends Panel {
             _foreground = Color.BLACK;
         }
 
-        if (_background != null) {
+        if (_background != 0) {
             setBackground(_background);
         } else {
             _background = Color.WHITE;
@@ -1098,6 +1098,13 @@ public class PlotBox extends Panel {
         if (_dataurl != null) {
             parseFile(_dataurl, _documentBase);
         }
+    }
+
+    /**
+     * It is a dummy method. It was created only to bypass compilation error.
+     */
+    private Canvas getGraphics() {
+        return null;
     }
 
     /**
@@ -1149,8 +1156,9 @@ public class PlotBox extends Panel {
         // we could end up calling setXORMode, being interrupted
         // and having setPaintMode() called in another method.
 
-        if (_debug > 9)
+        if (_debug > 9) {
             System.out.println("PlotBox: mouseDrag " + x + " " + y);
+        }
 
         if (_graphics == null) {
             System.out.println("PlotBox.mouseDrag(): Internal error: "
@@ -1166,6 +1174,7 @@ public class PlotBox extends Panel {
             x = _lrx;
         if (x < _ulx)
             x = _ulx;
+
         // erase previous rectangle, if there was one.
         if ((_zoomx != -1 || _zoomy != -1)) {
             // Ability to zoom out added by William Wu.
@@ -1231,7 +1240,9 @@ public class PlotBox extends Panel {
                     _drawn = false;
             }
         }
+
         _graphics.setPaintMode();
+
         return false;
     }
 
@@ -1498,7 +1509,7 @@ public class PlotBox extends Panel {
     /**
      * Set the background color.
      */
-    public void setBackground(Color background) {
+    public void setBackground(int background) {
         _background = background;
         super.setBackground(_background);
     }
@@ -2273,5 +2284,23 @@ public class PlotBox extends Panel {
             _ytickMax = _yMax;
             _yExp = 0;
         }
+    }
+
+    /**
+     * It is a dummy method. It was created only to bypass compilation error.
+     */
+    protected void show() {
+    }
+
+    /**
+     * It is a dummy method. It was created only to bypass compilation error.
+     */
+    protected void pack() {
+    }
+
+    /**
+     * It is a dummy method. It was created only to bypass compilation error.
+     */
+    protected void dispose() {
     }
 }

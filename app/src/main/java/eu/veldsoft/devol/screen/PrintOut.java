@@ -1,29 +1,25 @@
 package eu.veldsoft.devol.screen;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 
-public class PrintOut
-/***********************************************************
- ** **
- ***********************************************************/
-{
+public class PrintOut {
     DEScreen deScreen;
 
-    public PrintOut(DEScreen app)
-    /*************************************
-     ** Constructor of the class. **
-     *************************************/
-    {
+    /**
+     * Constructor of the class.
+     */
+    public PrintOut(DEScreen app) {
         deScreen = app;
     }
 
-    public void printResult()
-    /***********************************************************
-     ** **
-     ***********************************************************/
-    {
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void printResult() {
         int i, imax;
         double[] best = new double[100];
 
@@ -40,6 +36,6 @@ public class PrintOut
         } catch (IOException e) {
             e.printStackTrace();
         }
-    } // End printResult()
+    }
 
-}// Class PrintOut
+}

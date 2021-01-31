@@ -25,7 +25,6 @@ ENHANCEMENTS, OR MODIFICATIONS.
                                                 PT_COPYRIGHT_VERSION_2
                                                 COPYRIGHTENDKEY
 */
-package eu.veldsoft.devol.ptplot;
 
 // FIXME: To do
 //   - support for oscilloscope-like plots (where x axis wraps around).
@@ -44,6 +43,8 @@ package eu.veldsoft.devol.ptplot;
 // NOTE: There are quite a few subjective spacing parameters, all
 // given, unfortunately, in pixels.  This means that as resolutions
 // get better, this program may need to be adjusted.
+
+package eu.veldsoft.devol.ptplot;
 
 import android.graphics.Canvas;
 import android.os.Build;
@@ -433,7 +434,7 @@ public class Plot extends PlotBox {
      *
      * @return The number of arguments read.
      * @throws CmdLineArgException if there is a problem parsing the command line arguments
-     *                                    passed in.
+     *                             passed in.
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public int parseArgs(String[] args) throws CmdLineArgException {

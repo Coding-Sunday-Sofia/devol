@@ -174,11 +174,11 @@ public class InputPanel extends MyPanel
      ********************************************/
     {
         // Convert from text representation to numbers
-        NP = (NPObj.valueOf(NPText.getText().toString())).intValue();
-        F = (FObj.valueOf(FText.getText().toString())).doubleValue();
-        Cr = (CrObj.valueOf(CrText.getText().toString())).doubleValue();
-        Range = (RangeObj.valueOf(RangeText.getText().toString())).doubleValue();
-        Refresh = (RefreshObj.valueOf(RefreshText.getText().toString())).intValue();
+        NP = (Integer.valueOf(NPText.getText().toString())).intValue();
+        F = (Double.valueOf(FText.getText().toString())).doubleValue();
+        Cr = (Double.valueOf(CrText.getText().toString())).doubleValue();
+        Range = (Double.valueOf(RangeText.getText().toString())).doubleValue();
+        Refresh = (Integer.valueOf(RefreshText.getText().toString())).intValue();
 
         // check for violation of ranges and then set the variables
         if ((NP > NPMAX) || (NP < 0))
@@ -234,9 +234,9 @@ public class InputPanel extends MyPanel
     {
 
         // Convert from text representation to numbers
-        F = (FObj.valueOf(FText.getText().toString())).doubleValue();
-        Cr = (CrObj.valueOf(CrText.getText().toString())).doubleValue();
-        Refresh = (RefreshObj.valueOf(RefreshText.getText().toString())).intValue();
+        F = (Double.valueOf(FText.getText().toString())).doubleValue();
+        Cr = (Double.valueOf(CrText.getText().toString())).doubleValue();
+        Refresh = (Integer.valueOf(RefreshText.getText().toString())).intValue();
         // System.out.println(Refresh);
 
         // check for violation of ranges and then set the variables
@@ -282,4 +282,4 @@ public class InputPanel extends MyPanel
         // System.out.println(Refresh);
     }
 
-}// End class InputPanel
+}

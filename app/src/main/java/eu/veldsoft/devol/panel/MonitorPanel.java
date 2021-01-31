@@ -33,14 +33,13 @@ public class MonitorPanel extends Canvas {
     private final int y1 = 18;
     private final int y2 = y1 + new_line;
     private final int y3 = y2 + new_line;
+    private final Paint rectanglePaintSettings = new Paint();
+    private final Paint textPaintSettings = new TextPaint();
     public DEScreen deScreen;
     Size minSize; // set the minimum size of the canvas
     Bitmap offscreenImage; // This is where the image is stored
     Canvas offscreenGraphics;
     boolean initialized = false;
-
-    private Paint rectanglePaintSettings = new Paint();
-    private Paint textPaintSettings = new TextPaint();
 
     /**
      * Constructor.
@@ -98,7 +97,9 @@ public class MonitorPanel extends Canvas {
         this.drawBitmap(offscreenImage, 0F, 0F, null);
     }
 
-    /** It is a dummy method. It was created only to bypass compilation error. */
+    /**
+     * It is a dummy method. It was created only to bypass compilation error.
+     */
     public void repaint() {
     }
 }

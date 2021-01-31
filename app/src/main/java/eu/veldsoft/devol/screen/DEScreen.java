@@ -104,7 +104,7 @@ public class DEScreen extends Screen {
         // needs data from these
         // panels
 
-        statusPanel = new StatusPanel(null,this); // Create the status panel
+        statusPanel = new StatusPanel(null, this); // Create the status panel
         controlPanel = new ControlPanel(this); // Create button controls panel
         monitorPanel = new MonitorPanel(this); // Create monitorPanel panel
         inputPanel = new InputPanel(this); // Create scrollbar panel
@@ -308,11 +308,10 @@ public class DEScreen extends Screen {
         return t_DEOptimizer.best;
     }
 
-    public int getDimension()
     /**
      * Get number of parameters.
      */
-    {
+    public int getDimension() {
         return t_DEOptimizer.dim;
     }
 

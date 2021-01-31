@@ -1,6 +1,9 @@
 package eu.veldsoft.devol.panel;
 
+import android.os.Build;
 import android.widget.CheckBox;
+
+import androidx.annotation.RequiresApi;
 
 import java.awt.Event;
 import java.awt.GridBagConstraints;
@@ -20,6 +23,7 @@ public class PlotChoicePanel extends MyPanel
     GridBagLayout gridbag = new GridBagLayout();
     CheckBox[] plotCheckBox; // array of check boxes
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public PlotChoicePanel(DEScreen app, T_DEOptimizer opt)
     /***************************************
      ** Constructor. **
@@ -48,6 +52,7 @@ public class PlotChoicePanel extends MyPanel
                 GridBagConstraints.CENTER, 1.0, 1.0, 5, 5, 0, 0);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public boolean handleEvent(Event e)
     /***************************************
      ** Handles mouse events for the panel.**

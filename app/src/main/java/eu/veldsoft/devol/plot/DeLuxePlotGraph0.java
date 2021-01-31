@@ -59,10 +59,6 @@ public class DeLuxePlotGraph0 extends Plot {
         this.show();
     }
 
-    /** It is a dummy method. It was created only to bypass compilation error. */
-    private void show() {
-    }
-
     /**
      * Plot the tolerance scheme. We have much less points than
      * no_of_persistent_points so the tolerance scheme remains visible all

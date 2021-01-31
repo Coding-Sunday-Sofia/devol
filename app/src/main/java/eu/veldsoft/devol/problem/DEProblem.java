@@ -10,11 +10,10 @@ import eu.veldsoft.devol.de.T_DEOptimizer;
  * @author Rainer Storn
  */
 public abstract class DEProblem {
-    int dim;
-    double[] best;
-
     public static final int NAPTIME = 10;
     public double mincost;
+    int dim;
+    double[] best;
 
     /**
      * @return True if evaluation is completed.

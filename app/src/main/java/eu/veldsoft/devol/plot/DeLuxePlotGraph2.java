@@ -69,10 +69,6 @@ public class DeLuxePlotGraph2 extends Plot {
         this.show();
     }
 
-    /** It is a dummy method. It was created only to bypass compilation error. */
-    private void show() {
-    }
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void plotTolerance()
     /**********************************************************

@@ -4,10 +4,10 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.fonts.Font;
-import android.media.Image;
+import android.os.Build;
 import android.util.Size;
 
-import java.awt.Graphics;
+import androidx.annotation.RequiresApi;
 
 import eu.veldsoft.devol.screen.DEScreen;
 
@@ -234,6 +234,7 @@ public class PlotGraph1 extends Canvas
         g.drawString(DblObj.toString(), absX(0), absY(max_y) - 8);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void plot(Canvas g)
     /*******************************************************
      ** Plots the current polynomial. **
@@ -267,6 +268,7 @@ public class PlotGraph1 extends Canvas
         g.drawBitmap(offscreenImage, 0, 0, null);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void refreshImage()
     /***********************************************************
      ** Update function which recomputes the variable screen ** image. **
@@ -279,6 +281,12 @@ public class PlotGraph1 extends Canvas
         offscreenGraphics.drawBitmap(staticImage, 0, 0, null);
         plot(offscreenGraphics);
         repaint();
+    }
+
+    /**
+     * It is a dummy method. It was created only to bypass compilation error.
+     */
+    private void repaint() {
     }
 
     public void update(Canvas g)

@@ -56,5 +56,11 @@ public class MyPanel extends Panel
         ((GridBagLayout) container.getLayout()).setConstraints(component, c);
         container.add(component);
     }
+
+    /**
+     * It is a dummy method. It was created only to bypass compilation error.
+     */
+    protected void repaint() {
+    }
 }
 

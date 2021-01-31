@@ -1,6 +1,5 @@
 package eu.veldsoft.devol.plot;
 
-import android.graphics.Canvas;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
@@ -61,10 +60,6 @@ public class DeLuxePlotGraph1 extends Plot
         // points
 
         this.show();
-    }
-
-    /** It is a dummy method. It was created only to bypass compilation error. */
-    private void show() {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

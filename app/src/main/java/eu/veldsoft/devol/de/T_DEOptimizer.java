@@ -2,6 +2,10 @@ package eu.veldsoft.devol.de;
 
 // Import cost
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import eu.veldsoft.devol.problem.DEProblem;
 import eu.veldsoft.devol.screen.DEScreen;
 
@@ -230,6 +234,7 @@ public class T_DEOptimizer implements Runnable
         return mincost;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void start()
     /***********************************************************
      ** The "Init()" method for the thread. **
@@ -292,6 +297,7 @@ public class T_DEOptimizer implements Runnable
         action = null;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void run()
     /***********************************************************
      ** The "main()" method for the thread. **
@@ -373,6 +379,7 @@ public class T_DEOptimizer implements Runnable
         makeNotReady(); // Suspend the optimization
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void optStart()
     /***********************************************************
      ** Start the animation. **
@@ -387,6 +394,7 @@ public class T_DEOptimizer implements Runnable
         action.resume(); // and get it going
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void optResume()
     /***********************************************************
      ** Wake the sleeping animation. **
