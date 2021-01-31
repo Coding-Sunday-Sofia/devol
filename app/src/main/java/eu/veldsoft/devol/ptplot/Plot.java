@@ -45,11 +45,11 @@ package eu.veldsoft.devol.ptplot;
 // given, unfortunately, in pixels.  This means that as resolutions
 // get better, this program may need to be adjusted.
 
+import android.graphics.Canvas;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-import java.awt.Graphics;
 import java.io.DataInputStream;
 import java.io.EOFException;
 import java.io.IOException;
@@ -341,7 +341,7 @@ public class Plot extends PlotBox {
      * been first drawn. If the argument is true, clear the display first.
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public synchronized void drawPlot(Graphics graphics, boolean clearfirst) {
+    public synchronized void drawPlot(Canvas graphics, boolean clearfirst) {
         if (_debug > 7) {
             System.out.println("Plot: drawPlot");
         }
@@ -416,7 +416,7 @@ public class Plot extends PlotBox {
      * Draw the axes and the accumulated points.
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void paint(Graphics graphics) {
+    public void paint(Canvas graphics) {
         if (_debug > 7) {
             System.out.println("Plot: paint");
         }
@@ -432,7 +432,7 @@ public class Plot extends PlotBox {
      * backward compatibility with the X11 pxgraph program.
      *
      * @return The number of arguments read.
-     * @throws ptplot.CmdLineArgException if there is a problem parsing the command line arguments
+     * @throws CmdLineArgException if there is a problem parsing the command line arguments
      *                                    passed in.
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -1007,7 +1007,7 @@ public class Plot extends PlotBox {
      * that _xscale and _yscale are properly set.
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    protected void _drawBar(Graphics graphics, int dataset, long xpos,
+    protected void _drawBar(Canvas graphics, int dataset, long xpos,
                             long ypos, boolean clip) {
         if (_debug > 21) {
             System.out.println("Plot: _drawBar(" + dataset + " " + xpos + " "
@@ -1066,7 +1066,7 @@ public class Plot extends PlotBox {
      * If the <i>clip</i> argument is true, then do not draw above the y range.
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    protected void _drawErrorBar(Graphics graphics, int dataset, long xpos,
+    protected void _drawErrorBar(Canvas graphics, int dataset, long xpos,
                                  long yLowEBPos, long yHighEBPos, boolean clip) {
         if (_debug > 20) {
             System.out.println("Plot: _drawErrorBar(" + xpos + " " + yLowEBPos
@@ -1085,7 +1085,7 @@ public class Plot extends PlotBox {
      * <i>clip</i> argument is true, then do not draw above the y range.
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    protected void _drawImpulse(Graphics graphics, long xpos, long ypos,
+    protected void _drawImpulse(Canvas graphics, long xpos, long ypos,
                                 boolean clip) {
         if (_debug > 20) {
             System.out.println("Plot: _drawImpulse(" + xpos + " " + ypos + " "
@@ -1119,7 +1119,7 @@ public class Plot extends PlotBox {
      * rectangle.
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    protected void _drawLine(Graphics graphics, int dataset, long startx,
+    protected void _drawLine(Canvas graphics, int dataset, long startx,
                              long starty, long endx, long endy, boolean clip) {
 
         if (clip) {
@@ -1223,7 +1223,7 @@ public class Plot extends PlotBox {
      * are in range.
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    protected void _drawPoint(Graphics graphics, int dataset, long xpos,
+    protected void _drawPoint(Canvas graphics, int dataset, long xpos,
                               long ypos, boolean clip) {
         if (_debug > 20) {
             System.out.println("Plot:_drawPoint " + dataset + " " + xpos + " "
@@ -1781,7 +1781,7 @@ public class Plot extends PlotBox {
      * to the previous point.
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private synchronized void _addPoint(Graphics graphics, int dataset,
+    private synchronized void _addPoint(Canvas graphics, int dataset,
                                         double x, double y, double yLowEB, double yHighEB,
                                         boolean connected, boolean errorBar) {
         if (_debug > 100) {
@@ -1841,7 +1841,7 @@ public class Plot extends PlotBox {
      * _xscale and _yscale are properly set.
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private synchronized void _drawPlotPoint(Graphics graphics, int dataset,
+    private synchronized void _drawPlotPoint(Canvas graphics, int dataset,
                                              int index) {
         if (_debug > 20)
             System.out.println(
@@ -1908,7 +1908,7 @@ public class Plot extends PlotBox {
      * calling this method so that _xscale and _yscale are properly set.
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private synchronized void _erasePoint(Graphics graphics, int dataset,
+    private synchronized void _erasePoint(Canvas graphics, int dataset,
                                           int index) {
         // Set the color
         if (_pointsPersistence > 0) {

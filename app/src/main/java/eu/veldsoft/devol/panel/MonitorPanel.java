@@ -1,12 +1,17 @@
 package eu.veldsoft.devol.panel;
 
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.graphics.fonts.Font;
-import android.media.Image;
+import android.os.Build;
+import android.text.TextPaint;
 import android.util.Size;
 
-import java.awt.Graphics;
+import androidx.annotation.RequiresApi;
 
 import eu.veldsoft.devol.screen.DEScreen;
 
@@ -20,7 +25,7 @@ public class MonitorPanel extends Canvas {
     public final static String genString = "Generation :  ";
     public final static String evalString = "Evaluations:  ";
     public final static String valueString = "Minimum    :  ";
-    public final static Font DataFont = new Font("Dialog", Font.PLAIN, 10);
+    public final static Font DataFont = null;//new Font("Dialog", Font.PLAIN, 10);
     private final int font_height = 10;
     private final int gutter = 5;
     private final int new_line = font_height + gutter;
@@ -30,14 +35,24 @@ public class MonitorPanel extends Canvas {
     private final int y3 = y2 + new_line;
     public DEScreen deScreen;
     Size minSize; // set the minimum size of the canvas
-    Image offscreenImage; // This is where the image is stored
-    Graphics offscreenGraphics;
+    Bitmap offscreenImage; // This is where the image is stored
+    Canvas offscreenGraphics;
     boolean initialized = false;
+
+    private Paint rectanglePaintSettings = new Paint();
+    private Paint textPaintSettings = new TextPaint();
 
     /**
      * Constructor.
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public MonitorPanel(DEScreen app) {
+        rectanglePaintSettings.setColor(DEScreen.BACKGROUNDCOLOR);
+        textPaintSettings.setAntiAlias(false);
+        textPaintSettings.setColor(Color.BLUE);
+        textPaintSettings.setTextSize(12);
+        textPaintSettings.setTypeface(Typeface.create("Helvetica", Typeface.NORMAL));
+
         deScreen = app;
         minSize = new Size(100, 60); // set minimum size
     }
@@ -59,31 +74,31 @@ public class MonitorPanel extends Canvas {
     /**
      * Paints the current optimization data.
      */
-    public void paint(Graphics G) { // Get the values to display
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void paint() {
+        /* Get the values to display. */
+
         int width = getWidth();
         int height = getHeight();
 
-        if (!initialized) {
-            offscreenImage = createImage(width, height);
-            offscreenGraphics = offscreenImage.getGraphics();
+        if (initialized == false) {
+            offscreenImage = Bitmap.createBitmap(width, height, Config.ARGB_8888);
+            offscreenGraphics = new Canvas(offscreenImage);
             initialized = true;
         }
 
-        offscreenGraphics.setColor(DEScreen.BACKGROUNDCOLOR); // Like applet
-        offscreenGraphics.fill3DRect(0, 0, width - 1, height - 1, true); // ?
-        offscreenGraphics.setColor(Color.BLUE); // Text color
-        offscreenGraphics.setFont(new Font("Helvetica", Font.PLAIN, 12)); // font
-        // //
-        // Text
-        // font
+        offscreenGraphics.drawRect(0, 0, width - 1, height - 1, rectanglePaintSettings);
 
-        offscreenGraphics.drawString(genString + deScreen.getGeneration(), x,
-                y1);
-        offscreenGraphics.drawString(evalString + deScreen.getEvaluation(), x,
-                y2);
-        offscreenGraphics
-                .drawString(valueString + (float) deScreen.getMinimum(), x, y3);
+        offscreenGraphics.drawText(genString + deScreen.getGeneration(), x, y1, textPaintSettings);
+        offscreenGraphics.drawText(evalString + deScreen.getEvaluation(), x, y2, textPaintSettings);
+        offscreenGraphics.drawText(valueString + (float) deScreen.getMinimum(), x, y3, textPaintSettings);
         // reduce length of string to (float)
-        G.drawImage(offscreenImage, 0, 0, this); // Display the data panel
+
+        // Display the data panel
+        this.drawBitmap(offscreenImage, 0F, 0F, null);
+    }
+
+    /** It is a dummy method. It was created only to bypass compilation error. */
+    public void repaint() {
     }
 }

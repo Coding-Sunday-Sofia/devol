@@ -2,8 +2,12 @@ package eu.veldsoft.devol.screen;
 
 // Import all classes from the java.awt package
 
-import java.awt.Color;
-import java.awt.Dimension;
+import android.graphics.Color;
+import android.os.Build;
+import android.util.Size;
+
+import androidx.annotation.RequiresApi;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
@@ -19,7 +23,7 @@ public class PlotScreen extends Screen
  ***********************************************************/
 
 {
-    public static final java.awt.Color BACKGROUNDCOLOR = Color.lightGray;
+    public static final int BACKGROUNDCOLOR = Color.LTGRAY;
     // public PlotGraph0 plotGraph0; // First graphics panel
     public DeLuxePlotGraph0 plotGraph0; // First graphics panel
     // public PlotGraph1 plotGraph1; // Second graphics panel
@@ -28,11 +32,12 @@ public class PlotScreen extends Screen
     public DeLuxePlotGraph2 plotGraph2; // Third graphics panel
     public PlotGraph3 plotGraph3; // Fourth graphics panel
     public DEScreen app;
-    Dimension minSize; // set the minimum size of the screen
+    Size minSize; // set the minimum size of the screen
     GridBagLayout gridbag = new GridBagLayout();
     int w, h; // width and height
     int graph_type; // selects what to plot
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public PlotScreen(DEScreen deScreen, int i)
     /***********************************************************
      ** Define a screen which contains the graphics to be ** plotted. The
@@ -44,8 +49,8 @@ public class PlotScreen extends Screen
      ***********************************************************/
     {
         super("Plot"); // print Title
-        setBackground(Color.lightGray);
-        minSize = new Dimension(300, 300); // set minimum size
+        setBackground(Color.LTGRAY);
+        minSize = new Size(300, 300); // set minimum size
 
         app = deScreen;
         graph_type = i;
@@ -96,7 +101,7 @@ public class PlotScreen extends Screen
 
     }
 
-    public Dimension preferredSize()
+    public Size preferredSize()
     /***********************************************************
      ** The layout manager needs this to determine the right ** size. **
      ***********************************************************/
@@ -104,7 +109,7 @@ public class PlotScreen extends Screen
         return minimumSize();
     }
 
-    public synchronized Dimension minimumSize()
+    public synchronized Size minimumSize()
     /***********************************************************
      ** The layout manager needs this to determine the right ** size. **
      ***********************************************************/
@@ -128,4 +133,21 @@ public class PlotScreen extends Screen
         }
     }
 
-}// Class PlotScreen
+    /**
+     * It is a dummy method. It was created only to bypass compilation error.
+     */
+    public void pack() {
+    }
+
+    /**
+     * It is a dummy method. It was created only to bypass compilation error.
+     */
+    public void show() {
+    }
+
+    /**
+     * It is a dummy method. It was created only to bypass compilation error.
+     */
+    public void dispose() {
+    }
+}

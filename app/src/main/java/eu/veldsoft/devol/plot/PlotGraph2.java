@@ -1,12 +1,10 @@
 package eu.veldsoft.devol.plot;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.fonts.Font;
-import android.media.Image;
 import android.util.Size;
-
-import java.awt.Graphics;
 
 import eu.veldsoft.devol.screen.DEScreen;
 
@@ -20,10 +18,10 @@ public class PlotGraph2 extends Canvas
     // static image (staticI). The sample data is plotted into a background
     // image and copied into the Animation's gc to avoid flicker.
 
-    protected Image staticImage;
-    protected Graphics staticGraphics = null;
-    protected Image offscreenImage;
-    protected Graphics offscreenGraphics = null;
+    protected Bitmap staticImage;
+    protected Canvas staticGraphics = null;
+    protected Bitmap offscreenImage;
+    protected Canvas offscreenGraphics = null;
 
     protected boolean ready = false;
     protected DEScreen deScreen;
@@ -157,7 +155,7 @@ public class PlotGraph2 extends Canvas
         /*---draw the static image on the graphics context---*/
         /*---offscreenGraphics (location x=0, y=0, no--------*/
         /*---ImageObserver).---------------------------------*/
-        offscreenGraphics.drawImage(staticImage, 0, 0, null);
+        offscreenGraphics.drawBitmap(staticImage, 0, 0, null);
     }
 
     void init()
@@ -171,7 +169,7 @@ public class PlotGraph2 extends Canvas
         ready = true;
     }
 
-    void preparePlot(Graphics staticGraphics)
+    void preparePlot(Canvas staticGraphics)
     /*******************************************************
      ** Draws the static part of the plot. **
      *******************************************************/
@@ -180,7 +178,7 @@ public class PlotGraph2 extends Canvas
         plotTolerance(staticGraphics);
     }
 
-    public void plotAxes(Graphics g)
+    public void plotAxes(Canvas g)
     /*******************************************************
      ** Plot coordinate system in which polynomial will be ** plotted. **
      *******************************************************/
@@ -283,7 +281,7 @@ public class PlotGraph2 extends Canvas
         return 0; // default
     }
 
-    public void plotTolerance(Graphics g)
+    public void plotTolerance(Canvas g)
     /*******************************************************
      ** Plot the tolerance scheme. **
      *******************************************************/
@@ -378,7 +376,7 @@ public class PlotGraph2 extends Canvas
         return (sum);
     }
 
-    public void plot(Graphics g)
+    public void plot(Canvas g)
     /*******************************************************
      ** Plots the current polynomial. **
      *******************************************************/
@@ -402,14 +400,14 @@ public class PlotGraph2 extends Canvas
         }
     }
 
-    public void paint(Graphics g)
+    public void paint(Canvas g)
     /*******************************************************
      ** Actually draws on the canvas. **
      *******************************************************/
     {
         init(); // initializing with every paint() call
         // allows for resizing of the plot screen
-        g.drawImage(offscreenImage, 0, 0, null);
+        g.drawBitmap(offscreenImage, 0, 0, null);
     }
 
     public void refreshImage()
@@ -421,18 +419,18 @@ public class PlotGraph2 extends Canvas
             init();
         }
 
-        offscreenGraphics.drawImage(staticImage, 0, 0, null);
+        offscreenGraphics.drawBitmap(staticImage, 0, 0, null);
         plot(offscreenGraphics);
         repaint();
     }
 
-    public void update(Graphics g)
+    public void update(Canvas g)
     /*******************************************************
      ** Overriding update() reduces flicker. The normal ** update() method clears
      * the screen before it ** repaints and hence causes flicker. We dont like
      * ** this and leave out the screen clearing. **
      *******************************************************/
     {
-        g.drawImage(offscreenImage, 0, 0, null);
+        g.drawBitmap(offscreenImage, 0, 0, null);
     }
 }

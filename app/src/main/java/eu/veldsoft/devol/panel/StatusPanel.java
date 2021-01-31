@@ -1,5 +1,8 @@
 package eu.veldsoft.devol.panel;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.graphics.Typeface;
 import android.graphics.fonts.Font;
 import android.widget.TextView;
 
@@ -11,22 +14,24 @@ import eu.veldsoft.devol.screen.DEScreen;
  * @author Mikal Keenan
  * @author Rainer Storn
  */
+@SuppressLint("AppCompatCustomView")
 public class StatusPanel extends TextView {
     public final static String runningString = "Running...";
     public final static String pausedString = "Paused...";
     public final static String completedString = "Completed...";
     public final static String nullString = "";
 
-    public final static Font labelFont = new Font("Dialog", Font.PLAIN, 10);
+    public final static Typeface labelFont = Typeface.create("Dialog", Typeface.NORMAL); //new Font("Dialog", Font.PLAIN, 10);
 
     public DEScreen deScreen;
 
     /**
      * Constructor.
      */
-    public StatusPanel(DEScreen app) {
+    public StatusPanel(Context context, DEScreen app) {
+        super(context);
         deScreen = app;
-        setFont(labelFont);
+        setTypeface(labelFont);
     }
 
     /**

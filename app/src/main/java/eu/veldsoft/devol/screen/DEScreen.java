@@ -29,7 +29,7 @@ import eu.veldsoft.devol.panel.StatusPanel;
  */
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class DEScreen extends Screen {
-    public static final Color BACKGROUNDCOLOR = Color.valueOf(Color.LTGRAY);
+    public static final int BACKGROUNDCOLOR = Color.LTGRAY;
 
     /*-----Define identifiers which are used to select classes-------*/
     public String[] problem_identifier = {"T4", "T8", "Lowpass1"}; // chooses
@@ -104,7 +104,7 @@ public class DEScreen extends Screen {
         // needs data from these
         // panels
 
-        statusPanel = new StatusPanel(this); // Create the status panel
+        statusPanel = new StatusPanel(null,this); // Create the status panel
         controlPanel = new ControlPanel(this); // Create button controls panel
         monitorPanel = new MonitorPanel(this); // Create monitorPanel panel
         inputPanel = new InputPanel(this); // Create scrollbar panel

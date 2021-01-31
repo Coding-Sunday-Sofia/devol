@@ -1,10 +1,9 @@
 package eu.veldsoft.devol.plot;
 
+import android.graphics.Canvas;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
-
-import java.awt.Graphics;
 
 import eu.veldsoft.devol.ptplot.Plot;
 import eu.veldsoft.devol.screen.DEScreen;
@@ -25,6 +24,7 @@ public class DeLuxePlotGraph1 extends Plot
     int dim; // dimension of the problem
     int no_of_persistent_points;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public DeLuxePlotGraph1(DEScreen father, int width, int height)
     /***********************************************************
      ** Constructor. **
@@ -61,6 +61,10 @@ public class DeLuxePlotGraph1 extends Plot
         // points
 
         this.show();
+    }
+
+    /** It is a dummy method. It was created only to bypass compilation error. */
+    private void show() {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -109,7 +113,8 @@ public class DeLuxePlotGraph1 extends Plot
 
     }
 
-    public void paint(Graphics g)
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void paint()
     /*******************************************************
      ** Whenever the component is exposed anew, this method * is called. **
      *******************************************************/

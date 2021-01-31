@@ -4,17 +4,14 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-import java.awt.Graphics;
-
 import eu.veldsoft.devol.ptplot.Plot;
 import eu.veldsoft.devol.screen.DEScreen;
 
-public class DeLuxePlotGraph2 extends Plot
-/***********************************************************
- ** ** ** Authors: Rainer Storn ** ** Date: 2/5/99 ** **
- ***********************************************************/
-{
-
+/**
+ * @uthor Rainer Storn
+ * @date: 2/5/99
+ */
+public class DeLuxePlotGraph2 extends Plot {
     protected DEScreen deScreen;
     protected int initFlag; // 1: indicates that initialization must be done
     protected double min_x; // Relative coordinates
@@ -27,6 +24,7 @@ public class DeLuxePlotGraph2 extends Plot
     int no_of_persistent_points;
     int plotting_samples; // number of samples used for graph plotting
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public DeLuxePlotGraph2(DEScreen father, int width, int height)
     /***********************************************************
      ** Constructor. **
@@ -71,6 +69,11 @@ public class DeLuxePlotGraph2 extends Plot
         this.show();
     }
 
+    /** It is a dummy method. It was created only to bypass compilation error. */
+    private void show() {
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void plotTolerance()
     /**********************************************************
      ** Plot the tolerance scheme. ** We have much less points than
@@ -221,7 +224,7 @@ public class DeLuxePlotGraph2 extends Plot
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void paint(Graphics g)
+    public void paint()
     /*******************************************************
      ** Whenever the component is exposed anew, this method * is called. **
      *******************************************************/

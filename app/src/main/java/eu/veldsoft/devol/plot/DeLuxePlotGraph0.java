@@ -1,27 +1,30 @@
 package eu.veldsoft.devol.plot;
 
-import java.awt.Graphics;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 
 import eu.veldsoft.devol.ptplot.Plot;
 import eu.veldsoft.devol.screen.DEScreen;
 
-public class DeLuxePlotGraph0 extends Plot
-/***********************************************************
- ** ** ** Authors: Rainer Storn ** ** Date: 2/5/99 ** **
- ***********************************************************/
-{
-
+/**
+ * @author Rainer Storn
+ * @date: 2/5/99
+ */
+public class DeLuxePlotGraph0 extends Plot {
     protected DEScreen deScreen;
     protected int initFlag; // 1: indicates that initialization must be done
     protected double min_x; // Relative coordinates
     protected double max_x;
     protected double min_y;
     protected double max_y;
+
     double[] best; // best parameter vector so far
     int dim; // dimension of the problem
     int no_of_persistent_points;
     int plotting_samples; // number of samples used for graph plotting
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public DeLuxePlotGraph0(DEScreen father, int width, int height)
     /***********************************************************
      ** Constructor. **
@@ -56,13 +59,17 @@ public class DeLuxePlotGraph0 extends Plot
         this.show();
     }
 
-    public void plotTolerance()
-    /**********************************************************
-     ** Plot the tolerance scheme. ** We have much less points than
-     * no_of_persistent_points ** so the tolerance scheme remains visible all
-     * the time. **
-     **********************************************************/
-    {
+    /** It is a dummy method. It was created only to bypass compilation error. */
+    private void show() {
+    }
+
+    /**
+     * Plot the tolerance scheme. We have much less points than
+     * no_of_persistent_points so the tolerance scheme remains visible all
+     * the time.
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void plotTolerance() {
         // ---upper part of tolerance scheme--------
         addPoint(1, -1, +10, !true);
         addPoint(1, -1, +1, !false);
@@ -90,11 +97,11 @@ public class DeLuxePlotGraph0 extends Plot
         return y;
     }
 
-    public void refreshImage()
-    /***********************************************************
-     ** Update function which recomputes the variable screen ** image. **
-     ***********************************************************/
-    {
+    /**
+     * Update function which recomputes the variable screen image.
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void refreshImage() {
         dim = deScreen.getDimension();
         best = deScreen.getBest();
         double coefficient;
@@ -135,16 +142,16 @@ public class DeLuxePlotGraph0 extends Plot
             this.addPoint(2, x2, polynomial(best, x2, dim), !first);
             first = false; // from now on points will be connected with lines
         }
-        paint(_graphics);
 
+        paint(_graphics);
     }
 
-    public void paint(Graphics g)
-    /*******************************************************
-     ** Whenever the component is exposed anew, this method * is called. **
-     *******************************************************/
-    {
-        // ----Take care of proper initialization------------
+    /**
+     * Whenever the component is exposed anew, this method is called.
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void paint() {
+        /* Take care of proper initialization. */
         if (initFlag == 1) {
             init();
             plotTolerance();
@@ -152,11 +159,12 @@ public class DeLuxePlotGraph0 extends Plot
             initFlag = 0; // prevent that graphics is constantly initialized
         }
 
-        // ----Take care of screen resize--------------------
+        /* Take care of screen resize. */
         if (_reshapeFlag == 1) {
-            drawPlot(_graphics, true); // make graphics immediately visible
+            /* Make graphics immediately visible. */
+            drawPlot(_graphics, true);
+
             _reshapeFlag = 0;
         }
     }
-
 }

@@ -35,6 +35,7 @@ ENHANCEMENTS, OR MODIFICATIONS.
 
 package eu.veldsoft.devol.ptplot;
 
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.fonts.Font;
 import android.os.Build;
@@ -46,8 +47,7 @@ import androidx.annotation.RequiresApi;
 
 import java.awt.Event;
 import java.awt.FlowLayout;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
+import android.graphics.Paint.FontMetrics;
 import java.awt.Panel;
 import java.awt.Rectangle;
 import java.io.DataInputStream;
@@ -204,7 +204,7 @@ public class PlotBox extends Panel {
     // paint with a different graphics object, so we have to pass this
     // around properly.
     // 'transient' means that this field with not be serialized.
-    protected transient Graphics _graphics = null;
+    protected transient Canvas _graphics = null;
     // The range of the data to be plotted.
     protected double _yMax = 0, _yMin = 0, _xMax = 0, _xMin = 0;
     // Whether the ranges have been given.
@@ -222,7 +222,7 @@ public class PlotBox extends Panel {
     // Color of the background, settable from HTML.
     protected Color _background = null;
     // Color of the foreground, settable from HTML.
-    protected Color _foreground = null;
+    protected int _foreground = 0;
     // Derived classes can increment these to make space around the plot.
     protected int _topPadding = 10;
     protected int _bottomPadding = 5;
@@ -385,7 +385,7 @@ public class PlotBox extends Panel {
      * Draw the axes using the current range, label, and title information. If
      * the argument is true, clear the display before redrawing.
      */
-    public synchronized void drawPlot(Graphics graphics, boolean clearfirst) {
+    public synchronized void drawPlot(Canvas graphics, boolean clearfirst) {
         if (_debug > 7)
             System.out
                     .println("PlotBox: drawPlot" + graphics + " " + clearfirst);
@@ -1074,7 +1074,7 @@ public class PlotBox extends Panel {
             return;
         }
 
-        if (_foreground != null) {
+        if (_foreground != 0) {
             setForeground(_foreground);
         } else {
             _foreground = Color.BLACK;
@@ -1328,7 +1328,7 @@ public class PlotBox extends Panel {
     /**
      * Paint the component contents, which in this base class is only the axes.
      */
-    public void paint(Graphics graphics) {
+    public void paint(Canvas graphics) {
         if (_debug > 7)
             System.out.println("PlotBox: paint");
         // super.paint(graphics);
@@ -1515,7 +1515,7 @@ public class PlotBox extends Panel {
     /**
      * Set the foreground color.
      */
-    public void setForeground(Color foreground) {
+    public void setForeground(int foreground) {
         _foreground = foreground;
         super.setForeground(_foreground);
     }
@@ -1635,7 +1635,7 @@ public class PlotBox extends Panel {
      * if <code>true</code>, states that the point should not be drawn if it is
      * out of range.
      */
-    protected void _drawPoint(Graphics graphics, int dataset, long xpos,
+    protected void _drawPoint(Canvas graphics, int dataset, long xpos,
                               long ypos, boolean clip) {
         boolean pointinside = ypos <= _lry && ypos >= _uly && xpos <= _lrx
                 && xpos >= _ulx;
@@ -1772,7 +1772,7 @@ public class PlotBox extends Panel {
      * pixels) used up. The arguments give the upper right corner of the region
      * where the legend should be placed.
      */
-    private int _drawLegend(Graphics graphics, int urx, int ury) {
+    private int _drawLegend(Canvas graphics, int urx, int ury) {
         // FIXME: consolidate all these for efficiency
         graphics.setFont(_labelfont);
         int spacing = _labelFontMetrics.getHeight();
@@ -1807,7 +1807,7 @@ public class PlotBox extends Panel {
     /*
      * Rescales so that the data that is currently plotted just fits.
      */
-    private synchronized void _fillPlot(Graphics graphics) {
+    private synchronized void _fillPlot(Canvas graphics) {
         setXRange(_xBottom, _xTop);
         setYRange(_yBottom, _yTop);
         paint(graphics);
