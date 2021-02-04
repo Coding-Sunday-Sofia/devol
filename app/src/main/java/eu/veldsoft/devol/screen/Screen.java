@@ -4,11 +4,13 @@ import android.graphics.Bitmap;
 
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.Event;
+import eu.veldsoft.devol.dummy.Event;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+
+import eu.veldsoft.devol.dummy.Event;
 
 /*********************************************************************************
  * - Screen - - this class is a Frame with the function constraint. - - We use
@@ -180,5 +182,12 @@ public class Screen extends Frame {
      * It is a dummy method. It was created only to bypass compilation error.
      */
     protected void pack() {
+    }
+
+    /**
+     * It is a dummy method. It was created only to bypass compilation error.
+     */
+    protected boolean handleEvent(Event e) {
+        return false;
     }
 }

@@ -7,6 +7,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Panel;
 
+import eu.veldsoft.devol.dummy.Event;
+
 public class MyPanel extends Panel
 /***********************************************************
  ** ** Enables the usage of gridbaglayout in panels. ** ** Authors: Rainer Storn
@@ -61,6 +63,13 @@ public class MyPanel extends Panel
      * It is a dummy method. It was created only to bypass compilation error.
      */
     protected void repaint() {
+    }
+
+    /**
+     * It is a dummy method. It was created only to bypass compilation error.
+     */
+    protected boolean handleEvent(Event e) {
+        return false;
     }
 }
 

@@ -46,7 +46,7 @@ import android.widget.Button;
 
 import androidx.annotation.RequiresApi;
 
-import java.awt.Event;
+import eu.veldsoft.devol.dummy.Event;
 import java.awt.FlowLayout;
 import java.awt.Panel;
 import java.awt.Rectangle;

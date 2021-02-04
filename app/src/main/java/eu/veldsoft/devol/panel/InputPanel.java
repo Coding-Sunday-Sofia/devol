@@ -6,7 +6,7 @@ import android.graphics.fonts.Font;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.awt.Event;
+import eu.veldsoft.devol.dummy.Event;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 

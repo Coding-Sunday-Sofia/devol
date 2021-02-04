@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 
-import java.awt.Event;
+import eu.veldsoft.devol.dummy.Event;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
