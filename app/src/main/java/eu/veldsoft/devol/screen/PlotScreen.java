@@ -6,9 +6,8 @@ import android.util.Size;
 
 import androidx.annotation.RequiresApi;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-
+import eu.veldsoft.devol.dummy.GridBagConstraints;
+import eu.veldsoft.devol.dummy.GridBagLayout;
 import eu.veldsoft.devol.plot.DeLuxePlotGraph0;
 import eu.veldsoft.devol.plot.DeLuxePlotGraph1;
 import eu.veldsoft.devol.plot.DeLuxePlotGraph2;

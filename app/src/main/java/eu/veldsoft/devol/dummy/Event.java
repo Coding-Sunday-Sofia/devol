@@ -1,7 +1,6 @@
 package eu.veldsoft.devol.dummy;
 
 import android.view.View;
-import android.widget.Spinner;
 
 /**
  * It is a dummy class. It was created only to bypass compilation error.

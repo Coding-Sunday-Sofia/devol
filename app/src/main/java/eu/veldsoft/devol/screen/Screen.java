@@ -2,15 +2,13 @@ package eu.veldsoft.devol.screen;
 
 import android.graphics.Bitmap;
 
-import java.awt.Component;
-import java.awt.Container;
+import eu.veldsoft.devol.dummy.Component;
+import eu.veldsoft.devol.dummy.Container;
 import eu.veldsoft.devol.dummy.Event;
-import java.awt.Frame;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-
-import eu.veldsoft.devol.dummy.Event;
+import eu.veldsoft.devol.dummy.Frame;
+import eu.veldsoft.devol.dummy.GridBagConstraints;
+import eu.veldsoft.devol.dummy.GridBagLayout;
+import eu.veldsoft.devol.dummy.Insets;
 
 /*********************************************************************************
  * - Screen - - this class is a Frame with the function constraint. - - We use
@@ -89,6 +87,7 @@ public class Screen extends Frame {
      * This event must be managed by the class Window but because it was a
      * problem, Screen takes now care itself of this event
      */
+    @Override
     public boolean handleEvent(Event event) {
         if (event.id == Event.WINDOW_DESTROY) {
             this.dispose();
@@ -121,8 +120,9 @@ public class Screen extends Frame {
         c.anchor = anchor;
         c.weightx = weight_x;
         c.weighty = weight_y;
-        if (top + bottom + left + right > 0)
+        if (top + bottom + left + right > 0) {
             c.insets = new Insets(top, left, bottom, right);
+        }
         ((GridBagLayout) container.getLayout()).setConstraints(component, c);
         container.add(component);
     }
@@ -182,12 +182,5 @@ public class Screen extends Frame {
      * It is a dummy method. It was created only to bypass compilation error.
      */
     protected void pack() {
-    }
-
-    /**
-     * It is a dummy method. It was created only to bypass compilation error.
-     */
-    protected boolean handleEvent(Event e) {
-        return false;
     }
 }

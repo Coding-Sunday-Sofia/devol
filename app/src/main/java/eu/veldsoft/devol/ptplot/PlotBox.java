@@ -46,9 +46,6 @@ import android.widget.Button;
 
 import androidx.annotation.RequiresApi;
 
-import eu.veldsoft.devol.dummy.Event;
-import java.awt.FlowLayout;
-import java.awt.Panel;
 import java.awt.Rectangle;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
@@ -59,6 +56,10 @@ import java.net.URL;
 import java.util.Enumeration;
 import java.util.StringTokenizer;
 import java.util.Vector;
+
+import eu.veldsoft.devol.dummy.Event;
+import eu.veldsoft.devol.dummy.FlowLayout;
+import eu.veldsoft.devol.dummy.Panel;
 
 /**
  * Construct a labeled box within which to place a data plot. A title, X and Y

@@ -6,12 +6,11 @@ import android.util.Size;
 
 import androidx.annotation.RequiresApi;
 
-import eu.veldsoft.devol.dummy.Event;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Panel;
-
 import eu.veldsoft.devol.de.T_DEOptimizer;
+import eu.veldsoft.devol.dummy.Event;
+import eu.veldsoft.devol.dummy.GridBagConstraints;
+import eu.veldsoft.devol.dummy.GridBagLayout;
+import eu.veldsoft.devol.dummy.Panel;
 import eu.veldsoft.devol.panel.ControlPanel;
 import eu.veldsoft.devol.panel.InputPanel;
 import eu.veldsoft.devol.panel.MonitorPanel;

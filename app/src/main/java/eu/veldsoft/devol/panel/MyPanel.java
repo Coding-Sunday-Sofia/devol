@@ -1,13 +1,12 @@
 package eu.veldsoft.devol.panel;
 
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.Panel;
-
+import eu.veldsoft.devol.dummy.Component;
+import eu.veldsoft.devol.dummy.Container;
 import eu.veldsoft.devol.dummy.Event;
+import eu.veldsoft.devol.dummy.GridBagConstraints;
+import eu.veldsoft.devol.dummy.GridBagLayout;
+import eu.veldsoft.devol.dummy.Insets;
+import eu.veldsoft.devol.dummy.Panel;
 
 public class MyPanel extends Panel
 /***********************************************************
@@ -53,8 +52,9 @@ public class MyPanel extends Panel
         c.anchor = anchor;
         c.weightx = weight_x;
         c.weighty = weight_y;
-        if (top + bottom + left + right > 0)
+        if (top + bottom + left + right > 0) {
             c.insets = new Insets(top, left, bottom, right);
+        }
         ((GridBagLayout) container.getLayout()).setConstraints(component, c);
         container.add(component);
     }

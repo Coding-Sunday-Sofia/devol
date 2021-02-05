@@ -5,11 +5,10 @@ import android.widget.CheckBox;
 
 import androidx.annotation.RequiresApi;
 
-import eu.veldsoft.devol.dummy.Event;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-
 import eu.veldsoft.devol.de.T_DEOptimizer;
+import eu.veldsoft.devol.dummy.Event;
+import eu.veldsoft.devol.dummy.GridBagConstraints;
+import eu.veldsoft.devol.dummy.GridBagLayout;
 import eu.veldsoft.devol.screen.DEScreen;
 
 public class PlotChoicePanel extends MyPanel

@@ -1,19 +1,14 @@
 package eu.veldsoft.devol.panel;
 
-// Import all classes from the java.awt package
-
 import android.graphics.fonts.Font;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import eu.veldsoft.devol.dummy.Event;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-
 import eu.veldsoft.devol.de.T_DEOptimizer;
+import eu.veldsoft.devol.dummy.Event;
+import eu.veldsoft.devol.dummy.GridBagConstraints;
+import eu.veldsoft.devol.dummy.GridBagLayout;
 import eu.veldsoft.devol.screen.DEScreen;
-
-// Import screens
 
 public class InputPanel extends MyPanel
 /***********************************************************
