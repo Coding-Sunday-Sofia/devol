@@ -63,8 +63,8 @@ public class PlotScreen extends Screen {
 
         this.resize(400, 400);
 
-        int w = size().width;
-        int h = size().height;
+        int w = size().getWidth();
+        int h = size().getHeight();
 
         // ----Place the graph on the plot screen-----
         this.setLayout(gridbag); // apply gridbag layout to the

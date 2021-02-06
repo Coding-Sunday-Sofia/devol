@@ -46,7 +46,7 @@ import android.widget.Button;
 
 import androidx.annotation.RequiresApi;
 
-import java.awt.Rectangle;
+import android.graphics.Rect;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -401,7 +401,7 @@ public class PlotBox extends Panel {
         Thread.yield();
 
         // Find the width and height of the total drawing area, and clear it.
-        Rectangle drawRect = bounds(); // FIXME: bounds() is deprecated
+        Rect drawRect = bounds(); // FIXME: bounds() is deprecated
         // in JDK1.1, but we need to compile under 1.0.2 for
         // netscape3.x compatibility.
 
@@ -410,14 +410,14 @@ public class PlotBox extends Panel {
             // Clear all the way from the top so that we erase the title.
             // If we don't do this, then zooming in with the pxgraph
             // application ends up blurring the title.
-            graphics.clearRect(0, 0, drawRect.width, drawRect.height);
+            graphics.clearRect(0, 0, drawRect.width(), drawRect.height());
         }
 
         if (_debug > 8) {
-            System.out.println("PlotBox: drawPlot drawRect =" + drawRect.width
-                    + " " + drawRect.height + " " + drawRect.x + " "
-                    + drawRect.y);
-            graphics.drawRect(0, 0, drawRect.width, drawRect.height);
+            System.out.println("PlotBox: drawPlot drawRect =" + drawRect.width()
+                    + " " + drawRect.height() + " " + drawRect.left + " "
+                    + drawRect.top);
+            graphics.drawRect(0, 0, drawRect.width(), drawRect.height());
         }
 
         // If an error message has been set, display it and return.
@@ -467,8 +467,8 @@ public class PlotBox extends Panel {
 
         // Draw scaling annotation for x axis.
         // NOTE: 5 pixel padding on bottom.
-        int ySPos = drawRect.height - 5;
-        int xSPos = drawRect.width - _rightPadding;
+        int ySPos = drawRect.height() - 5;
+        int xSPos = drawRect.width() - _rightPadding;
         if (_xlog)
             _xExp = (int) Math.floor(_xtickMin);
         if (_xExp != 0 && _xticks == null) {
@@ -495,7 +495,7 @@ public class PlotBox extends Panel {
         // NOTE: padding of 5 pixels below title.
         _uly = titley + 5;
         // NOTE: 3 pixels above bottom labels.
-        _lry = drawRect.height - labelheight - _bottomPadding - 3;
+        _lry = drawRect.height() - labelheight - _bottomPadding - 3;
         int height = _lry - _uly;
         _yscale = height / (_yMax - _yMin);
         _ytickscale = height / (_ytickMax - _ytickMin);
@@ -600,9 +600,9 @@ public class PlotBox extends Panel {
         } else {
             _ulx = widesty + _leftPadding;
         }
-        int legendwidth = _drawLegend(graphics, drawRect.width - _rightPadding,
+        int legendwidth = _drawLegend(graphics, drawRect.width() - _rightPadding,
                 _uly);
-        _lrx = drawRect.width - legendwidth - _rightPadding;
+        _lrx = drawRect.width() - legendwidth - _rightPadding;
         int width = _lrx - _ulx;
         _xscale = width / (_xMax - _xMin);
         _xtickscale = width / (_xtickMax - _xtickMin);
@@ -1962,7 +1962,6 @@ public class PlotBox extends Panel {
                     ngrid = 10;
                 else
                     ngrid = (int) Math.rint(1.0 / step);
-
             }
         } else {
             // Set up the number of grid lines that will not be labeled

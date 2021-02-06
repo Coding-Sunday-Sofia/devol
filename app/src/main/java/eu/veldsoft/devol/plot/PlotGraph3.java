@@ -372,12 +372,6 @@ public class PlotGraph3 extends Canvas
         repaint();
     }
 
-    /**
-     * It is a dummy method. It was created only to bypass compilation error.
-     */
-    private void repaint() {
-    }
-
     public void update(Canvas g)
     /*******************************************************
      ** Overriding update() reduces flicker. The normal ** update() method clears
@@ -386,5 +380,11 @@ public class PlotGraph3 extends Canvas
      *******************************************************/
     {
         g.drawBitmap(offscreenImage, 0, 0, null);
+    }
+
+    /**
+     * It is a dummy method. It was created only to bypass compilation error.
+     */
+    private void repaint() {
     }
 }

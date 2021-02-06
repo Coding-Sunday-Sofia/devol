@@ -14,14 +14,12 @@ import eu.veldsoft.devol.dummy.GridBagConstraints;
 import eu.veldsoft.devol.dummy.GridBagLayout;
 import eu.veldsoft.devol.screen.DEScreen;
 
-// Import screens
-
-public class ControlPanel extends MyPanel
-/***********************************************************
- ** ** Defines the user operated control panel. ** ** Authors: Rainer Storn ** **
- ***********************************************************/
-
-{
+/**
+ * Defines the user operated control panel.
+ *
+ * @аuthor Rainer Storn
+ */
+public class ControlPanel extends MyPanel {
     public final static String startString = "Start";
     public final static String stopString = "Stop";
     public final static String pauseString = "Pause";
@@ -43,30 +41,30 @@ public class ControlPanel extends MyPanel
     TextView strategyLab;
     int i, n; // some general variables
 
-    public ControlPanel(DEScreen app)
-    /********************************************
-     ** Constructor. **
-     ********************************************/
-    {
+    /**
+     * Constructor.
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public ControlPanel(DEScreen app) {
         deScreen = app;
         // setLayout (new FlowLayout (FlowLayout.LEFT, 10, 10)); // "best
         // effort" layout
         // setLayout(new GridLayout(2,3));
         this.setLayout(gridbag); // P layout manager, 3 rows
 
-        startButton = new Button(); // Create the start button
+        startButton = new Button(null); // Create the start button
         startButton.setFont(buttonFont); // Define its font
         startButton.setText(startString); // and its text
 
-        pauseButton = new Button(); // Create the pause button
+        pauseButton = new Button(null); // Create the pause button
         pauseButton.setFont(buttonFont); // Define its font
         pauseButton.setText(pauseString); // and its text
 
-        exitButton = new Button(); // Create the exit button
+        exitButton = new Button(null); // Create the exit button
         exitButton.setFont(buttonFont); // Define its font
         exitButton.setText("Exit"); // and its text
 
-        problemList = new Spinner();
+        problemList = new Spinner(null);
         problemList.setFont(choiceFont);
         String[] identifier = deScreen.getProblemIdentifiers();
         n = identifier.length; // how many different cost functions ?
@@ -75,7 +73,7 @@ public class ControlPanel extends MyPanel
         // add (problemList); // Make the list visible
         problemLab = new TextView("Problem:");
 
-        strategyList = new Spinner();
+        strategyList = new Spinner(null);
         strategyList.setFont(choiceFont);
         identifier = deScreen.getStrategyIdentifiers();
         n = identifier.length; // how many different strategies ?
@@ -105,12 +103,11 @@ public class ControlPanel extends MyPanel
         // problem
     }
 
+    /**
+     * Handles mouse events for the panel.
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public boolean action(Event E, Object O)
-    /********************************************
-     ** Handles mouse events for the panel. **
-     ********************************************/
-    {
+    public boolean action(Event E, Object O) {
         if (E.target instanceof Spinner) {
             if (E.target.equals(problemList)) // Selected a problem
             {
@@ -149,39 +146,35 @@ public class ControlPanel extends MyPanel
         return true;
     }
 
-    private void userReset()
-    /********************************************
-     ** A special kind of reset. **
-     ********************************************/
-    {
+    /**
+     * A special kind of reset.
+     */
+    private void userReset() {
         startButton.setText(startString); // Start button shows "start"
         pauseButton.setText(pauseString); // Pause button shows "pause"
         startButton.setEnabled(true);
         pauseButton.setEnabled(false);
     }
 
-    public void getParameters(T_DEOptimizer opt)
-    /********************************************
-     ** Load the optimizer with DE's control ** variables. **
-     ********************************************/
-    {
+    /**
+     * Load the optimizer with DE's control variables.
+     */
+    public void getParameters(T_DEOptimizer opt) {
         opt.current_problem = current_problem;
         opt.current_strategy = current_strategy;
     }
 
-    public void done()
-    /********************************************
-     ** Do this when the optimization is ** finished. **
-     ********************************************/
-    {
+    /**
+     * Do this when the optimization is finished.
+     */
+    public void done() {
         reset();
     }
 
-    public void reset()
-    /********************************************
-     ** Reset button labels. **
-     ********************************************/
-    {
+    /**
+     * Reset button labels.
+     */
+    public void reset() {
         userReset();
         problemList.setEnabled(true); // Enable problem selection
         strategyList.setEnabled(true); // Enable strategy selection

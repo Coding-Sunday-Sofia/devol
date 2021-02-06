@@ -75,9 +75,14 @@
 
 package eu.veldsoft.devol;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import eu.veldsoft.devol.screen.DEScreen;
 
 public class DeApp1 {
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public static void main(String[] args)
     // The program starts here as in C and C++
     {

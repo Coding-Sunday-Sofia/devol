@@ -171,16 +171,4 @@ public class Screen extends Frame {
      */
     protected void dispose() {
     }
-
-    /**
-     * It is a dummy method. It was created only to bypass compilation error.
-     */
-    protected void show() {
-    }
-
-    /**
-     * It is a dummy method. It was created only to bypass compilation error.
-     */
-    protected void pack() {
-    }
 }

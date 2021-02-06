@@ -33,13 +33,16 @@ public class PlotChoicePanel extends MyPanel
         this.setLayout(gridbag); // P layout manager, 3 rows
 
         plotCheckBox = new CheckBox[3]; // three check boxes
-        plotCheckBox[0] = new CheckBox("Tolerance Scheme Plot");
+        plotCheckBox[0] = new CheckBox(null);
+        plotCheckBox[0].setText("Tolerance Scheme Plot");
         plotCheckBox[0].setChecked(false); // check box not checked
 
-        plotCheckBox[1] = new CheckBox("Coefficient Plot");
+        plotCheckBox[1] = new CheckBox(null);
+        plotCheckBox[1].setText("Coefficient Plot");
         plotCheckBox[1].setChecked(false); // check box not checked
 
-        plotCheckBox[2] = new CheckBox("Console Output");
+        plotCheckBox[2] = new CheckBox(null);
+        plotCheckBox[2].setText("Console Output");
         plotCheckBox[2].setChecked(false); // check box not checked
         deScreen.consoleDisable(); // and hence suppress console trace
 

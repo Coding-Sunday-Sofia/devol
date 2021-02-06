@@ -69,9 +69,11 @@ public class InputPanel extends MyPanel
         this.setLayout(new GridBagLayout()); // Slider below the text
 
         // ------Parameter NP-----------------------------------
-        NPText = new EditText(10); // Create the NP text field
+        NPText = new EditText(null); // Create the NP text field
+        NPText.setTextSize(10);
         NPText.setEnabled(true);
-        NPLab = new TextView("NP:");
+        NPLab = new TextView(null);
+        NPLab.setText("NP:");
 
         NPText.setText(String.valueOf(NP)); // Show initial value
         this.setLayout(new GridBagLayout()); // Slider below the text
@@ -81,9 +83,11 @@ public class InputPanel extends MyPanel
                 GridBagConstraints.CENTER, 1.0, 1.0, 5, 5, 0, 0);
 
         // ------Parameter F-----------------------------------
-        FText = new EditText(10);
+        FText = new EditText(null);
+        FText.setTextSize(10);
         FText.setEnabled(true);
-        FLab = new TextView("F:");
+        FLab = new TextView(null);
+        FLab.setText("F:");
 
         FText.setText(Double.toString(F));
         constrain(this, FLab, 0, 2, 1, 1, GridBagConstraints.BOTH,
@@ -92,9 +96,11 @@ public class InputPanel extends MyPanel
                 GridBagConstraints.CENTER, 1.0, 1.0, 5, 5, 0, 0);
 
         // ----Parameter CR---------------------------------------
-        CrText = new EditText(10);
+        CrText = new EditText(null);
+        CrText.setTextSize(10);
         CrText.setEnabled(true);
-        CrLab = new TextView("CR:");
+        CrLab = new TextView(null);
+        CrLab.setText("CR:");
 
         CrText.setText(Double.toString(Cr));
         constrain(this, CrLab, 0, 4, 1, 1, GridBagConstraints.BOTH,
@@ -103,9 +109,11 @@ public class InputPanel extends MyPanel
                 GridBagConstraints.CENTER, 1.0, 1.0, 5, 5, 0, 0);
 
         // ---Init section-----------------------------------------
-        RangeText = new EditText(10);
+        RangeText = new EditText(null);
+        RangeText.setTextSize(10);
         RangeText.setEnabled(true);
-        RangeLab = new TextView("Range:  ");
+        RangeLab = new TextView(null);
+        RangeLab.setText("Range:  ");
 
         RangeText.setText(Double.toString(Range));
         constrain(this, RangeLab, 0, 6, 1, 1, GridBagConstraints.BOTH,
@@ -114,9 +122,11 @@ public class InputPanel extends MyPanel
                 GridBagConstraints.CENTER, 1.0, 1.0, 5, 5, 0, 0);
 
         // ------Range-----------------------------------
-        RefreshText = new EditText(10); // Create the Refresh text field
+        RefreshText = new EditText(null); // Create the Refresh text field
+        RefreshText.setTextSize(10);
         RefreshText.setEnabled(true);
-        RefreshLab = new TextView("Refresh:");
+        RefreshLab = new TextView(null);
+        RefreshLab.setText("Refresh:");
 
         RefreshText.setText(String.valueOf(Refresh)); // Show initial value
         constrain(this, RefreshLab, 0, 8, 1, 1, GridBagConstraints.BOTH,
