@@ -77,8 +77,9 @@ public class ControlPanel extends MyPanel {
         strategyList.setFont(choiceFont);
         identifier = deScreen.getStrategyIdentifiers();
         n = identifier.length; // how many different strategies ?
-        for (i = 0; i < n; i++)
+        for (i = 0; i < n; i++) {
             strategyList.addItem(identifier[i]); // Put strategies into list
+        }
         // add (strategyList); // Make the list visible
         strategyLab = new TextView("Strategy:");
 
@@ -111,29 +112,29 @@ public class ControlPanel extends MyPanel {
         if (E.target instanceof Spinner) {
             if (E.target.equals(problemList)) // Selected a problem
             {
-                current_problem = ((Spinner) (E.target)).getSelectedIndex();
+                current_problem = ((Spinner) (E.target)).getSelectedItemPosition();
                 deScreen.setProblem(current_problem);
             } else if (E.target.equals(strategyList)) // Selected a strategy
             {
-                current_strategy = ((Spinner) (E.target)).getSelectedIndex();
+                current_strategy = ((Spinner) (E.target)).getSelectedItemPosition();
                 userReset();
                 deScreen.idle();
             }
         } else if (E.target instanceof Button) {
-            if (startString.equals((String) O)) {
+            if (startString.equals(O)) {
                 startButton.setText(stopString); // Now animation can only stop
                 pauseButton.setEnabled(true); // or pause
                 problemList.setEnabled(false); // No choices during animation
                 strategyList.setEnabled(false); // No choices during animation
                 deScreen.start();
-            } else if (pauseString.equals((String) O)) {
+            } else if (pauseString.equals(O)) {
                 pauseButton.setText(resumeString); // Show: animation can
                 // resume
                 deScreen.pause();
-            } else if (resumeString.equals((String) O)) {
+            } else if (resumeString.equals(O)) {
                 pauseButton.setText(pauseString); // Show: animation can pause
                 deScreen.resume();
-            } else if (stopString.equals((String) O)) {
+            } else if (stopString.equals(O)) {
                 reset();
                 deScreen.stop();
             } else if (E.target == exitButton) {

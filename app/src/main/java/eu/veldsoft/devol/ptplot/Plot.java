@@ -575,7 +575,7 @@ public class Plot extends PlotBox {
                     continue;
                 } else if (arg.equals("-debug")) {
                     // -debug is not in the original X11 pxgraph.
-                    _debug = (int) Integer.valueOf(args[i++]).intValue();
+                    _debug = Integer.valueOf(args[i++]).intValue();
                     continue;
                 } else if (arg.equals("-fg")) {
                     setForeground(getColorByName(args[i++]));
@@ -670,7 +670,7 @@ public class Plot extends PlotBox {
             } else {
                 if (arg.startsWith("=")) {
                     // Process =WxH+X+Y
-                    _width = (int) Integer
+                    _width = Integer
                             .valueOf(arg.substring(1, arg.indexOf('x')))
                             .intValue();
                     int plusIndex = arg.indexOf('+');
@@ -823,7 +823,7 @@ public class Plot extends PlotBox {
                         // them in the wordChars() range of chars, since
                         // the single quote is between them and the rest of the
                         // chars. So we have to process them by hand.
-                        partialarg = ((String) argvector.lastElement())
+                        partialarg = argvector.lastElement()
                                 + (char) c;
                         argvector.removeElementAt(argvector.size() - 1);
                         break;
@@ -1142,12 +1142,12 @@ public class Plot extends PlotBox {
                 if (startx != endx) {
                     if (endx < _ulx) {
                         endy = (int) (endy
-                                + ((long) (starty - endy) * (_ulx - endx))
+                                + ((starty - endy) * (_ulx - endx))
                                 / (startx - endx));
                         endx = _ulx;
                     } else if (endx > _lrx) {
                         endy = (int) (endy
-                                + ((long) (starty - endy) * (_lrx - endx))
+                                + ((starty - endy) * (_lrx - endx))
                                 / (startx - endx));
                         endx = _lrx;
                     }
@@ -1158,12 +1158,12 @@ public class Plot extends PlotBox {
                 if (starty != endy) {
                     if (endy < _uly) {
                         endx = (int) (endx
-                                + ((long) (startx - endx) * (_uly - endy))
+                                + ((startx - endx) * (_uly - endy))
                                 / (starty - endy));
                         endy = _uly;
                     } else if (endy > _lry) {
                         endx = (int) (endx
-                                + ((long) (startx - endx) * (_lry - endy))
+                                + ((startx - endx) * (_lry - endy))
                                 / (starty - endy));
                         endy = _lry;
                     }
@@ -1173,12 +1173,12 @@ public class Plot extends PlotBox {
                 if (startx != endx) {
                     if (startx < _ulx) {
                         starty = (int) (starty
-                                + ((long) (endy - starty) * (_ulx - startx))
+                                + ((endy - starty) * (_ulx - startx))
                                 / (endx - startx));
                         startx = _ulx;
                     } else if (startx > _lrx) {
                         starty = (int) (starty
-                                + ((long) (endy - starty) * (_lrx - startx))
+                                + ((endy - starty) * (_lrx - startx))
                                 / (endx - startx));
                         startx = _lrx;
                     }
@@ -1186,12 +1186,12 @@ public class Plot extends PlotBox {
                 if (starty != endy) {
                     if (starty < _uly) {
                         startx = (int) (startx
-                                + ((long) (endx - startx) * (_uly - starty))
+                                + ((endx - startx) * (_uly - starty))
                                 / (endy - starty));
                         starty = _uly;
                     } else if (starty > _lry) {
                         startx = (int) (startx
-                                + ((long) (endx - startx) * (_lry - starty))
+                                + ((endx - startx) * (_lry - starty))
                                 / (endy - starty));
                         starty = _lry;
                     }

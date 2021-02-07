@@ -179,7 +179,7 @@ public class Lowpass1 extends DEProblem {
          * if (res > err) err = res;
          */
 
-        return (double) err;
+        return err;
     }
 
     /**

@@ -36,6 +36,6 @@ public class Panel extends Component {
     protected void setLayout(FlowLayout layout) {
     }
 
-    protected void setLayout(GridBagLayout layout) {
+    public void setLayout(GridBagLayout layout) {
     }
 }

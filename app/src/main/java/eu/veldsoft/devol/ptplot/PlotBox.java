@@ -38,6 +38,7 @@ package eu.veldsoft.devol.ptplot;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint.FontMetrics;
+import android.graphics.Rect;
 import android.graphics.fonts.Font;
 import android.os.Build;
 import android.util.Size;
@@ -46,7 +47,6 @@ import android.widget.Button;
 
 import androidx.annotation.RequiresApi;
 
-import android.graphics.Rect;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -1354,7 +1354,7 @@ public class PlotBox extends Panel {
      * Syntactic sugar for parseFile(dataurl, documentBase);
      */
     public void parseFile(String dataurl) {
-        parseFile(dataurl, (URL) null);
+        parseFile(dataurl, null);
     }
 
     /**
@@ -2238,7 +2238,7 @@ public class PlotBox extends Panel {
         _xExp = (int) Math.floor(Math.log(largest) * _LOG10SCALE);
         // Use the exponent only if it's larger than 1 in magnitude.
         if (_xExp > 1 || _xExp < -1) {
-            double xs = 1.0 / Math.pow(10.0, (double) _xExp);
+            double xs = 1.0 / Math.pow(10.0, _xExp);
             _xtickMin = _xMin * xs;
             _xtickMax = _xMax * xs;
         } else {
@@ -2276,7 +2276,7 @@ public class PlotBox extends Panel {
         _yExp = (int) Math.floor(Math.log(largest) * _LOG10SCALE);
         // Use the exponent only if it's larger than 1 in magnitude.
         if (_yExp > 1 || _yExp < -1) {
-            double ys = 1.0 / Math.pow(10.0, (double) _yExp);
+            double ys = 1.0 / Math.pow(10.0, _yExp);
             _ytickMin = _yMin * ys;
             _ytickMax = _yMax * ys;
         } else {

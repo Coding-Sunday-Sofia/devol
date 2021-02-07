@@ -81,11 +81,15 @@ import androidx.annotation.RequiresApi;
 
 import eu.veldsoft.devol.screen.DEScreen;
 
+/**
+ * Application single entry point class.
+ */
 public class DeApp1 {
+    /**
+     * The program starts here as in C and C++.
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public static void main(String[] args)
-    // The program starts here as in C and C++
-    {
+    public static void main(String[] args) {
         DEScreen deScreen = new DEScreen(); // Create the application
         deScreen.pack(); // Arrange components
         deScreen.show(); // Make them visible

@@ -3,7 +3,8 @@ package eu.veldsoft.devol.plot;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.fonts.Font;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.util.Size;
 
@@ -11,12 +12,11 @@ import androidx.annotation.RequiresApi;
 
 import eu.veldsoft.devol.screen.DEScreen;
 
-public class PlotGraph3 extends Canvas
 /***********************************************************
  ** ** ** Authors: Mikal Keenan ** Rainer Storn ** ** Date: 3/16/98 ** ** Use
  * PlotGraph2 to adjust the graphics. **
  ***********************************************************/
-{
+public class PlotGraph3 extends Canvas {
     // The axes, and tolerance scheme are computed once and plotted into a
     // static image (staticI). The sample data is plotted into a background
     // image and copied into the Animation's gc to avoid flicker.
@@ -59,55 +59,49 @@ public class PlotGraph3 extends Canvas
     Size minSize;
     int margin = 40;
 
-    public PlotGraph3(DEScreen father, int width, int height)
     /***********************************************************
      ** Set size of the plot and define the axes. **
      ***********************************************************/
-    {
+    public PlotGraph3(DEScreen father, int width, int height) {
         deScreen = father;
         minSize = new Size(width - margin, height - margin); // set minimum
         // size
     }
 
-    public Size preferredSize()
     /***********************************************************
      ** The layout manager needs this to determine the right ** size. **
      ***********************************************************/
-    {
+    public Size preferredSize() {
         return minimumSize();
     }
 
-    public synchronized Size minimumSize()
     /***********************************************************
      ** The layout manager needs this to determine the right ** size. **
      ***********************************************************/
-    {
+    public synchronized Size minimumSize() {
         return minSize;
     }
 
-    int absX(double x)
     /***********************************************************
      ** Transform relative X-values in absolute ones. **
      ***********************************************************/
-    {
+    int absX(double x) {
         return abs_max_x + (int) (((double) (abs_min_x - abs_max_x))
                 * ((max_x - x) / (max_x - min_x)));
     }
 
-    int absY(double y)
     /***********************************************************
      ** Transform relative Y-values in absolute ones. **
      ***********************************************************/
-    {
+    int absY(double y) {
         return abs_min_y + (int) (((double) (abs_max_y - abs_min_y))
                 * ((max_y - y) / (max_y - min_y)));
     }
 
-    void initParameters()
     /*******************************************************
      ** Set some parameters. **
      *******************************************************/
-    {
+    void initParameters() {
         x = 0;
         y = 0;
         w = getWidth();
@@ -126,23 +120,24 @@ public class PlotGraph3 extends Canvas
         y_tics = 6; // Number of tics in Y-direction
     }
 
-    public synchronized void initGraphics()
-    /***********************************************************
-     ** Initializes background graphics, computes the ** tolerance scheme, etc.
-     * **
-     ***********************************************************/
-    {
+    /**
+     * Initializes background graphics, computes the tolerance scheme, etc.
+     */
+    public synchronized void initGraphics() {
         /*---static part of the graphics-------------*/
-        staticImage = createImage(w, h); // create a static image
-        staticGraphics = staticImage.getGraphics(); // graphics context for the
+        staticImage = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888); // create a static image
+        staticGraphics = new Canvas(staticImage); // graphics context for the
+
         // static image.
-        staticGraphics.setColor(Color.WHITE); // white background
-        staticGraphics.fillRect(x, y, w, h); // in rectangle area.
+        Paint paint = new Paint();
+        paint.setColor(Color.WHITE); // white background
+        staticGraphics.drawRect(x, y, w, h, paint); // in rectangle area.
+
         preparePlot(staticGraphics); // plot axes and tolerance scheme
 
         /*---dynamic part of the graphics------------*/
-        offscreenImage = createImage(w, h);
-        offscreenGraphics = offscreenImage.getGraphics();
+        offscreenImage = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+        offscreenGraphics = new Canvas(offscreenImage);
 
         /*---draw the static image on the graphics context---*/
         /*---offscreenGraphics (location x=0, y=0, no--------*/
@@ -150,36 +145,34 @@ public class PlotGraph3 extends Canvas
         offscreenGraphics.drawBitmap(staticImage, 0, 0, null);
     }
 
-    void init()
     /*******************************************************
      ** As the name says: Initialization. **
      *******************************************************/
-    {
+    void init() {
         ready = false;
         initParameters();
         initGraphics();
         ready = true;
     }
 
-    void preparePlot(Canvas staticGraphics)
     /*******************************************************
      ** Draws the static part of the plot. **
      *******************************************************/
-    {
+    void preparePlot(Canvas staticGraphics) {
         plotAxes(staticGraphics);
         plotCircle(0.0, 0.0, 1.0, 200, staticGraphics, Color.RED);
     }
 
-    public void plotCircle(double x0, double y0, double radius, int samples,
-                           Canvas g, int c)
     /*******************************************************
      ** Plot circle into coordinate system. **
      *******************************************************/
-    {
+    public void plotCircle(double x0, double y0, double radius, int samples,
+                           Canvas g, int c) {
         int i; // counter variable
         double xstart, x1, x2, y1, y2;
 
-        g.setColor(c);
+        Paint paint = new Paint();
+        paint.setColor(c);
 
         /*---Draw upper half----------------------------*/
         xstart = x0 - radius;
@@ -189,7 +182,7 @@ public class PlotGraph3 extends Canvas
             x2 = xstart + 2.0 * radius * (double) i / (double) (samples - 1);
             y2 = Math.sqrt(Math.abs(radius * radius - (x2 - x0) * (x2 - x0)))
                     + y0;
-            g.drawLine(absX(x1), absY(y1), absX(x2), absY(y2));
+            g.drawLine(absX(x1), absY(y1), absX(x2), absY(y2), paint);
             x1 = x2;
             y1 = y2;
         }
@@ -201,83 +194,83 @@ public class PlotGraph3 extends Canvas
             x2 = xstart + 2.0 * radius * (double) i / (double) (samples - 1);
             y2 = -Math.sqrt(Math.abs(radius * radius - (x2 - x0) * (x2 - x0)))
                     + y0;
-            g.drawLine(absX(x1), absY(y1), absX(x2), absY(y2));
+            g.drawLine(absX(x1), absY(y1), absX(x2), absY(y2), paint);
             x1 = x2;
             y1 = y2;
         }
     }
 
-    public void plotRect(double x0, double y0, double radius, Canvas g,
-                         int c)
     /*******************************************************
      ** Plot rectangle into coordinate system. **
      *******************************************************/
-    {
+    public void plotRect(double x0, double y0, double radius, Canvas g,
+                         int c) {
         double x1, x2, y1, y2;
 
-        g.setColor(c);
+        Paint paint = new Paint();
+        paint.setColor(c);
 
         /*---Draw upper half----------------------------*/
         x1 = x0 - radius;
         y1 = y0 + radius;
         x2 = x0 + radius;
         y2 = y0 + radius;
-        g.drawLine(absX(x1), absY(y1), absX(x2), absY(y2));
+        g.drawLine(absX(x1), absY(y1), absX(x2), absY(y2), paint);
         x1 = x2;
         y1 = y2;
         y2 = y2 - 2 * radius;
-        g.drawLine(absX(x1), absY(y1), absX(x2), absY(y2));
+        g.drawLine(absX(x1), absY(y1), absX(x2), absY(y2), paint);
         x1 = x2;
         y1 = y2;
         x2 = x2 - 2 * radius;
-        g.drawLine(absX(x1), absY(y1), absX(x2), absY(y2));
+        g.drawLine(absX(x1), absY(y1), absX(x2), absY(y2), paint);
         x1 = x2;
         y1 = y2;
         y2 = y2 + 2 * radius;
-        g.drawLine(absX(x1), absY(y1), absX(x2), absY(y2));
+        g.drawLine(absX(x1), absY(y1), absX(x2), absY(y2), paint);
     }
 
-    public void plotCross(double x0, double y0, double radius, Canvas g,
-                          int c)
     /*******************************************************
      ** Plot cross into coordinate system. **
      *******************************************************/
-    {
+    public void plotCross(double x0, double y0, double radius, Canvas g,
+                          int c) {
         double x1, x2, y1, y2;
 
-        g.setColor(c);
+        Paint paint = new Paint();
+        paint.setColor(c);
 
         /*---Draw upper half----------------------------*/
         x1 = x0 - radius;
         y1 = y0 + radius;
         x2 = x0 + radius;
         y2 = y0 - radius;
-        g.drawLine(absX(x1), absY(y1), absX(x2), absY(y2));
+        g.drawLine(absX(x1), absY(y1), absX(x2), absY(y2), paint);
         x1 = x0 + radius;
         y1 = y0 + radius;
         x2 = x0 - radius;
         y2 = y0 - radius;
-        g.drawLine(absX(x1), absY(y1), absX(x2), absY(y2));
+        g.drawLine(absX(x1), absY(y1), absX(x2), absY(y2), paint);
     }
 
-    public void plotAxes(Canvas g)
     /*******************************************************
      ** Plot coordinate system in which polynomial will be ** plotted. **
      *******************************************************/
-    {
+    public void plotAxes(Canvas g) {
         int tick_height = 3;
         int i; // counter variable
         // System.out.println("Plot Axes");
 
-        g.setColor(Color.BLACK);
+        Paint paint = new Paint();
+        paint.setColor(Color.BLACK);
 
         /*---Draw x-axis----------------------------*/
         int static0 = absY(0.0);
-        g.drawLine(absX(min_x), static0, absX(max_x), static0); // X axis
+        g.drawLine(absX(min_x), static0, absX(max_x), static0, paint); // X axis
 
         /*---Draw y-axis----------------------------*/
         static0 = absX(0.0);
-        g.drawLine(static0, absY(min_y), static0, absY(max_y)); // Y axis
+        g.drawLine(static0, absY(min_y), static0, absY(max_y), paint); // Y axis
 
         /*---Prepare x-axis ticks-------------------*/
         static0 = absY(0.0);
@@ -290,7 +283,7 @@ public class PlotGraph3 extends Canvas
         /*---Draw x-axis ticks----------------------*/
         for (i = 0; i <= x_tics; i++) {
             int x = base_pos + (int) (i * increment);
-            g.drawLine(x, static1, x, static2);
+            g.drawLine(x, static1, x, static2, paint);
         }
 
         /*---Prepare y-axis ticks-------------------*/
@@ -304,34 +297,35 @@ public class PlotGraph3 extends Canvas
         /*---Draw y-axis ticks----------------------*/
         for (i = 0; i <= y_tics; i++) {
             int y = base_pos - (int) (i * increment);
-            g.drawLine(static1, y, static2, y);
+            g.drawLine(static1, y, static2, y, paint);
         }
 
         /*---Prepare x-tick labeling----------------*/
-        g.setFont(new Font("Helvetica", Font.PLAIN, 10));
+        paint.setTextSize(10);
+        paint.setTypeface(Typeface.create("Helvetica", Typeface.NORMAL));
 
         static0 = absY(0) - 10;
         double x = min_x;
 
-        increment = (double) (max_x - min_x) / (double) x_tics;
+        increment = (max_x - min_x) / (double) x_tics;
 
         /*---Draw x-tick labeling-------------------*/
         for (i = 0; i <= x_tics; i++, x += increment) {
             Double DblObj = new Double(x);
-            g.drawString(DblObj.toString(), absX(x) - 10, static0);
+            g.drawText(DblObj.toString(), absX(x) - 10, static0, paint);
         }
 
         Double DblObj = new Double(max_y);
-        g.drawString(DblObj.toString(), absX(0), absY(max_y) - 8);
+        g.drawText(DblObj.toString(), absX(0), absY(max_y) - 8, paint);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public void plot(Canvas g)
     /*******************************************************
      ** Plots the current polynomial. **
      *******************************************************/
-    {
-        g.setColor(Color.BLUE);
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void plot(Canvas g) {
+        Paint paint = new Paint();
+        paint.setColor(Color.BLUE);
         best = deScreen.getBest();
         dim = deScreen.getDimension();
         double x, y;
@@ -347,22 +341,20 @@ public class PlotGraph3 extends Canvas
         }
     }
 
-    public void paint(Canvas g)
     /*******************************************************
      ** Actually draws on the canvas. **
      *******************************************************/
-    {
+    public void paint(Canvas g) {
         init(); // initializing with every paint() call
         // allows for resizing of the plot screen
         g.drawBitmap(offscreenImage, 0, 0, null);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public void refreshImage()
     /***********************************************************
      ** Update function which recomputes the variable screen ** image. **
      ***********************************************************/
-    {
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void refreshImage() {
         if (offscreenGraphics == null) {
             init();
         }
@@ -372,13 +364,12 @@ public class PlotGraph3 extends Canvas
         repaint();
     }
 
-    public void update(Canvas g)
     /*******************************************************
      ** Overriding update() reduces flicker. The normal ** update() method clears
      * the screen before it ** repaints and hence causes flicker. We dont like
      * ** this and leave out the screen clearing. **
      *******************************************************/
-    {
+    public void update(Canvas g) {
         g.drawBitmap(offscreenImage, 0, 0, null);
     }
 

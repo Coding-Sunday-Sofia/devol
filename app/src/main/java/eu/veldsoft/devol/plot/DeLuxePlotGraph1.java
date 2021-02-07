@@ -102,7 +102,7 @@ public class DeLuxePlotGraph1 extends Plot
 
         // -----now plot new graph-----------------------------
         for (i = 0; i < dim; i++) {
-            addPoint(1, (double) i, best[i], !true);
+            addPoint(1, i, best[i], !true);
         }
         paint(_graphics);
 

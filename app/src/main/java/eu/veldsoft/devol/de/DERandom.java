@@ -25,7 +25,7 @@ public class DERandom extends Random
      *********************************************************/
     {
         if (seed == 0)
-            seed = (long) System.currentTimeMillis();
+            seed = System.currentTimeMillis();
         setSeed(seed);
     }
 
